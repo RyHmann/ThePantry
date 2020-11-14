@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ThePantry.Data.Entities
 {
-    public class Unit
+    public class Pantry
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
+        public virtual ICollection<MealIngredient> Ingredients { get; set; }
     }
 }

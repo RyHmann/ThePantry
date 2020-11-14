@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "PantryConnectionString": "server=(localdb)\\MSSQLLocalDB;Database=PantryDb;Integrated Security=true;MultipleActiveResultSets=true;"
+  }
+}
