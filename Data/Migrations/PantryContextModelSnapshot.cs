@@ -36,7 +36,7 @@ namespace ThePantry.Migrations
 
                     b.HasIndex("MealIngredientId");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Meal", b =>
@@ -70,22 +70,22 @@ namespace ThePantry.Migrations
                     b.Property<int?>("MealId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PantryId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("ShoppingListId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("ShoppingListId");
+                    b.HasIndex("PantryId");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("MealIngredients");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.ShoppingList", b =>
+            modelBuilder.Entity("ThePantry.Data.Entities.Pantry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +97,7 @@ namespace ThePantry.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lists");
+                    b.ToTable("Pantries");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Unit", b =>
@@ -117,7 +117,7 @@ namespace ThePantry.Migrations
 
                     b.HasIndex("MealIngredientId");
 
-                    b.ToTable("Unit");
+                    b.ToTable("Units");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Ingredient", b =>
@@ -133,9 +133,9 @@ namespace ThePantry.Migrations
                         .WithMany("Ingredients")
                         .HasForeignKey("MealId");
 
-                    b.HasOne("ThePantry.Data.Entities.ShoppingList", null)
+                    b.HasOne("ThePantry.Data.Entities.Pantry", null)
                         .WithMany("Ingredients")
-                        .HasForeignKey("ShoppingListId");
+                        .HasForeignKey("PantryId");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Unit", b =>
@@ -157,7 +157,7 @@ namespace ThePantry.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.ShoppingList", b =>
+            modelBuilder.Entity("ThePantry.Data.Entities.Pantry", b =>
                 {
                     b.Navigation("Ingredients");
                 });
