@@ -1,42 +1,32 @@
 [
     {
-      "id": 0,
       "name": "unit"
     },
     {
-    "id": 1,
     "name": "tablespoon"
     },
     {
-    "id": 2,
     "name": "teaspoon"
     },
     {
-    "id": 3,
     "name": "cup"
     },
     {
-    "id": 4,
     "name": "ounce"
     },
     {
-    "id": 5,
     "name": "gram"
     },
     {
-    "id": 6,
     "name": "pint"
     },
     {
-    "id": 7,
     "name": "quart"
     },
     {
-    "id": 8,
     "name": "gallon"
     },
     {
-    "id": 9,
     "name": "litre"
     }
 ]

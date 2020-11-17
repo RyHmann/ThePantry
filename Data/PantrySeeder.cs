@@ -51,52 +51,50 @@ namespace ThePantry.Data
             {
                 var mealIngredientHam = new MealIngredient()
                 {
-                    Id = 1,
                     MealId = 1,
-                    Ingredient = (ICollection<Ingredient>)_context.Ingredients.Where(m => m.Name == "ham"),
-                    Unit = (ICollection<Unit>)_context.Units.Where(u => u.Name == "unit"),
+                    Ingredient = _context.Ingredients
+                                         .Where(m => m.Name == "ham")
+                                         .FirstOrDefault(),
+                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
                     Quantity = 5
                 };
                 _context.Add(mealIngredientHam);
 
                 var mealIngredientBread = new MealIngredient()
                 {
-                    Id = 2,
                     MealId = 1,
-                    Ingredient = (ICollection<Ingredient>)_context.Ingredients.Where(m => m.Name == "bread"),
-                    Unit = (ICollection<Unit>)_context.Units.Where(u => u.Name == "unit"),
+                    Ingredient = _context.Ingredients.Where(m => m.Name == "bread").FirstOrDefault(),
+                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
                     Quantity = 5
                 };
                 _context.Add(mealIngredientBread);
 
                 var mealIngredientCheese = new MealIngredient()
                 {
-                    Id = 3,
                     MealId = 1,
-                    Ingredient = (ICollection<Ingredient>)_context.Ingredients.Where(i => i.Name == "cheddar cheese"),
-                    Unit = (ICollection<Unit>)_context.Units.Where(u => u.Name == "unit"),
+                    Ingredient = _context.Ingredients.Where(i => i.Name == "cheddar cheese").FirstOrDefault(),
+                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
                     Quantity = 5
                 };
                 _context.Add(mealIngredientCheese);
+                _context.SaveChanges();
+
 
                 if (!_context.Meals.Any())
                 {
                     var mealHamSandwich = new Meal()
                     {
-                        Id = 1,
                         Name = "Ham Sandwich",
                         Description = "A traditional ham sandwich",
                         Instructions = "Assemble ham, cheddar cheese, and bread.",
-                        Ingredients = new List<MealIngredient>()
+                        MealIngredients = new List<MealIngredient>()
                         {
                             mealIngredientBread,
                             mealIngredientCheese,
                             mealIngredientHam
                         }
                     };
-
                 _context.Add(mealHamSandwich);
-                    _context.SaveChanges();
                 }
                 _context.SaveChanges();
             }

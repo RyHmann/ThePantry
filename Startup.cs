@@ -31,6 +31,7 @@ namespace ThePantry
             });
             services.AddControllersWithViews();
             services.AddMvc();
+            services.AddTransient<PantrySeeder>();
             //services.AddRazorPages();
         }
 

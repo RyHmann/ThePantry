@@ -15,10 +15,11 @@ namespace ThePantry.Data
         public DbSet<Unit> Units { get; set; }
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<PantryIngredient> PantryIngredients { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public PantryContext(DbContextOptions<PantryContext> options) : base(options)
         {
         }
-        
     }
 }

@@ -1,30 +1,23 @@
 [
     {
-        "id": 0,
         "name": "chickpea"
     },
     {
-        "id": 1,
         "name": "bread"
     },
     {
-        "id": 2,
         "name": "ham"
     },
     {
-        "id": 3,
         "name": "cheddar cheese"
     },
     {
-        "id": 4,
         "name": "canned tomato"
     },
     {
-        "id": 5,
         "name": "onion"
     },
     {
-        "id": 6,
         "name": "garlic"
     }
     
