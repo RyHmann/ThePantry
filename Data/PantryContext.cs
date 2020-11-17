@@ -18,7 +18,7 @@ namespace ThePantry.Data
 
         public PantryContext(DbContextOptions<PantryContext> options) : base(options)
         {
-
         }
+        
     }
 }

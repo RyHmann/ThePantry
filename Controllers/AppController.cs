@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data;
+using ThePantry.Data.Entities;
 
 namespace ThePantry.Controllers
 {
@@ -37,6 +38,7 @@ namespace ThePantry.Controllers
             var meals = _context.Meals
                 .OrderBy(p => p.Name)
                 .ToList();
+            
             return View(meals);
         }
     }

@@ -9,6 +9,7 @@ namespace ThePantry.Data.Entities
     public class MealIngredient
     {
         public int Id { get; set; }
+        public int MealId { get; set; }
         public decimal Quantity { get; set; }
         public ICollection<Ingredient> Ingredient { get; set; }
         public ICollection<Unit> Unit { get; set; }
