@@ -7,6 +7,36 @@ namespace ThePantry.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Ingredients",
+                columns: table => new
+                {
+                    IngredientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
+                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ingredients", x => x.IngredientId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    UnitId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
+                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.UnitId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -70,24 +100,31 @@ namespace ThePantry.Migrations
                     MealIngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    MealId = table.Column<int>(type: "int", nullable: false),
-                    PantryId = table.Column<int>(type: "int", nullable: false)
+                    MealId = table.Column<int>(type: "int", nullable: true),
+                    IngredientForeignKey = table.Column<int>(type: "int", nullable: true),
+                    UnitForeignKey = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MealIngredients", x => x.MealIngredientId);
                     table.ForeignKey(
+                        name: "FK_MealIngredients_Ingredients_IngredientForeignKey",
+                        column: x => x.IngredientForeignKey,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngredientId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_MealIngredients_Meals_MealId",
                         column: x => x.MealId,
                         principalTable: "Meals",
                         principalColumn: "MealId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MealIngredients_Pantries_PantryId",
-                        column: x => x.PantryId,
-                        principalTable: "Pantries",
-                        principalColumn: "PantryId",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_MealIngredients_Units_UnitForeignKey",
+                        column: x => x.UnitForeignKey,
+                        principalTable: "Units",
+                        principalColumn: "UnitId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,86 +134,39 @@ namespace ThePantry.Migrations
                     PantryIngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PantryId = table.Column<int>(type: "int", nullable: false)
+                    PantryId = table.Column<int>(type: "int", nullable: true),
+                    IngredientForeignKey = table.Column<int>(type: "int", nullable: true),
+                    UnitForeignKey = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PantryIngredients", x => x.PantryIngredientId);
                     table.ForeignKey(
+                        name: "FK_PantryIngredients_Ingredients_IngredientForeignKey",
+                        column: x => x.IngredientForeignKey,
+                        principalTable: "Ingredients",
+                        principalColumn: "IngredientId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_PantryIngredients_Pantries_PantryId",
                         column: x => x.PantryId,
                         principalTable: "Pantries",
                         principalColumn: "PantryId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ingredients",
-                columns: table => new
-                {
-                    IngredientId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
-                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ingredients", x => x.IngredientId);
-                    table.ForeignKey(
-                        name: "FK_Ingredients_MealIngredients_MealIngredientId",
-                        column: x => x.MealIngredientId,
-                        principalTable: "MealIngredients",
-                        principalColumn: "MealIngredientId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Ingredients_PantryIngredients_PantryIngredientId",
-                        column: x => x.PantryIngredientId,
-                        principalTable: "PantryIngredients",
-                        principalColumn: "PantryIngredientId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Units",
-                columns: table => new
-                {
-                    UnitId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
-                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Units", x => x.UnitId);
-                    table.ForeignKey(
-                        name: "FK_Units_MealIngredients_MealIngredientId",
-                        column: x => x.MealIngredientId,
-                        principalTable: "MealIngredients",
-                        principalColumn: "MealIngredientId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Units_PantryIngredients_PantryIngredientId",
-                        column: x => x.PantryIngredientId,
-                        principalTable: "PantryIngredients",
-                        principalColumn: "PantryIngredientId",
+                        name: "FK_PantryIngredients_Units_UnitForeignKey",
+                        column: x => x.UnitForeignKey,
+                        principalTable: "Units",
+                        principalColumn: "UnitId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_MealIngredientId",
-                table: "Ingredients",
-                column: "MealIngredientId",
+                name: "IX_MealIngredients_IngredientForeignKey",
+                table: "MealIngredients",
+                column: "IngredientForeignKey",
                 unique: true,
-                filter: "[MealIngredientId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ingredients_PantryIngredientId",
-                table: "Ingredients",
-                column: "PantryIngredientId",
-                unique: true,
-                filter: "[PantryIngredientId] IS NOT NULL");
+                filter: "[IngredientForeignKey] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredients_MealId",
@@ -184,9 +174,11 @@ namespace ThePantry.Migrations
                 column: "MealId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MealIngredients_PantryId",
+                name: "IX_MealIngredients_UnitForeignKey",
                 table: "MealIngredients",
-                column: "PantryId");
+                column: "UnitForeignKey",
+                unique: true,
+                filter: "[UnitForeignKey] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_UserId",
@@ -199,33 +191,27 @@ namespace ThePantry.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PantryIngredients_IngredientForeignKey",
+                table: "PantryIngredients",
+                column: "IngredientForeignKey",
+                unique: true,
+                filter: "[IngredientForeignKey] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PantryIngredients_PantryId",
                 table: "PantryIngredients",
                 column: "PantryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Units_MealIngredientId",
-                table: "Units",
-                column: "MealIngredientId",
+                name: "IX_PantryIngredients_UnitForeignKey",
+                table: "PantryIngredients",
+                column: "UnitForeignKey",
                 unique: true,
-                filter: "[MealIngredientId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Units_PantryIngredientId",
-                table: "Units",
-                column: "PantryIngredientId",
-                unique: true,
-                filter: "[PantryIngredientId] IS NOT NULL");
+                filter: "[UnitForeignKey] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Ingredients");
-
-            migrationBuilder.DropTable(
-                name: "Units");
-
             migrationBuilder.DropTable(
                 name: "MealIngredients");
 
@@ -236,7 +222,13 @@ namespace ThePantry.Migrations
                 name: "Meals");
 
             migrationBuilder.DropTable(
+                name: "Ingredients");
+
+            migrationBuilder.DropTable(
                 name: "Pantries");
+
+            migrationBuilder.DropTable(
+                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "Users");

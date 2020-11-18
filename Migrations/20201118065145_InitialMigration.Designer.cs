@@ -10,7 +10,7 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20201117230105_InitialMigration")]
+    [Migration("20201118065145_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,14 +38,6 @@ namespace ThePantry.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IngredientId");
-
-                    b.HasIndex("MealIngredientId")
-                        .IsUnique()
-                        .HasFilter("[MealIngredientId] IS NOT NULL");
-
-                    b.HasIndex("PantryIngredientId")
-                        .IsUnique()
-                        .HasFilter("[PantryIngredientId] IS NOT NULL");
 
                     b.ToTable("Ingredients");
                 });
@@ -83,20 +75,29 @@ namespace ThePantry.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("MealId")
+                    b.Property<int?>("IngredientForeignKey")
                         .HasColumnType("int");
 
-                    b.Property<int>("PantryId")
+                    b.Property<int?>("MealId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("UnitForeignKey")
+                        .HasColumnType("int");
+
                     b.HasKey("MealIngredientId");
+
+                    b.HasIndex("IngredientForeignKey")
+                        .IsUnique()
+                        .HasFilter("[IngredientForeignKey] IS NOT NULL");
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("PantryId");
+                    b.HasIndex("UnitForeignKey")
+                        .IsUnique()
+                        .HasFilter("[UnitForeignKey] IS NOT NULL");
 
                     b.ToTable("MealIngredients");
                 });
@@ -128,15 +129,29 @@ namespace ThePantry.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("PantryId")
+                    b.Property<int?>("IngredientForeignKey")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PantryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("UnitForeignKey")
+                        .HasColumnType("int");
+
                     b.HasKey("PantryIngredientId");
 
+                    b.HasIndex("IngredientForeignKey")
+                        .IsUnique()
+                        .HasFilter("[IngredientForeignKey] IS NOT NULL");
+
                     b.HasIndex("PantryId");
+
+                    b.HasIndex("UnitForeignKey")
+                        .IsUnique()
+                        .HasFilter("[UnitForeignKey] IS NOT NULL");
 
                     b.ToTable("PantryIngredients");
                 });
@@ -158,14 +173,6 @@ namespace ThePantry.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("UnitId");
-
-                    b.HasIndex("MealIngredientId")
-                        .IsUnique()
-                        .HasFilter("[MealIngredientId] IS NOT NULL");
-
-                    b.HasIndex("PantryIngredientId")
-                        .IsUnique()
-                        .HasFilter("[PantryIngredientId] IS NOT NULL");
 
                     b.ToTable("Units");
                 });
@@ -191,21 +198,6 @@ namespace ThePantry.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.Ingredient", b =>
-                {
-                    b.HasOne("ThePantry.Data.Entities.MealIngredient", "MealIngredient")
-                        .WithOne("Ingredient")
-                        .HasForeignKey("ThePantry.Data.Entities.Ingredient", "MealIngredientId");
-
-                    b.HasOne("ThePantry.Data.Entities.PantryIngredient", "PantryIngredient")
-                        .WithOne("Ingredient")
-                        .HasForeignKey("ThePantry.Data.Entities.Ingredient", "PantryIngredientId");
-
-                    b.Navigation("MealIngredient");
-
-                    b.Navigation("PantryIngredient");
-                });
-
             modelBuilder.Entity("ThePantry.Data.Entities.Meal", b =>
                 {
                     b.HasOne("ThePantry.Data.Entities.User", "User")
@@ -217,21 +209,23 @@ namespace ThePantry.Migrations
 
             modelBuilder.Entity("ThePantry.Data.Entities.MealIngredient", b =>
                 {
+                    b.HasOne("ThePantry.Data.Entities.Ingredient", "Ingredient")
+                        .WithOne("MealIngredient")
+                        .HasForeignKey("ThePantry.Data.Entities.MealIngredient", "IngredientForeignKey");
+
                     b.HasOne("ThePantry.Data.Entities.Meal", "Meal")
                         .WithMany("MealIngredients")
-                        .HasForeignKey("MealId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MealId");
 
-                    b.HasOne("ThePantry.Data.Entities.Pantry", "Pantry")
-                        .WithMany()
-                        .HasForeignKey("PantryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
+                        .WithOne("MealIngredient")
+                        .HasForeignKey("ThePantry.Data.Entities.MealIngredient", "UnitForeignKey");
+
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Meal");
 
-                    b.Navigation("Pantry");
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Pantry", b =>
@@ -245,25 +239,27 @@ namespace ThePantry.Migrations
 
             modelBuilder.Entity("ThePantry.Data.Entities.PantryIngredient", b =>
                 {
+                    b.HasOne("ThePantry.Data.Entities.Ingredient", "Ingredient")
+                        .WithOne("PantryIngredient")
+                        .HasForeignKey("ThePantry.Data.Entities.PantryIngredient", "IngredientForeignKey");
+
                     b.HasOne("ThePantry.Data.Entities.Pantry", "Pantry")
                         .WithMany("PantryIngredients")
-                        .HasForeignKey("PantryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PantryId");
+
+                    b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
+                        .WithOne("PantryIngredient")
+                        .HasForeignKey("ThePantry.Data.Entities.PantryIngredient", "UnitForeignKey");
+
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Pantry");
+
+                    b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.Unit", b =>
+            modelBuilder.Entity("ThePantry.Data.Entities.Ingredient", b =>
                 {
-                    b.HasOne("ThePantry.Data.Entities.MealIngredient", "MealIngredient")
-                        .WithOne("Unit")
-                        .HasForeignKey("ThePantry.Data.Entities.Unit", "MealIngredientId");
-
-                    b.HasOne("ThePantry.Data.Entities.PantryIngredient", "PantryIngredient")
-                        .WithOne("Unit")
-                        .HasForeignKey("ThePantry.Data.Entities.Unit", "PantryIngredientId");
-
                     b.Navigation("MealIngredient");
 
                     b.Navigation("PantryIngredient");
@@ -274,23 +270,16 @@ namespace ThePantry.Migrations
                     b.Navigation("MealIngredients");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.MealIngredient", b =>
-                {
-                    b.Navigation("Ingredient");
-
-                    b.Navigation("Unit");
-                });
-
             modelBuilder.Entity("ThePantry.Data.Entities.Pantry", b =>
                 {
                     b.Navigation("PantryIngredients");
                 });
 
-            modelBuilder.Entity("ThePantry.Data.Entities.PantryIngredient", b =>
+            modelBuilder.Entity("ThePantry.Data.Entities.Unit", b =>
                 {
-                    b.Navigation("Ingredient");
+                    b.Navigation("MealIngredient");
 
-                    b.Navigation("Unit");
+                    b.Navigation("PantryIngredient");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.User", b =>

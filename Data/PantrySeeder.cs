@@ -46,12 +46,28 @@ namespace ThePantry.Data
                 _context.SaveChanges();
             }
 
-            // Seed MealIngredients and a Meal into the Db.
+            // Seed Meal into the Db.
+            if (!_context.Meals.Any())
+            {
+                var mealHamSandwich = new Meal()
+                {
+                    Name = "Ham Sandwich",
+                    Description = "A traditional ham sandwich",
+                    Instructions = "Assemble ham, cheddar cheese, and bread.",
+                };
+                _context.Add(mealHamSandwich);
+                _context.SaveChanges();
+            }
+
+            // Seed MealIngredients into the Db.
             if (!_context.MealIngredients.Any())
             {
                 var mealIngredientHam = new MealIngredient()
                 {
-                    MealId = 1,
+                    MealId = _context.Meals
+                                     .Where(m => m.Name == "Ham Sandwich")
+                                     .SingleOrDefault()
+                                     .MealId,
                     Ingredient = _context.Ingredients
                                          .Where(m => m.Name == "ham")
                                          .FirstOrDefault(),
@@ -59,10 +75,14 @@ namespace ThePantry.Data
                     Quantity = 5
                 };
                 _context.Add(mealIngredientHam);
+                
 
                 var mealIngredientBread = new MealIngredient()
                 {
-                    MealId = 1,
+                    MealId = _context.Meals
+                                     .Where(m => m.Name == "Ham Sandwich")
+                                     .SingleOrDefault()
+                                     .MealId,
                     Ingredient = _context.Ingredients.Where(m => m.Name == "bread").FirstOrDefault(),
                     Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
                     Quantity = 5
@@ -71,31 +91,15 @@ namespace ThePantry.Data
 
                 var mealIngredientCheese = new MealIngredient()
                 {
-                    MealId = 1,
+                    MealId = _context.Meals
+                                     .Where(m => m.Name == "Ham Sandwich")
+                                     .SingleOrDefault()
+                                     .MealId,
                     Ingredient = _context.Ingredients.Where(i => i.Name == "cheddar cheese").FirstOrDefault(),
                     Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
                     Quantity = 5
                 };
                 _context.Add(mealIngredientCheese);
-                _context.SaveChanges();
-
-
-                if (!_context.Meals.Any())
-                {
-                    var mealHamSandwich = new Meal()
-                    {
-                        Name = "Ham Sandwich",
-                        Description = "A traditional ham sandwich",
-                        Instructions = "Assemble ham, cheddar cheese, and bread.",
-                        MealIngredients = new List<MealIngredient>()
-                        {
-                            mealIngredientBread,
-                            mealIngredientCheese,
-                            mealIngredientHam
-                        }
-                    };
-                _context.Add(mealHamSandwich);
-                }
                 _context.SaveChanges();
             }
         }

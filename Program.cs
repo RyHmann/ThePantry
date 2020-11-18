@@ -16,7 +16,7 @@ namespace ThePantry
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            //SeedDb(host);
+            SeedDb(host);
             host.Run();
         }
 
