@@ -11,11 +11,11 @@ namespace ThePantry.Controllers
 {
     public class AppController : Controller
     {
-        private readonly PantryContext _context;
+        private readonly IPantryRepository _repository;
 
-        public AppController(PantryContext context)
+        public AppController(IPantryRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
         public IActionResult Index()
         {
@@ -35,9 +35,7 @@ namespace ThePantry.Controllers
 
         public IActionResult Meals()
         {
-            var meals = _context.Meals
-                .OrderBy(p => p.Name)
-                .ToList();
+            var meals = _repository.GetAllMeals();
             
             return View(meals);
         }

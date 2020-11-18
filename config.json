@@ -1,5 +1,11 @@
 {
   "ConnectionStrings": {
     "PantryConnectionString": "server=(localdb)\\MSSQLLocalDB;Database=PantryDb;Integrated Security=true;MultipleActiveResultSets=true;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft":  "Warning"
+    }
   }
 }
