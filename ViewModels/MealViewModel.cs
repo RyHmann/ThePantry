@@ -16,8 +16,12 @@ namespace ThePantry.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }
-        public List<IngredientViewModel> Ingredients { get; set; }
+        public virtual List<MealIngredientViewModel> Ingredients { get; set; }
 
+        public MealViewModel()
+        {
+            Ingredients = new List<MealIngredientViewModel>();
+        }
 
     }
 }

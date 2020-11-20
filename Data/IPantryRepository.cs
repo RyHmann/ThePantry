@@ -9,5 +9,6 @@ namespace ThePantry.Data
         Meal GetMealById(int mealId);
         bool SaveAll();
         void AddEntity(object model);
+        IEnumerable<MealIngredient> GetMealIngredientByMealId(int mealId);
     }
 }

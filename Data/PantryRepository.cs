@@ -19,11 +19,7 @@ namespace ThePantry.Data
             _logger = logger;
         }
 
-        public void AddEntity(object model)
-        {
-            _context.Add(model);
-        }
-
+        // Meal Gets
         public IEnumerable<Meal> GetAllMeals()
         {
             try
@@ -45,6 +41,30 @@ namespace ThePantry.Data
             return _context.Meals
                            .Where(m => m.MealId == mealId)
                            .FirstOrDefault();
+        }
+
+        // Meal Ingredient Gets
+        public IEnumerable<MealIngredient> GetMealIngredientByMealId(int mealId)
+        {
+            try
+            {
+                return _context.MealIngredients
+                           .Where(i => i.MealId == mealId)
+                           .OrderBy(n => n.Ingredient)
+                           .ToList();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"Failed to get ingredients: {exception}");
+                return null;
+            }
+            
+        }
+
+        // Save States
+        public void AddEntity(object model)
+        {
+            _context.Add(model);
         }
 
         public bool SaveAll()

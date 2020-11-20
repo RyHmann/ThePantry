@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ThePantry.ViewModels
 {
-    public class IngredientViewModel
+    public class UnitViewModel
     {
         public string Name { get; set; }
     }

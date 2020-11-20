@@ -73,12 +73,27 @@ namespace ThePantry.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    //Make Meal
                     var newMeal = _mapper.Map<MealViewModel, Meal>(model);
+                    
                     _repository.AddEntity(newMeal);
+
+                    //Make MealIngredientList
+                    var mealIngredients = new List<MealIngredientViewModel>();
+                    //get ingredient, get unit
+                    var newMealIngredient = new MealIngredient();
+
                     if (_repository.SaveAll())
                     {
                         return Created($"/api/orders/{newMeal.MealId}", _mapper.Map<Meal, MealViewModel>(newMeal));
                     }
+
+                    
+
+                    
+
+                    //Save Meal
+                    
                 }
                 else
                 {
