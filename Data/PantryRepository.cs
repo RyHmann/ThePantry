@@ -19,6 +19,11 @@ namespace ThePantry.Data
             _logger = logger;
         }
 
+        public void AddEntity(object model)
+        {
+            _context.Add(model);
+        }
+
         public IEnumerable<Meal> GetAllMeals()
         {
             try
@@ -40,6 +45,11 @@ namespace ThePantry.Data
             return _context.Meals
                            .Where(m => m.MealId == mealId)
                            .FirstOrDefault();
+        }
+
+        public bool SaveAll()
+        {
+            return _context.SaveChanges() > 0;
         }
     }
 }

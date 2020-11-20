@@ -33,10 +33,10 @@ namespace ThePantry.Controllers
             return View();
         }
 
+        [HttpGet("meals")]
         public IActionResult Meals()
         {
             var meals = _repository.GetAllMeals();
-            
             return View(meals);
         }
     }

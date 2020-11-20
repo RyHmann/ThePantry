@@ -7,5 +7,7 @@ namespace ThePantry.Data
     {
         IEnumerable<Meal> GetAllMeals();
         Meal GetMealById(int mealId);
+        bool SaveAll();
+        void AddEntity(object model);
     }
 }

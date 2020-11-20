@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,7 @@ namespace ThePantry
             services.AddControllersWithViews();
             services.AddMvc();
             services.AddTransient<PantrySeeder>();
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IPantryRepository, PantryRepository>();
             //services.AddRazorPages();
         }
