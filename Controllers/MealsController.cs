@@ -74,23 +74,25 @@ namespace ThePantry.Controllers
                 if (ModelState.IsValid)
                 {
                     //Make Meal
-                    var newMeal = _mapper.Map<MealViewModel, Meal>(model);
+                    
 
                     var mealIngredients = new List<MealIngredient>();
-                    foreach (var ingredient in model.Ingredients)
+                    foreach (var mealIngredient in model.Ingredients)
                     {
-                        // If it doesn't exist, add ingredient to dbcontext
-                        if (_repository.IngredientExists(ingredient.Ingredient.Name))
+                        var ingredientToMap = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredient);
+
+                        if (_repository.IngredientExists(mealIngredient.Ingredient.Name))
                         {
-                            _repository.GetIngredientByName(ingredient.Ingredient.Name);
+                            ingredientToMap.Ingredient = _repository.GetIngredientByName(mealIngredient.Ingredient.Name);
                         }
                         else
                         {
-                            _repository.AddEntity(ingredient.Ingredient);
+                            var newIngredient = _mapper.Map<IngredientViewModel, Ingredient>(mealIngredient.Ingredient);
+                            _repository.AddEntity(mealIngredient.Ingredient);
                         }
-                        var ingredientToMap = _mapper.Map<MealIngredientViewModel, MealIngredient>(ingredient);
                         mealIngredients.Add(ingredientToMap);
                     }
+                    var newMeal = _mapper.Map<MealViewModel, Meal>(model);
                     newMeal.MealIngredients = mealIngredients;
                     _repository.AddEntity(newMeal);
                     if (_repository.SaveAll())

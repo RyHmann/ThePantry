@@ -12,9 +12,7 @@ namespace ThePantry.Migrations
                 {
                     IngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
-                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,9 +25,7 @@ namespace ThePantry.Migrations
                 {
                     UnitId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MealIngredientId = table.Column<int>(type: "int", nullable: true),
-                    PantryIngredientId = table.Column<int>(type: "int", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -164,9 +160,7 @@ namespace ThePantry.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredients_IngredientForeignKey",
                 table: "MealIngredients",
-                column: "IngredientForeignKey",
-                unique: true,
-                filter: "[IngredientForeignKey] IS NOT NULL");
+                column: "IngredientForeignKey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredients_MealId",
@@ -176,9 +170,7 @@ namespace ThePantry.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MealIngredients_UnitForeignKey",
                 table: "MealIngredients",
-                column: "UnitForeignKey",
-                unique: true,
-                filter: "[UnitForeignKey] IS NOT NULL");
+                column: "UnitForeignKey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meals_UserId",
@@ -193,9 +185,7 @@ namespace ThePantry.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PantryIngredients_IngredientForeignKey",
                 table: "PantryIngredients",
-                column: "IngredientForeignKey",
-                unique: true,
-                filter: "[IngredientForeignKey] IS NOT NULL");
+                column: "IngredientForeignKey");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PantryIngredients_PantryId",
@@ -205,9 +195,7 @@ namespace ThePantry.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_PantryIngredients_UnitForeignKey",
                 table: "PantryIngredients",
-                column: "UnitForeignKey",
-                unique: true,
-                filter: "[UnitForeignKey] IS NOT NULL");
+                column: "UnitForeignKey");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -10,11 +10,5 @@ namespace ThePantry.Data.Entities
     {
         public int IngredientId { get; set; }
         public string Name { get; set; }
-
-        // One to One Relationship
-        public int? MealIngredientId { get; set; }
-        public MealIngredient MealIngredient { get; set; }
-        public int? PantryIngredientId { get; set; }
-        public PantryIngredient PantryIngredient { get; set; }
     }
 }

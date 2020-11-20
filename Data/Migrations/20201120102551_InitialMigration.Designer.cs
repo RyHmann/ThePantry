@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThePantry.Data;
 
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    partial class PantryContextModelSnapshot : ModelSnapshot
+    [Migration("20201120102551_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,14 +28,8 @@ namespace ThePantry.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("MealIngredientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PantryIngredientId")
-                        .HasColumnType("int");
 
                     b.HasKey("IngredientId");
 
@@ -87,15 +83,11 @@ namespace ThePantry.Migrations
 
                     b.HasKey("MealIngredientId");
 
-                    b.HasIndex("IngredientForeignKey")
-                        .IsUnique()
-                        .HasFilter("[IngredientForeignKey] IS NOT NULL");
+                    b.HasIndex("IngredientForeignKey");
 
                     b.HasIndex("MealId");
 
-                    b.HasIndex("UnitForeignKey")
-                        .IsUnique()
-                        .HasFilter("[UnitForeignKey] IS NOT NULL");
+                    b.HasIndex("UnitForeignKey");
 
                     b.ToTable("MealIngredients");
                 });
@@ -141,15 +133,11 @@ namespace ThePantry.Migrations
 
                     b.HasKey("PantryIngredientId");
 
-                    b.HasIndex("IngredientForeignKey")
-                        .IsUnique()
-                        .HasFilter("[IngredientForeignKey] IS NOT NULL");
+                    b.HasIndex("IngredientForeignKey");
 
                     b.HasIndex("PantryId");
 
-                    b.HasIndex("UnitForeignKey")
-                        .IsUnique()
-                        .HasFilter("[UnitForeignKey] IS NOT NULL");
+                    b.HasIndex("UnitForeignKey");
 
                     b.ToTable("PantryIngredients");
                 });
@@ -161,14 +149,8 @@ namespace ThePantry.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("MealIngredientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PantryIngredientId")
-                        .HasColumnType("int");
 
                     b.HasKey("UnitId");
 
@@ -208,16 +190,16 @@ namespace ThePantry.Migrations
             modelBuilder.Entity("ThePantry.Data.Entities.MealIngredient", b =>
                 {
                     b.HasOne("ThePantry.Data.Entities.Ingredient", "Ingredient")
-                        .WithOne("MealIngredient")
-                        .HasForeignKey("ThePantry.Data.Entities.MealIngredient", "IngredientForeignKey");
+                        .WithMany()
+                        .HasForeignKey("IngredientForeignKey");
 
                     b.HasOne("ThePantry.Data.Entities.Meal", "Meal")
                         .WithMany("MealIngredients")
                         .HasForeignKey("MealId");
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
-                        .WithOne("MealIngredient")
-                        .HasForeignKey("ThePantry.Data.Entities.MealIngredient", "UnitForeignKey");
+                        .WithMany()
+                        .HasForeignKey("UnitForeignKey");
 
                     b.Navigation("Ingredient");
 
@@ -238,29 +220,22 @@ namespace ThePantry.Migrations
             modelBuilder.Entity("ThePantry.Data.Entities.PantryIngredient", b =>
                 {
                     b.HasOne("ThePantry.Data.Entities.Ingredient", "Ingredient")
-                        .WithOne("PantryIngredient")
-                        .HasForeignKey("ThePantry.Data.Entities.PantryIngredient", "IngredientForeignKey");
+                        .WithMany()
+                        .HasForeignKey("IngredientForeignKey");
 
                     b.HasOne("ThePantry.Data.Entities.Pantry", "Pantry")
                         .WithMany("PantryIngredients")
                         .HasForeignKey("PantryId");
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
-                        .WithOne("PantryIngredient")
-                        .HasForeignKey("ThePantry.Data.Entities.PantryIngredient", "UnitForeignKey");
+                        .WithMany()
+                        .HasForeignKey("UnitForeignKey");
 
                     b.Navigation("Ingredient");
 
                     b.Navigation("Pantry");
 
                     b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("ThePantry.Data.Entities.Ingredient", b =>
-                {
-                    b.Navigation("MealIngredient");
-
-                    b.Navigation("PantryIngredient");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.Meal", b =>
@@ -271,13 +246,6 @@ namespace ThePantry.Migrations
             modelBuilder.Entity("ThePantry.Data.Entities.Pantry", b =>
                 {
                     b.Navigation("PantryIngredients");
-                });
-
-            modelBuilder.Entity("ThePantry.Data.Entities.Unit", b =>
-                {
-                    b.Navigation("MealIngredient");
-
-                    b.Navigation("PantryIngredient");
                 });
 
             modelBuilder.Entity("ThePantry.Data.Entities.User", b =>
