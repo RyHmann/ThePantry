@@ -61,6 +61,19 @@ namespace ThePantry.Data
             
         }
 
+        // Ingredient Checks
+        public bool IngredientExists(string ingredientName)
+        {
+            return _context.Ingredients.Any(n => n.Name == ingredientName);
+        }
+
+        public Ingredient GetIngredientByName(string ingredientName)
+        {
+            return _context.Ingredients
+                .Where(n => n.Name == ingredientName)
+                .FirstOrDefault();
+        }
+
         // Save States
         public void AddEntity(object model)
         {
@@ -71,5 +84,7 @@ namespace ThePantry.Data
         {
             return _context.SaveChanges() > 0;
         }
+
+        
     }
 }
