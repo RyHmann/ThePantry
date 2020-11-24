@@ -12,5 +12,7 @@ namespace ThePantry.Data
         IEnumerable<MealIngredient> GetMealIngredientByMealId(int mealId);
         bool IngredientExists(string ingredientName);
         Ingredient GetIngredientByName(string ingredientName);
+        IEnumerable<Pantry> GetAllPantries();
+        Pantry GetPantryById(int id);
     }
 }

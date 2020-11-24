@@ -63,7 +63,6 @@ namespace ThePantry.Controllers
                 _logger.LogError($"Failed to get meals: {exception}");
                 return BadRequest("Failed to get meal");
             }
-            
         }
 
         [HttpPost]
@@ -73,9 +72,6 @@ namespace ThePantry.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //Make Meal
-                    
-
                     var mealIngredients = new List<MealIngredient>();
                     foreach (var mealIngredient in model.Ingredients)
                     {

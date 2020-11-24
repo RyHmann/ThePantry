@@ -19,7 +19,7 @@ namespace ThePantry.Data
             _logger = logger;
         }
 
-        // Meal Gets
+        // Meal Methods
         public IEnumerable<Meal> GetAllMeals()
         {
             try
@@ -43,7 +43,7 @@ namespace ThePantry.Data
                            .FirstOrDefault();
         }
 
-        // Meal Ingredient Gets
+        // Meal Ingredient Methods
         public IEnumerable<MealIngredient> GetMealIngredientByMealId(int mealId)
         {
             try
@@ -61,7 +61,6 @@ namespace ThePantry.Data
             
         }
 
-        // Ingredient Checks
         public bool IngredientExists(string ingredientName)
         {
             return _context.Ingredients.Any(n => n.Name == ingredientName);
@@ -85,6 +84,37 @@ namespace ThePantry.Data
             return _context.SaveChanges() > 0;
         }
 
-        
+        // Pantry Methods
+        public IEnumerable<Pantry> GetAllPantries()
+        {
+            try
+            {
+                return _context.Pantries
+                        .OrderBy(p => p.Name)
+                        .ToList();
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogInformation($"Failed to get all pantries: {exception}");
+                return null;
+            }
+            
+        }
+
+        public Pantry GetPantryById(int id)
+        {
+            try
+            {
+                return _context.Pantries
+                        .Where(p => p.PantryId == id)
+                        .FirstOrDefault();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"Failed to get pantry: {exception}");
+                return null;
+            }
+        }
     }
 }
