@@ -22,6 +22,5 @@ namespace ThePantry.ViewModels
         {
             Ingredients = new List<MealIngredientViewModel>();
         }
-
     }
 }

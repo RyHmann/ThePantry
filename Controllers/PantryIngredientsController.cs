@@ -23,6 +23,6 @@ namespace ThePantry.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult G
+        
     }
 }

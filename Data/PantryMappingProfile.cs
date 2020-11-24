@@ -19,6 +19,9 @@ namespace ThePantry.Data
                 .ReverseMap();
             CreateMap<Ingredient, IngredientViewModel>()
                 .ReverseMap();
+            CreateMap<Pantry, PantryViewModel>()
+                .ReverseMap();
+            CreateMap<PantryIngredient, PantryIngredientViewModel>();
         }
     }
 }
