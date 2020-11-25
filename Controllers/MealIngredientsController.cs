@@ -11,7 +11,7 @@ using ThePantry.Data;
 namespace ThePantry.Controllers
 {
     [Route("api/meals/{mealid}/{ingredients}")]
-    public class MealIngredientsController : Controller
+    public class MealIngredientsController : ControllerBase
     {
         private readonly IPantryRepository _repository;
         private readonly ILogger<MealIngredientsController> _logger;

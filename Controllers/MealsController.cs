@@ -14,7 +14,7 @@ namespace ThePantry.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
-    public class MealsController : Controller
+    public class MealsController : ControllerBase
     {
         private readonly IPantryRepository _repository;
         private readonly ILogger<MealsController> _logger;
@@ -108,6 +108,26 @@ namespace ThePantry.Controllers
                 _logger.LogError($"Failed to save a new meal: {exception}");
             }
             return BadRequest("Failed to save new meal");
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult DeleteMeal(int id)
+        {
+            try
+            {
+                var mealToDelete = _repository.GetMealById(id);
+                _repository.DeleteEntity(mealToDelete);
+                
+                if (_repository.SaveAll())
+                {
+                    return View();
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Failed to delete meal: {exception}");
+            }
+            return BadRequest("Failed to delete meal");
         }
     }
 }

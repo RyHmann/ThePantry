@@ -79,6 +79,11 @@ namespace ThePantry.Data
             _context.Add(model);
         }
 
+        public void DeleteEntity(object model)
+        {
+            _context.Remove(model);
+        }
+
         public bool SaveAll()
         {
             return _context.SaveChanges() > 0;
@@ -116,5 +121,7 @@ namespace ThePantry.Data
                 return null;
             }
         }
+
+        
     }
 }

@@ -14,5 +14,6 @@ namespace ThePantry.Data
         Ingredient GetIngredientByName(string ingredientName);
         IEnumerable<Pantry> GetAllPantries();
         Pantry GetPantryById(int id);
+        void DeleteEntity(object model);
     }
 }
