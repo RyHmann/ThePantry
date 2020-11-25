@@ -9,7 +9,7 @@ using ThePantry.Data.Entities;
 
 namespace ThePantry.Controllers
 {
-    public class AppController : ControllerBase
+    public class AppController : Controller
     {
         private readonly IPantryRepository _repository;
 

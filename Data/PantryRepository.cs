@@ -86,6 +86,7 @@ namespace ThePantry.Data
 
         public bool SaveAll()
         {
+            _logger.LogInformation("Attempting to save changes to the Db");
             return _context.SaveChanges() > 0;
         }
 

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,20 +21,23 @@ namespace ThePantry.Controllers
         private readonly IPantryRepository _repository;
         private readonly ILogger<MealsController> _logger;
         private readonly IMapper _mapper;
+        private readonly LinkGenerator _linkGenerator;
 
-        public MealsController(IPantryRepository repository, ILogger<MealsController> logger, IMapper mapper)
+        public MealsController(IPantryRepository repository, ILogger<MealsController> logger, IMapper mapper, LinkGenerator linkGenerator)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _linkGenerator = linkGenerator;
         }
 
         [HttpGet]
-        public IActionResult ShowAllMeals()
+        public ActionResult<MealViewModel[]> ShowAllMeals()
         {
             try
             {
-                return Ok(_mapper.Map<IEnumerable<Meal>, IEnumerable<MealViewModel>>(_repository.GetAllMeals()));
+                var meals = _repository.GetAllMeals();
+                return _mapper.Map<MealViewModel[]>(meals);
             }
             catch (Exception exception)
             {
@@ -43,14 +48,14 @@ namespace ThePantry.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult ShowMealById(int id)
+        public ActionResult<MealViewModel> ShowMealById(int id)
         {
             try
             {
                 var meal = _repository.GetMealById(id);
                 if (meal != null)
                 {
-                    return Ok(_mapper.Map<Meal, MealViewModel>(meal));
+                    return Ok(_mapper.Map<MealViewModel>(meal));
                 }
                 else
                 {
@@ -67,7 +72,7 @@ namespace ThePantry.Controllers
 
         [HttpPost]
         [ActionName("Complex")]
-        public IActionResult SaveMeal([FromForm]MealViewModel model)
+        public IActionResult SaveMeal(MealViewModel model)
         {
             try
             {
@@ -94,7 +99,13 @@ namespace ThePantry.Controllers
                     _repository.AddEntity(newMeal);
                     if (_repository.SaveAll())
                     {
-                        return Created($"/api/orders/{newMeal.MealId}", _mapper.Map<Meal, MealViewModel>(newMeal));
+                        //Is this needed? In example, moniker was used, so this would be check to make sure that Moniker is valid
+                        var location = _linkGenerator.GetPathByAction("ShowMealById", "Meals", new { id = newMeal.MealId });
+                        if (string.IsNullOrWhiteSpace(location))
+                        {
+                            return BadRequest("Could not use meal identifier.");
+                        }
+                        return Created($"{location}", _mapper.Map<Meal, MealViewModel>(newMeal));
                     }
                 }
                 else
@@ -110,24 +121,53 @@ namespace ThePantry.Controllers
             return BadRequest("Failed to save new meal");
         }
 
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteMeal(int id)
+        [HttpPut("{id:int}")]
+        public ActionResult<MealViewModel> Put(int id, MealViewModel model)
         {
             try
             {
-                var mealToDelete = _repository.GetMealById(id);
-                _repository.DeleteEntity(mealToDelete);
-                
+                var oldMeal = _repository.GetMealById(id);
+                if (oldMeal == null) return NotFound($"Could not find meal with id of {id}.");
+
+                _mapper.Map(model, oldMeal);
+
                 if (_repository.SaveAll())
                 {
-                    return View();
+                    return _mapper.Map<MealViewModel>(oldMeal);
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                _logger.LogError($"Failed to delete meal: {exception}");
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
             }
-            return BadRequest("Failed to delete meal");
+            return BadRequest();
+        }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var oldMeal = _repository.GetMealById(id);
+                if (oldMeal == null)
+                {
+                    return NotFound();
+                }
+
+                _repository.DeleteEntity(oldMeal);
+
+                if (_repository.SaveAll())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception)
+            {
+
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
+            }
+            return BadRequest();
         }
     }
 }
