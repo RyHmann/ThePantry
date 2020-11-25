@@ -14,7 +14,12 @@ namespace ThePantry.ViewModels
         [Required]
         [MinLength(3)]
         public string Name { get; set; }
+
+        [Required]
+        [MaxLength(250)]
         public string Description { get; set; }
+
+        [Required]
         public string Instructions { get; set; }
         public virtual List<MealIngredientViewModel> Ingredients { get; set; }
 

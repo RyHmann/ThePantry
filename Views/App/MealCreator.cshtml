@@ -1,0 +1,26 @@
+﻿@model MealViewModel
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+<h1>Add A Meal</h1>
+
+<form action="/api/meals" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="Name">Meal Name</label>
+        <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Meal Description</label>
+        <input type="text" asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Instructions">Meal Instructions</label>
+        <input type="text" asp-for="Instructions" class="form-control" />
+        <span asp-validation-for="Instructions"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

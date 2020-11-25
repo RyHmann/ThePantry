@@ -22,7 +22,5 @@ namespace ThePantry.Controllers
             _logger = logger;
             _mapper = mapper;
         }
-
-        
     }
 }

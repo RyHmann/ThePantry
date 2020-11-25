@@ -40,7 +40,7 @@ namespace ThePantry.Controllers
             }
         }
 
-        [HttpGet("{int:id}")]
+        [HttpGet("{id:int}")]
         public IActionResult ShowPantryById(int id)
         {
             try

@@ -14,7 +14,7 @@ namespace ThePantry.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
-    public class MealsController : ControllerBase
+    public class MealsController : Controller
     {
         private readonly IPantryRepository _repository;
         private readonly ILogger<MealsController> _logger;
@@ -66,7 +66,8 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveMeal([FromBody]MealViewModel model)
+        [ActionName("Complex")]
+        public IActionResult SaveMeal([FromForm]MealViewModel model)
         {
             try
             {

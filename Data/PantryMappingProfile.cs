@@ -15,12 +15,16 @@ namespace ThePantry.Data
         {
             CreateMap<Meal, MealViewModel>()
                 .ReverseMap();
+
             CreateMap<MealIngredient, MealIngredientViewModel>()
                 .ReverseMap();
+
             CreateMap<Ingredient, IngredientViewModel>()
                 .ReverseMap();
+
             CreateMap<Pantry, PantryViewModel>()
                 .ReverseMap();
+
             CreateMap<PantryIngredient, PantryIngredientViewModel>();
         }
     }

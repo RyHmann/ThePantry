@@ -2,20 +2,23 @@
 
 <h1>Meals</h1>
 <p>Count: @Model.Count()</p>
-@foreach (var p in Model)
-{
-    <li>@p.Name</li>
-}
 
-<div>
-    <form>
-        <h3>Add a meal</h3>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" />
-        <label for="description">Description</label>
-        <input type="text" id="description" name="description" />
-        <label for="instructions">Instructions</label>
-        <input type="text" id="instructions" name="instructions" />
-        <input type="submit" name="submit" value="submit" />
-    </form>
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+         <div class="col-sm">
+             <div class="card">
+                 <div class="card-body">
+                     <h5 class="card-title">@p.Name</h5>
+                     <h6 class="card-subtitle mb-2 text-muted">@p.Description</h6>
+                     <p class="card-text">@p.Instructions</p>
+                     <a href="#" class="btn btn-primary">View Meal</a>
+                 </div>
+             </div>
+         </div>
+         }
+    </div>
 </div>
+
+<a href="/mealcreator" class="btn btn-primary">Add A Meal</a>
