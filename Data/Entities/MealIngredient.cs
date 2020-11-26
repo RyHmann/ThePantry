@@ -13,7 +13,7 @@ namespace ThePantry.Data.Entities
         public decimal Quantity { get; set; }
 
         //One to Many Relationship (Child)
-        public int? MealId { get; set; }
+        public int MealId { get; set; }
         public Meal Meal { get; set; }
 
         // One to One Relationships

@@ -70,7 +70,7 @@ namespace ThePantry.Migrations
                     b.Property<int?>("IngredientForeignKey")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MealId")
+                    b.Property<int>("MealId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -120,7 +120,7 @@ namespace ThePantry.Migrations
                     b.Property<int?>("IngredientForeignKey")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PantryId")
+                    b.Property<int>("PantryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -193,7 +193,9 @@ namespace ThePantry.Migrations
 
                     b.HasOne("ThePantry.Data.Entities.Meal", "Meal")
                         .WithMany("MealIngredients")
-                        .HasForeignKey("MealId");
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
                         .WithMany()
@@ -223,7 +225,9 @@ namespace ThePantry.Migrations
 
                     b.HasOne("ThePantry.Data.Entities.Pantry", "Pantry")
                         .WithMany("PantryIngredients")
-                        .HasForeignKey("PantryId");
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
                         .WithMany()

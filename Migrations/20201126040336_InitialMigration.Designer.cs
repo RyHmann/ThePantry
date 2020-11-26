@@ -10,7 +10,7 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20201120102551_InitialMigration")]
+    [Migration("20201126040336_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,7 +72,7 @@ namespace ThePantry.Migrations
                     b.Property<int?>("IngredientForeignKey")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MealId")
+                    b.Property<int>("MealId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -122,7 +122,7 @@ namespace ThePantry.Migrations
                     b.Property<int?>("IngredientForeignKey")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PantryId")
+                    b.Property<int>("PantryId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Quantity")
@@ -195,7 +195,9 @@ namespace ThePantry.Migrations
 
                     b.HasOne("ThePantry.Data.Entities.Meal", "Meal")
                         .WithMany("MealIngredients")
-                        .HasForeignKey("MealId");
+                        .HasForeignKey("MealId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
                         .WithMany()
@@ -225,7 +227,9 @@ namespace ThePantry.Migrations
 
                     b.HasOne("ThePantry.Data.Entities.Pantry", "Pantry")
                         .WithMany("PantryIngredients")
-                        .HasForeignKey("PantryId");
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThePantry.Data.Entities.Unit", "Unit")
                         .WithMany()

@@ -96,7 +96,7 @@ namespace ThePantry.Migrations
                     MealIngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    MealId = table.Column<int>(type: "int", nullable: true),
+                    MealId = table.Column<int>(type: "int", nullable: false),
                     IngredientForeignKey = table.Column<int>(type: "int", nullable: true),
                     UnitForeignKey = table.Column<int>(type: "int", nullable: true)
                 },
@@ -114,7 +114,7 @@ namespace ThePantry.Migrations
                         column: x => x.MealId,
                         principalTable: "Meals",
                         principalColumn: "MealId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_MealIngredients_Units_UnitForeignKey",
                         column: x => x.UnitForeignKey,
@@ -130,7 +130,7 @@ namespace ThePantry.Migrations
                     PantryIngredientId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PantryId = table.Column<int>(type: "int", nullable: true),
+                    PantryId = table.Column<int>(type: "int", nullable: false),
                     IngredientForeignKey = table.Column<int>(type: "int", nullable: true),
                     UnitForeignKey = table.Column<int>(type: "int", nullable: true)
                 },
@@ -148,7 +148,7 @@ namespace ThePantry.Migrations
                         column: x => x.PantryId,
                         principalTable: "Pantries",
                         principalColumn: "PantryId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PantryIngredients_Units_UnitForeignKey",
                         column: x => x.UnitForeignKey,
