@@ -122,18 +122,19 @@ namespace ThePantry.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<MealViewModel> Put(int id, MealViewModel model)
+        public ActionResult<MealViewModel> EditMeal(int id, MealViewModel model)
         {
             try
             {
-                var oldMeal = _repository.GetMealById(id);
-                if (oldMeal == null) return NotFound($"Could not find meal with id of {id}.");
-
-                _mapper.Map(model, oldMeal);
-
+                var existingMeal = _repository.GetMealById(id);
+                if (existingMeal == null)
+                {
+                    return NotFound($"Could not fine meal with id of {id}.");
+                }
+                _mapper.Map(model, existingMeal);
                 if (_repository.SaveAll())
                 {
-                    return _mapper.Map<MealViewModel>(oldMeal);
+                    return _mapper.Map<MealViewModel>(existingMeal);
                 }
             }
             catch (Exception)

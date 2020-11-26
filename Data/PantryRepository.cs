@@ -24,6 +24,7 @@ namespace ThePantry.Data
         {
             try
             {
+                _logger.LogInformation("Attempting to retreive all Meals.");
                 return _context.Meals
                            .OrderBy(m => m.Name)
                            .ToList();
@@ -38,6 +39,7 @@ namespace ThePantry.Data
 
         public Meal GetMealById(int mealId)
         {
+            _logger.LogInformation("Attempting to retreive Ingredient.");
             return _context.Meals
                            .Where(m => m.MealId == mealId)
                            .FirstOrDefault();
@@ -48,6 +50,7 @@ namespace ThePantry.Data
         {
             try
             {
+                _logger.LogInformation("Attempting to retreive MealIngredient by MealId.");
                 return _context.MealIngredients
                            .Where(i => i.MealId == mealId)
                            .OrderBy(n => n.Ingredient)
@@ -63,11 +66,13 @@ namespace ThePantry.Data
 
         public bool IngredientExists(string ingredientName)
         {
+            _logger.LogInformation("Checking to see if ingredient exists in Db.");
             return _context.Ingredients.Any(n => n.Name == ingredientName);
         }
 
         public Ingredient GetIngredientByName(string ingredientName)
         {
+            _logger.LogInformation("Attempting to retreive existing Ingredient.");
             return _context.Ingredients
                 .Where(n => n.Name == ingredientName)
                 .FirstOrDefault();
@@ -76,11 +81,13 @@ namespace ThePantry.Data
         // Save States
         public void AddEntity(object model)
         {
+            _logger.LogInformation("Attempting to add model to the Db");
             _context.Add(model);
         }
 
         public void DeleteEntity(object model)
         {
+            _logger.LogInformation("Attempting to remove object from Db");
             _context.Remove(model);
         }
 
@@ -95,6 +102,7 @@ namespace ThePantry.Data
         {
             try
             {
+                _logger.LogInformation("Attempting to retreive all Pantries.");
                 return _context.Pantries
                         .OrderBy(p => p.Name)
                         .ToList();
@@ -112,6 +120,7 @@ namespace ThePantry.Data
         {
             try
             {
+                _logger.LogInformation("Attempting to retreive Pantry by PantryId.");
                 return _context.Pantries
                         .Where(p => p.PantryId == id)
                         .FirstOrDefault();
