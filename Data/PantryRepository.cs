@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,8 @@ namespace ThePantry.Data
                 _logger.LogInformation("Attempting to retreive MealIngredients by MealId.");
                 return _context.MealIngredients
                                .Where(i => i.MealId == mealId)
-                               .OrderBy(n => n.Ingredient)
+                               .Include(m => m.Ingredient)
+                               .OrderBy(n => n.Ingredient.Name)
                                .ToArray();
             }
             catch (Exception exception)
@@ -69,9 +71,10 @@ namespace ThePantry.Data
         {
             try
             {
-                _logger.LogInformation("Attempting to retreive specific Meal Ingredient by Meal ID and Meal Ingredient ID.");
+                _logger.LogInformation($"Attempting to retreive specific Meal Ingredient by Meal ID: {mealId} and Meal Ingredient ID: {mealIngredientId}.");
                 return _context.MealIngredients
-                           .Where(i => i.MealId == mealId && i.MealIngredientId == mealIngredientId)
+                           .Where(i => i.MealId == mealId && i.Ingredient.IngredientId == mealIngredientId)
+                           .Include(m => m.Ingredient)
                            .FirstOrDefault();
             }
             catch (Exception exception)

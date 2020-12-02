@@ -51,12 +51,33 @@ namespace ThePantry.Controllers
         {
             try
             {
-                return Ok(_repository.GetMealIngredientByMealId(mealId, mealIngredientId));
+                var ingredient = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
+                return Ok(_mapper.Map<MealIngredientViewModel>(ingredient));
             }
             catch (Exception exception)
             {
                 _logger.LogInformation($"Could not get that meal ingredient: {exception}");
                 return BadRequest("Could not find that ingredient.");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<IngredientViewModel> AddIngredientToMeal(int mealId, MealIngredientViewModel model)
+        {
+            try
+            {
+                var meal = _repository.GetMealById(mealId);
+                if (meal == null) return BadRequest("Meal does not exist.");
+
+                var mealIngredient = _mapper.Map<MealIngredientViewModel>(model);
+                var mealIngredients = meal.MealIngredients;
+                mealIngredients.Add(mealIngredient);
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogInformation($"Could not add that meal ingredient: {exception}");
+                return BadRequest("Could not add that ingredient.");
             }
         }
     }
