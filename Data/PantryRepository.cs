@@ -46,15 +46,33 @@ namespace ThePantry.Data
         }
 
         // Meal Ingredient Methods
-        public IEnumerable<MealIngredient> GetMealIngredientByMealId(int mealId)
+
+        public IEnumerable<MealIngredient> GetMealIngredientsByMealId(int mealId)
         {
             try
             {
-                _logger.LogInformation("Attempting to retreive MealIngredient by MealId.");
+                _logger.LogInformation("Attempting to retreive MealIngredients by MealId.");
                 return _context.MealIngredients
-                           .Where(i => i.MealId == mealId)
-                           .OrderBy(n => n.Ingredient)
-                           .ToList();
+                               .Where(i => i.MealId == mealId)
+                               .OrderBy(n => n.Ingredient)
+                               .ToList();
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogInformation($"Failed to get meal ingredients for that meal: {exception}");
+                return null;
+            }
+        }
+
+        public MealIngredient GetMealIngredientByMealId(int mealId, int mealIngredientId)
+        {
+            try
+            {
+                _logger.LogInformation("Attempting to retreive specific Meal Ingredient by Meal ID and Meal Ingredient ID.");
+                return _context.MealIngredients
+                           .Where(i => i.MealId == mealId && i.MealIngredientId == mealIngredientId)
+                           .FirstOrDefault();
             }
             catch (Exception exception)
             {
