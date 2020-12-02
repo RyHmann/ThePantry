@@ -47,7 +47,7 @@ namespace ThePantry.Data
 
         // Meal Ingredient Methods
 
-        public IEnumerable<MealIngredient> GetMealIngredientsByMealId(int mealId)
+        public MealIngredient[] GetMealIngredientsByMealId(int mealId)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace ThePantry.Data
                 return _context.MealIngredients
                                .Where(i => i.MealId == mealId)
                                .OrderBy(n => n.Ingredient)
-                               .ToList();
+                               .ToArray();
             }
             catch (Exception exception)
             {

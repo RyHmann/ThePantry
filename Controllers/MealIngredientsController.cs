@@ -31,12 +31,12 @@ namespace ThePantry.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<MealIngredientViewModel>> ShowMealIngredients(int mealId)
+        public ActionResult<MealIngredientViewModel[]> ShowMealIngredients(int mealId)
         {
             try
             {
                 var ingredients = _repository.GetMealIngredientsByMealId(mealId);
-                return Ok(_mapper.Map<MealIngredientViewModel>(ingredients));
+                return Ok(_mapper.Map<MealIngredientViewModel[]>(ingredients));
             }
             catch (Exception exception)
             {
