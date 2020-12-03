@@ -71,8 +71,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        [ActionName("Complex")]
-        public IActionResult SaveMeal(MealViewModel model)
+        public ActionResult SaveMeal(MealViewModel model)
         {
             try
             {

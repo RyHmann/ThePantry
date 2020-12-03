@@ -17,9 +17,7 @@ namespace ThePantry.Data
                 .ReverseMap();
 
             CreateMap<MealIngredient, MealIngredientViewModel>()
-                .ReverseMap()
-                .ForMember(m => m.Meal, opt => opt.Ignore())
-                .ForMember(m => m.Ingredient, opt => opt.Ignore());
+                .ReverseMap();
 
             CreateMap<Ingredient, IngredientViewModel>()
                 .ReverseMap();

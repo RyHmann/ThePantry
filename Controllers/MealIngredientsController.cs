@@ -120,7 +120,7 @@ namespace ThePantry.Controllers
             catch (Exception exception)
             {
 
-                _logger.LogInformation($"Could not add that meal ingredient: {exception}");
+                _logger.LogError($"Could not add that meal ingredient: {exception}");
                 return BadRequest("Could not add that ingredient.");
             }
         }
@@ -140,9 +140,20 @@ namespace ThePantry.Controllers
                     return NotFound("Couldn't find meal ingredient");
                 }
 
-                _mapper.Map(model, existingMealIngredient);
+                if (mealId != model.MealId || mealIngredientId != model.MealIngredientId)
+                {
+                    return BadRequest("Unable to edit Meals or Meal Ingredients during this stage.");
+                }
 
                 // Do we want to allow the user to change the ingredient type here? If so, we will need checks similar to Post ie: checking if ingredient exists in Db, and checking if ingredient is already part of this meal.
+
+                // Throwing error if no changes detected. Any additional items that can be changes should be added to this check.
+                if (model.Quantity == existingMealIngredient.Quantity)
+                {
+                    return Ok("No changes detected.");
+                }
+
+                existingMealIngredient.Quantity = model.Quantity;
 
                 if (_repository.SaveAll())
                 {
@@ -152,21 +163,21 @@ namespace ThePantry.Controllers
             catch (Exception exception)
             {
 
-                _logger.LogInformation($"Could not add that meal ingredient: {exception}");
+                _logger.LogError($"Could not add that meal ingredient: {exception}");
                 return BadRequest("Could not add that ingredient.");
             }
             return BadRequest("Could not update that ingredient. You are unable to edit Meals and Ingredients in this manner.");
         }
 
         [HttpDelete("{mealIngredientId:int}")]
-        public ActionResult Delete(int mealId, int mealIngredientId)
+        public IActionResult Delete(int mealId, int mealIngredientId)
         {
             try
             {
                 var mealIngredientToDelete = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
                 if (mealIngredientToDelete == null)
                 {
-                    return NotFound();
+                    return NotFound("Failed to locate meal ingredient, unable to delete.");
                 }
 
                 _repository.DeleteEntity(mealIngredientToDelete);
@@ -178,7 +189,7 @@ namespace ThePantry.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogInformation($"Could not delete meal ingredient: {exception}");
+                _logger.LogError($"Could not delete meal ingredient: {exception}");
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
             }
             return BadRequest("Could not delete that ingredient.");
