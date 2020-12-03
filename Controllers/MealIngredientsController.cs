@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -124,5 +125,31 @@ namespace ThePantry.Controllers
             }
         }
         */
+
+        [HttpDelete("{mealIngredientId:int}")]
+        public ActionResult Delete(int mealId, int mealIngredientId)
+        {
+            try
+            {
+                var mealIngredientToDelete = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
+                if (mealIngredientToDelete == null)
+                {
+                    return NotFound();
+                }
+
+                _repository.DeleteEntity(mealIngredientToDelete);
+
+                if (_repository.SaveAll())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"Could not delete meal ingredient: {exception}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
+            }
+            return BadRequest("Could not delete that ingredient.");
+        }
     }
 }

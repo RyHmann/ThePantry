@@ -73,7 +73,7 @@ namespace ThePantry.Data
             {
                 _logger.LogInformation($"Attempting to retreive specific Meal Ingredient by Meal ID: {mealId} and Meal Ingredient ID: {mealIngredientId}.");
                 return _context.MealIngredients
-                           .Where(i => i.MealId == mealId && i.Ingredient.IngredientId == mealIngredientId)
+                           .Where(i => i.MealId == mealId && i.MealIngredientId == mealIngredientId)
                            .Include(m => m.Ingredient)
                            .FirstOrDefault();
             }
