@@ -87,10 +87,16 @@ namespace ThePantry.Data
 
         // Ingredient Methods
 
-        public bool IngredientExists(string ingredientName)
+        public bool IngredientExists(Ingredient ingredientToCheck)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");
-            return _context.Ingredients.Any(n => n.Name == ingredientName);
+            return _context.Ingredients.Any(n => n.Name == ingredientToCheck.Name);
+        }
+
+        public bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId)
+        {
+            _logger.LogInformation($"Checking to see if ingredient: {ingredientId} exists in meal.");
+            return _context.MealIngredients.Any(n => n.MealId == mealId && n.Ingredient.IngredientId == ingredientId);
         }
 
         public Ingredient GetIngredientByName(string ingredientName)

@@ -69,22 +69,37 @@ namespace ThePantry.Controllers
             try
             {
                 var existingMeal = _repository.GetMealById(mealId);
+                var mealIngredient = _mapper.Map<MealIngredient>(model);
 
+                // Confirm meal exists
                 if (existingMeal == null)
                 {
                     return BadRequest("Meal does not exist.");
                 }
 
-                var mealIngredient = _mapper.Map<MealIngredient>(model);
+                if (model.Ingredient.Name == null)
+                {
+                    return BadRequest("Ingredient Name is required");
+                }
+
+                // Check if ingredient exists in database
+                if (_repository.IngredientExists(mealIngredient.Ingredient))
+                {
+                    mealIngredient.Ingredient = _repository.GetIngredientByName(model.Ingredient.Name);
+                }
+                else
+                {
+                    var newIngredient = mealIngredient.Ingredient;
+                    _repository.AddEntity(newIngredient);
+                }
+
+                // Check if ingredient is already assigned to this meal
+                if (_repository.IngredientAlreadyAssignedToMeal(mealId, mealIngredient.Ingredient.IngredientId))
+                {
+                    return BadRequest("Ingredient is already assigned to this meal.");
+                }
+                
                 mealIngredient.Meal = existingMeal;
-
-                // Implement a check if ingredient exists in Db, then use it, and if not create a new Ingredient in Db
-                // Implement a check if ingredient already exists, if so do not add to Db and instruct user to edit
-                if (model.Ingredient.Name == null) return BadRequest("Ingredient Name is required");
-                var ingredient = _repository.GetIngredientByName(model.Ingredient.Name);
-                if (ingredient == null) return BadRequest("Ingredient could not be found.");
-
-                mealIngredient.Ingredient = ingredient;
                 _repository.AddEntity(mealIngredient);
 
                 if (_repository.SaveAll())
@@ -109,13 +124,26 @@ namespace ThePantry.Controllers
                 return BadRequest("Could not add that ingredient.");
             }
         }
+        
         /*
-        [HttpPut("{}")]
-        public ActionResult<MealIngredientViewModel> EditMealIngredient(int mealId, int mealIngredientId)
+        [HttpPut("{mealIngredientId:int}")]
+        public ActionResult<MealIngredientViewModel> EditMealIngredient(int mealId, int mealIngredientId, MealIngredientViewModel model)
         {
             try
             {
+                var mealIngredient = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
 
+                if (mealIngredient == null)
+                {
+                    return NotFound("Couldn't find meal ingredient");
+                }
+
+                _mapper.Map(model, mealIngredient);
+
+                if (_repository.SaveAll())
+                {
+                    return _mapper.Map<MealIngredientViewModel>(mealIngredient);
+                }
             }
             catch (Exception exception)
             {
@@ -125,6 +153,7 @@ namespace ThePantry.Controllers
             }
         }
         */
+        
 
         [HttpDelete("{mealIngredientId:int}")]
         public ActionResult Delete(int mealId, int mealIngredientId)

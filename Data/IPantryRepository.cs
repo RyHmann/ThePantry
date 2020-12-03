@@ -11,7 +11,8 @@ namespace ThePantry.Data
         void AddEntity(object model);
         MealIngredient GetMealIngredientByMealId(int mealId, int mealIngredientId);
         MealIngredient[] GetMealIngredientsByMealId(int mealId);
-        bool IngredientExists(string ingredientName);
+        bool IngredientExists(Ingredient ingredientToCheck);
+        bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId);
         Ingredient GetIngredientByName(string ingredientName);
         IEnumerable<Pantry> GetAllPantries();
         Pantry GetPantryById(int id);

@@ -79,27 +79,26 @@ namespace ThePantry.Controllers
                 if (ModelState.IsValid)
                 {
                     var mealIngredients = new List<MealIngredient>();
-                    foreach (var mealIngredient in model.Ingredients)
+                    foreach (var mealIngredientViewModel in model.Ingredients)
                     {
-                        var ingredientToMap = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredient);
+                        var mealIngredient = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredientViewModel);
 
-                        if (_repository.IngredientExists(mealIngredient.Ingredient.Name))
+                        if (_repository.IngredientExists(mealIngredient.Ingredient))
                         {
-                            ingredientToMap.Ingredient = _repository.GetIngredientByName(mealIngredient.Ingredient.Name);
+                            mealIngredient.Ingredient = _repository.GetIngredientByName(mealIngredientViewModel.Ingredient.Name);
                         }
                         else
                         {
-                            var newIngredient = _mapper.Map<IngredientViewModel, Ingredient>(mealIngredient.Ingredient);
-                            _repository.AddEntity(mealIngredient.Ingredient);
+                            var newIngredient = _mapper.Map<IngredientViewModel, Ingredient>(mealIngredientViewModel.Ingredient);
+                            _repository.AddEntity(newIngredient);
                         }
-                        mealIngredients.Add(ingredientToMap);
+                        mealIngredients.Add(mealIngredient);
                     }
                     var newMeal = _mapper.Map<MealViewModel,Meal>(model);
                     newMeal.MealIngredients = mealIngredients;
                     _repository.AddEntity(newMeal);
                     if (_repository.SaveAll())
                     {
-                        //Is this needed? In example, moniker was used, so this would be check to make sure that Moniker is valid
                         var location = _linkGenerator.GetPathByAction("ShowMealById", "Meals", new { id = newMeal.MealId });
                         if (string.IsNullOrWhiteSpace(location))
                         {
