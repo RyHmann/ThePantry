@@ -125,24 +125,28 @@ namespace ThePantry.Controllers
             }
         }
         
-        /*
         [HttpPut("{mealIngredientId:int}")]
         public ActionResult<MealIngredientViewModel> EditMealIngredient(int mealId, int mealIngredientId, MealIngredientViewModel model)
         {
             try
             {
-                var mealIngredient = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
+                // Do we need to check if mealIngredientId == model.mealIngredientId?
+                // Do we need to check if mealId == model.mealId?
 
-                if (mealIngredient == null)
+                var existingMealIngredient = _repository.GetMealIngredientByMealId(mealId, mealIngredientId);
+
+                if (existingMealIngredient == null)
                 {
                     return NotFound("Couldn't find meal ingredient");
                 }
 
-                _mapper.Map(model, mealIngredient);
+                _mapper.Map(model, existingMealIngredient);
+
+                // Do we want to allow the user to change the ingredient type here? If so, we will need checks similar to Post ie: checking if ingredient exists in Db, and checking if ingredient is already part of this meal.
 
                 if (_repository.SaveAll())
                 {
-                    return _mapper.Map<MealIngredientViewModel>(mealIngredient);
+                    return _mapper.Map<MealIngredientViewModel>(existingMealIngredient);
                 }
             }
             catch (Exception exception)
@@ -151,9 +155,8 @@ namespace ThePantry.Controllers
                 _logger.LogInformation($"Could not add that meal ingredient: {exception}");
                 return BadRequest("Could not add that ingredient.");
             }
+            return BadRequest("Could not update that ingredient. You are unable to edit Meals and Ingredients in this manner.");
         }
-        */
-        
 
         [HttpDelete("{mealIngredientId:int}")]
         public ActionResult Delete(int mealId, int mealIngredientId)
