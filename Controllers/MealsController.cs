@@ -94,7 +94,7 @@ namespace ThePantry.Controllers
                         }
                         mealIngredients.Add(ingredientToMap);
                     }
-                    var newMeal = _mapper.Map<MealViewModel, Meal>(model);
+                    var newMeal = _mapper.Map<MealViewModel,Meal>(model);
                     newMeal.MealIngredients = mealIngredients;
                     _repository.AddEntity(newMeal);
                     if (_repository.SaveAll())

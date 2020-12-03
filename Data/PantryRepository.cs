@@ -85,6 +85,8 @@ namespace ThePantry.Data
             
         }
 
+        // Ingredient Methods
+
         public bool IngredientExists(string ingredientName)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");

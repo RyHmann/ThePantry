@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data;
+using ThePantry.Data.Entities;
 using ThePantry.ViewModels;
 
 namespace ThePantry.Controllers
@@ -66,12 +67,39 @@ namespace ThePantry.Controllers
         {
             try
             {
-                var meal = _repository.GetMealById(mealId);
-                if (meal == null) return BadRequest("Meal does not exist.");
+                var existingMeal = _repository.GetMealById(mealId);
 
-                var mealIngredient = _mapper.Map<MealIngredientViewModel>(model);
-                var mealIngredients = meal.MealIngredients;
-                mealIngredients.Add(mealIngredient);
+                if (existingMeal == null)
+                {
+                    return BadRequest("Meal does not exist.");
+                }
+
+                var mealIngredient = _mapper.Map<MealIngredient>(model);
+                mealIngredient.Meal = existingMeal;
+
+                // Implement a check if ingredient exists in Db, then use it, and if not create a new Ingredient in Db
+                // Implement a check if ingredient already exists, if so do not add to Db and instruct user to edit
+                if (model.Ingredient.Name == null) return BadRequest("Ingredient Name is required");
+                var ingredient = _repository.GetIngredientByName(model.Ingredient.Name);
+                if (ingredient == null) return BadRequest("Ingredient could not be found.");
+
+                mealIngredient.Ingredient = ingredient;
+                _repository.AddEntity(mealIngredient);
+
+                if (_repository.SaveAll())
+                {
+                    var url = _linkGenerator.GetPathByAction("ShowMealIngredient", "MealIngredients",
+                        values: new { mealId, mealIngredientId = mealIngredient.MealIngredientId });
+                    if (string.IsNullOrWhiteSpace(url))
+                    {
+                        return BadRequest("Could not use MealIngredientId.");
+                    }
+                    return Created($"{url}", _mapper.Map<MealIngredientViewModel>(mealIngredient));
+                }
+                else
+                {
+                    return BadRequest($"Failed to save new meal ingredient to meal with Meal Id: {mealId}.");
+                }
             }
             catch (Exception exception)
             {
@@ -80,5 +108,21 @@ namespace ThePantry.Controllers
                 return BadRequest("Could not add that ingredient.");
             }
         }
+        /*
+        [HttpPut("{}")]
+        public ActionResult<MealIngredientViewModel> EditMealIngredient(int mealId, int mealIngredientId)
+        {
+            try
+            {
+
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogInformation($"Could not add that meal ingredient: {exception}");
+                return BadRequest("Could not add that ingredient.");
+            }
+        }
+        */
     }
 }
