@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -119,6 +120,32 @@ namespace ThePantry.Controllers
                 return BadRequest("Unable to create pantry.");
             }
             return BadRequest("Failed to save new pantry.");
+        }
+
+        [HttpDelete("{pantryId:int}")]
+        public IActionResult DeletePantry(int pantryId)
+        {
+            try
+            {
+                var oldPantry = _repository.GetPantryById(pantryId);
+                if (oldPantry == null)
+                {
+                    return NotFound("Pantry could not be found.");
+                }
+
+                _repository.DeleteEntity(oldPantry);
+
+                if (_repository.SaveAll())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Unable to delete Pantry with Id: {exception}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
+            }
+            return BadRequest("Unable to delete pantry from database.");
         }
     }
 }
