@@ -32,7 +32,6 @@ namespace ThePantry.Data
             }
             catch (Exception exception)
             {
-
                 _logger.LogInformation($"Failed to get all pantries: {exception}");
                 return null;
             }
@@ -54,8 +53,6 @@ namespace ThePantry.Data
             }
         }
 
-
-
         // Meal Methods
         public IEnumerable<Meal> GetAllMeals()
         {
@@ -68,7 +65,6 @@ namespace ThePantry.Data
             }
             catch (Exception exception)
             {
-
                 _logger.LogInformation($"Failed to get all meals: {exception}");
                 return null;
             }
@@ -96,7 +92,6 @@ namespace ThePantry.Data
             }
             catch (Exception exception)
             {
-
                 _logger.LogInformation($"Failed to get meal ingredients for that meal: {exception}");
                 return null;
             }

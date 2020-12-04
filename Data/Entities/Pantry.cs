@@ -12,10 +12,15 @@ namespace ThePantry.Data.Entities
         public string Name { get; set; }
 
         // One to Many Relationship (Parent)
-        public ICollection<PantryIngredient> PantryIngredients { get; set; }
+        public virtual ICollection<PantryIngredient> PantryIngredients { get; set; }
       
         // One to Many Relationship (Child)
         public int? UserId { get; set; }
         public User User { get; set; }
+
+        public Pantry()
+        {
+            PantryIngredients = new List<PantryIngredient>();
+        }
     }
 }

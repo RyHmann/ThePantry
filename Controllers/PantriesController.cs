@@ -45,12 +45,21 @@ namespace ThePantry.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult ShowPantryById(int pantryId)
+        [HttpGet("{pantryId:int}")]
+        public ActionResult<PantryViewModel> ShowPantryById(int pantryId)
         {
             try
             {
-                return Ok(_repository.GetPantryById(pantryId));
+                var pantry = _repository.GetPantryById(pantryId);
+                if (pantry != null)
+                {
+                    return Ok(_mapper.Map<PantryViewModel>(pantry));
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
             }
             catch (Exception exception)
             {
@@ -61,7 +70,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PantryViewModel> CreatePantry(PantryViewModel model)
+        public ActionResult CreatePantry(PantryViewModel model)
         {
             try
             {
@@ -78,12 +87,12 @@ namespace ThePantry.Controllers
                         }
                         else
                         {
-                            var newIngredient = _mapper.Map<Ingredient>(pantryIngredientViewModel.Ingredient);
+                            var newIngredient = _mapper.Map<IngredientViewModel, Ingredient>(pantryIngredientViewModel.Ingredient);
                             _repository.AddEntity(newIngredient);
                         }
                         pantryIngredients.Add(pantryIngredient);
                     }
-                    var newPantry = _mapper.Map<Pantry>(model);
+                    var newPantry = _mapper.Map<PantryViewModel, Pantry>(model);
                     newPantry.PantryIngredients = pantryIngredients;
                     _repository.AddEntity(newPantry);
                     if (_repository.SaveAll())
@@ -94,7 +103,7 @@ namespace ThePantry.Controllers
                             _logger.LogError("Could not save pantry to Db");
                             return BadRequest("Could not use this pantry identifier to add pantry to Database.");
                         }
-                        return Created($"{newURL}", _mapper.Map<Pantry>(newPantry));
+                        return Created($"{newURL}", _mapper.Map<Pantry, PantryViewModel>(newPantry));
                     }
  
                 }
