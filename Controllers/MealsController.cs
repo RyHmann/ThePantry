@@ -142,7 +142,7 @@ namespace ThePantry.Controllers
 
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
             }
-            return BadRequest();
+            return BadRequest("Unable to edit meal.");
         }
 
         [HttpDelete("{id:int}")]

@@ -106,13 +106,11 @@ namespace ThePantry.Controllers
                         }
                         return Created($"{newURL}", _mapper.Map<Pantry, PantryViewModel>(newPantry));
                     }
- 
                 }
                 else
                 {
                     return BadRequest(ModelState);
                 }
-                
             }
             catch (Exception exception)
             {
@@ -120,6 +118,30 @@ namespace ThePantry.Controllers
                 return BadRequest("Unable to create pantry.");
             }
             return BadRequest("Failed to save new pantry.");
+        }
+
+        [HttpPut("{pantryId:int}")]
+        public ActionResult<PantryViewModel> EditPantry(int pantryId, PantryViewModel model)
+        {
+            try
+            {
+                var pantryToEdit = _repository.GetPantryById(pantryId);
+                if (pantryToEdit == null)
+                {
+                    return NotFound($"Unable to find existing pantry with id of {pantryId}");
+                }
+                _mapper.Map(model, pantryToEdit);
+                if (_repository.SaveAll())
+                {
+                    return _mapper.Map<PantryViewModel>(pantryToEdit);
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Unable to edit Pantry: {exception}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure.");
+            }
+            return BadRequest("Unable to edit pantry.");
         }
 
         [HttpDelete("{pantryId:int}")]
