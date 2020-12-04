@@ -20,6 +20,42 @@ namespace ThePantry.Data
             _logger = logger;
         }
 
+        // Pantry Methods
+        public IEnumerable<Pantry> GetAllPantries()
+        {
+            try
+            {
+                _logger.LogInformation("Attempting to retreive all Pantries.");
+                return _context.Pantries
+                        .OrderBy(p => p.Name)
+                        .ToList();
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogInformation($"Failed to get all pantries: {exception}");
+                return null;
+            }
+        }
+
+        public Pantry GetPantryById(int pantryId)
+        {
+            try
+            {
+                _logger.LogInformation($"Attempting to retreive Pantry by Pantry ID: {pantryId}.");
+                return _context.Pantries
+                        .Where(p => p.PantryId == pantryId)
+                        .FirstOrDefault();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogInformation($"Failed to get pantry: {exception}");
+                return null;
+            }
+        }
+
+
+
         // Meal Methods
         public IEnumerable<Meal> GetAllMeals()
         {
@@ -40,19 +76,18 @@ namespace ThePantry.Data
 
         public Meal GetMealById(int mealId)
         {
-            _logger.LogInformation("Attempting to retreive Ingredient.");
+            _logger.LogInformation($"Attempting to retreive meal with ID: {mealId}.");
             return _context.Meals
                            .Where(m => m.MealId == mealId)
                            .FirstOrDefault();
         }
 
         // Meal Ingredient Methods
-
         public MealIngredient[] GetMealIngredientsByMealId(int mealId)
         {
             try
             {
-                _logger.LogInformation("Attempting to retreive MealIngredients by MealId.");
+                _logger.LogInformation($"Attempting to retreive MealIngredients by Meal ID: {mealId}.");
                 return _context.MealIngredients
                                .Where(i => i.MealId == mealId)
                                .Include(m => m.Ingredient)
@@ -86,7 +121,6 @@ namespace ThePantry.Data
         }
 
         // Ingredient Methods
-
         public bool IngredientExists(Ingredient ingredientToCheck)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");
@@ -126,40 +160,7 @@ namespace ThePantry.Data
             return _context.SaveChanges() > 0;
         }
 
-        // Pantry Methods
-        public IEnumerable<Pantry> GetAllPantries()
-        {
-            try
-            {
-                _logger.LogInformation("Attempting to retreive all Pantries.");
-                return _context.Pantries
-                        .OrderBy(p => p.Name)
-                        .ToList();
-            }
-            catch (Exception exception)
-            {
-
-                _logger.LogInformation($"Failed to get all pantries: {exception}");
-                return null;
-            }
-            
-        }
-
-        public Pantry GetPantryById(int id)
-        {
-            try
-            {
-                _logger.LogInformation("Attempting to retreive Pantry by PantryId.");
-                return _context.Pantries
-                        .Where(p => p.PantryId == id)
-                        .FirstOrDefault();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"Failed to get pantry: {exception}");
-                return null;
-            }
-        }
+        
 
         
     }

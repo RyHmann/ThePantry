@@ -71,7 +71,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveMeal(MealViewModel model)
+        public ActionResult CreateMeal(MealViewModel model)
         {
             try
             {
@@ -82,6 +82,7 @@ namespace ThePantry.Controllers
                     {
                         var mealIngredient = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredientViewModel);
 
+                        // Add check to make sure same meal ingredient isn't added twice?
                         if (_repository.IngredientExists(mealIngredient.Ingredient))
                         {
                             mealIngredient.Ingredient = _repository.GetIngredientByName(mealIngredientViewModel.Ingredient.Name);
@@ -101,6 +102,7 @@ namespace ThePantry.Controllers
                         var location = _linkGenerator.GetPathByAction("ShowMealById", "Meals", new { id = newMeal.MealId });
                         if (string.IsNullOrWhiteSpace(location))
                         {
+                            _logger.LogError("Could not complete URI creation.");
                             return BadRequest("Could not use meal identifier.");
                         }
                         return Created($"{location}", _mapper.Map<Meal, MealViewModel>(newMeal));

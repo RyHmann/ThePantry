@@ -9,6 +9,7 @@ namespace ThePantry.ViewModels
 {
     public class PantryIngredientViewModel
     {
+        public int PantryIngredientId { get; set; }
         public decimal Quantity { get; set; }
         public int PantryId { get; set; }
 

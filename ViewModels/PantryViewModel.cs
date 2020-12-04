@@ -13,10 +13,8 @@ namespace ThePantry.ViewModels
         [MinLength(3)]
         public string Name { get; set; }
 
-        // One to Many Relationship (Parent)
         public virtual List<PantryIngredientViewModel> Ingredients { get; set; }
 
-        // One to Many Relationship (Child)
         public User User { get; set; }
 
         public PantryViewModel()

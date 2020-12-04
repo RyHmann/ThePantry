@@ -10,6 +10,7 @@ using ThePantry.Data;
 
 namespace ThePantry.Controllers
 {
+    [ApiController]
     public class PantryIngredientsController : ControllerBase
     {
         private readonly IPantryRepository _repository;
