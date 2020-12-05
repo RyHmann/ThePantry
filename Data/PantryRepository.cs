@@ -53,6 +53,43 @@ namespace ThePantry.Data
             }
         }
 
+        // Pantry Ingredient Methods
+        public PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId)
+        {
+            try
+            {
+                _logger.LogInformation($"Attempting to retreive Pantry Ingredient in Pantry: {pantryId} and Ingredient: {pantryIngredientId}.");
+                return _context.PantryIngredients
+                               .Where(p => p.PantryId == pantryId && p.PantryIngredientId == pantryIngredientId)
+                               .Include(i => i.Ingredient)
+                               .FirstOrDefault();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Failed to get Pantry Ingredient: {exception}.");
+                return null;
+            }
+        }
+
+        public PantryIngredient[] GetPantryIngredientsByPantryId(int pantryId)
+        {
+            try
+            {
+                _logger.LogInformation($"Attempting to retreive all Pantry Ingredients in Pantry: {pantryId}.");
+                return _context.PantryIngredients
+                               .Where(p => p.PantryId == pantryId)
+                               .Include(i => i.Ingredient)
+                               .OrderBy(n => n.Ingredient.Name)
+                               .ToArray();
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogError($"Failed to get Pantry Ingredients in Pantry: {exception}.");
+                return null;
+            }
+        }
+
         // Meal Methods
         public IEnumerable<Meal> GetAllMeals()
         {

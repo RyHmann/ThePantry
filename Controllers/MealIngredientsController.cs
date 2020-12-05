@@ -43,7 +43,7 @@ namespace ThePantry.Controllers
             catch (Exception exception)
             {
 
-                _logger.LogInformation($"Could not get meal ingredients: {exception}");
+                _logger.LogError($"Could not get meal ingredients: {exception}");
                 return BadRequest("Could not find meal ingredients.");
             }
         }
@@ -58,7 +58,7 @@ namespace ThePantry.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogInformation($"Could not get that meal ingredient: {exception}");
+                _logger.LogError($"Could not get that meal ingredient: {exception}");
                 return BadRequest("Could not find that ingredient.");
             }
         }

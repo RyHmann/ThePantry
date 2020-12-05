@@ -14,6 +14,10 @@ namespace ThePantry.Data
         IEnumerable<Meal> GetAllMeals();
         Meal GetMealById(int mealId);
 
+        // Pantry Ingredient Methods
+        PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId);
+        PantryIngredient[] GetPantryIngredientsByPantryId(int pantryId);
+
         // Meal Ingredient Methods
         MealIngredient GetMealIngredientByMealId(int mealId, int mealIngredientId);
         MealIngredient[] GetMealIngredientsByMealId(int mealId);
