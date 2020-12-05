@@ -121,6 +121,50 @@ namespace ThePantry.Controllers
             }
         }
 
+        [HttpPut("{pantryIngredientId:int}")]
+        public ActionResult<PantryIngredientViewModel> EditPantryIngredient(int pantryId, int pantryIngredientId, PantryIngredientViewModel model)
+        {
+            try
+            {
+                // Do we need to check if mealIngredientId == model.mealIngredientId?
+                // Do we need to check if mealId == model.mealId?
+
+                var existingPantryIngredient = _repository.GetPantryIngredientByPantryId(pantryId, pantryIngredientId);
+
+                if (existingPantryIngredient == null)
+                {
+                    return NotFound("Couldn't find pantry ingredient");
+                }
+
+                if (pantryId != model.PantryId || pantryIngredientId != model.PantryIngredientId)
+                {
+                    return BadRequest("Unable to edit Pantries or Pantry Ingredients during this stage.");
+                }
+
+                // Do we want to allow the user to change the ingredient type here? If so, we will need checks similar to Post ie: checking if ingredient exists in Db, and checking if ingredient is already part of this meal.
+
+                // Throwing error if no changes detected. Any additional items that can be changed should be added to this check.
+                if (model.Quantity == existingPantryIngredient.Quantity)
+                {
+                    return Ok("No changes detected.");
+                }
+
+                existingPantryIngredient.Quantity = model.Quantity;
+
+                if (_repository.SaveAll())
+                {
+                    return _mapper.Map<PantryIngredientViewModel>(existingPantryIngredient);
+                }
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogError($"Could not edit that pantry ingredient: {exception}");
+                return BadRequest("Could not edit that ingredient.");
+            }
+            return BadRequest("Could not update that ingredient. You are unable to edit Pantries and Ingredients in this manner.");
+        }
+
         [HttpDelete("{pantryIngredientId:int}")]
         public IActionResult Delete(int pantryId, int pantryIngredientId)
         {
