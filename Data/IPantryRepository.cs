@@ -25,6 +25,7 @@ namespace ThePantry.Data
         // Ingredient Methods
         bool IngredientExists(Ingredient ingredientToCheck);
         bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId);
+        public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId);
         Ingredient GetIngredientByName(string ingredientName);
 
         // DB Methods

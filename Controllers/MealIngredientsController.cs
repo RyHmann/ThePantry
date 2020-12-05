@@ -64,7 +64,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public ActionResult<IngredientViewModel> AddIngredientToMeal(int mealId, MealIngredientViewModel model)
+        public ActionResult<MealIngredientViewModel> AddIngredientToMeal(int mealId, MealIngredientViewModel model)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace ThePantry.Controllers
                 // Confirm meal exists
                 if (existingMeal == null)
                 {
-                    return BadRequest("Meal does not exist.");
+                    return BadRequest($"Meal with ID: {mealId} does not exist.");
                 }
 
                 if (model.Ingredient.Name == null)

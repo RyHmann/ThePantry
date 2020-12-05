@@ -61,6 +61,66 @@ namespace ThePantry.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult<PantryIngredientViewModel> AddIngredientToPantry(int pantryId, PantryIngredientViewModel model)
+        {
+            try
+            {
+                var existingPantry = _repository.GetPantryById(pantryId);
+                var pantryIngredient = _mapper.Map<PantryIngredient>(model);
+
+                // Confirm if pantry exists
+                if (existingPantry == null)
+                {
+                    return BadRequest($"Pantry with ID: {pantryId} does not exist");
+                }
+
+                if (model.Ingredient.Name == null)
+                {
+                    return BadRequest("Ingredient name required.");
+                }
+
+                // Check if ingredient exists in database
+                if (_repository.IngredientExists(pantryIngredient.Ingredient))
+                {
+                    pantryIngredient.Ingredient = _repository.GetIngredientByName(model.Ingredient.Name);
+                }
+                else
+                {
+                    var newIngredient = pantryIngredient.Ingredient;
+                    _repository.AddEntity(newIngredient);
+                }
+
+                // Check if ingredient is already assigned to this pantry
+                if (_repository.IngredientAlreadyAssignedToPantry(pantryId, pantryIngredient.Ingredient.IngredientId))
+                {
+                    return BadRequest("Ingredient is already assigned to this pantry.");
+                }
+
+                pantryIngredient.Pantry = existingPantry;
+                _repository.AddEntity(pantryIngredient);
+                if (_repository.SaveAll())
+                {
+                    var url = _linkGenerator.GetPathByAction("ShowPantryIngredient", "PantryIngredients", values: new { pantryId, pantryIngredientId = pantryIngredient.PantryIngredientId });
+                    if (string.IsNullOrWhiteSpace(url))
+                    {
+                        return BadRequest("Could not assign pantry ingredient to that ID.");
+                    }
+                    return Created($"{url}", _mapper.Map<PantryIngredientViewModel>(pantryIngredient));
+                }
+                else
+                {
+                    return BadRequest($"Failed to save new pantry ingredient to pantry with Pantry Id: {pantryId}.");
+                }
+            }
+            catch (Exception exception)
+            {
+
+                _logger.LogError($"Could not add that meal ingredient: {exception}");
+                return BadRequest("Could not add that ingredient.");
+            }
+        }
+
         [HttpDelete("{pantryIngredientId:int}")]
         public IActionResult Delete(int pantryId, int pantryIngredientId)
         {

@@ -165,6 +165,12 @@ namespace ThePantry.Data
             return _context.MealIngredients.Any(n => n.MealId == mealId && n.Ingredient.IngredientId == ingredientId);
         }
 
+        public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId)
+        {
+            _logger.LogInformation($"Checking to see if ingredient: {ingredientId} exists in pantry.");
+            return _context.PantryIngredients.Any(n => n.PantryId == pantryId && n.Ingredient.IngredientId == ingredientId);
+        }
+
         public Ingredient GetIngredientByName(string ingredientName)
         {
             _logger.LogInformation("Attempting to retreive existing Ingredient.");
