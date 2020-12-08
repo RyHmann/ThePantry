@@ -1,0 +1,20 @@
+﻿@model MealViewModel
+
+<h1>@Model.Name</h1>
+<p>C</p>
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model.Ingredients)
+        {
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Ingredient.Name</h5>
+                        <a href="#" class="btn btn-primary">View Ingredient</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

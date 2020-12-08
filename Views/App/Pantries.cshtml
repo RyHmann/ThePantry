@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Pantry>
+
+<h1>Pantries</h1>
+<p>Count: @Model.Count()</p>
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Name</h5>
+                        <a href="#" class="btn btn-primary">View Pantry</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a href="/mealcreator" class="btn btn-primary">Add A Meal</a>
