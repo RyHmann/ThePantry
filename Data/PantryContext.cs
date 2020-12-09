@@ -9,7 +9,7 @@ using ThePantry.Data.Entities;
 
 namespace ThePantry.Data
 {
-    public class PantryContext : DbContext
+    public class PantryContext : IdentityDbContext<User>
     {
         public DbSet<Meal> Meals { get; set; }
         public DbSet<MealIngredient> MealIngredients { get; set; }
@@ -17,7 +17,6 @@ namespace ThePantry.Data
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<PantryIngredient> PantryIngredients { get; set; }
-        public DbSet<User> Users { get; set; }
 
         public PantryContext(DbContextOptions<PantryContext> options) : base(options)
         {

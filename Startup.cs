@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ThePantry.Data;
+using ThePantry.Data.Entities;
 
 namespace ThePantry
 {

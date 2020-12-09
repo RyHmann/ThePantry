@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -15,16 +16,35 @@ namespace ThePantry.Data
     {
         private readonly PantryContext _context;
         private readonly IWebHostEnvironment _hosting;
+        private readonly UserManager<User> _userManager;
 
-        public PantrySeeder(PantryContext context, IWebHostEnvironment hosting)
+        public PantrySeeder(PantryContext context, IWebHostEnvironment hosting, UserManager<User> userManager)
         {
             _context = context;
             _hosting = hosting;
+            _userManager = userManager;
         }
 
-        public void Seed()
+        public async Task SeedAsync()
         {
             _context.Database.EnsureCreated();
+
+            User user = await _userManager.FindByEmailAsync("ryan@thepantry.com");
+            if (user == null)
+            {
+                user = new User()
+                {
+                    Email = "ryan@thepantry.com",
+                    UserName = "ryan@thepantry.com"
+                };
+
+                var result = await _userManager.CreateAsync(user, "Password123!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Could not create new user in during Db seeding.");
+                }
+
+            }
 
             // Seed Units into the Db.
             if (!_context.Units.Any())

@@ -41,7 +41,7 @@ namespace ThePantry
             using (var scope = scopeFactory.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetService<PantrySeeder>();
-                seeder.Seed();
+                seeder.SeedAsync().Wait();
             }
         }
     }
