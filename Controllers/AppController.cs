@@ -47,11 +47,5 @@ namespace ThePantry.Controllers
             return View();
         }
 
-        [HttpGet("pantires")]
-        public IActionResult Pantries()
-        {
-            var pantries = _repository.GetAllPantries();
-            return View(pantries);
-        }
     }
 }
