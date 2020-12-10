@@ -12,8 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using ThePantry.Data;
 using ThePantry.Data.Entities;
+using System.Text;
 
 namespace ThePantry
 {
@@ -34,6 +36,17 @@ namespace ThePantry
                cfg.User.RequireUniqueEmail = true;
            })
                 .AddEntityFrameworkStores<PantryContext>();
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
             services.AddDbContext<PantryContext>(cfg =>
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("PantryConnectionString"));
