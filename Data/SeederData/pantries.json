@@ -1,0 +1,8 @@
+{
+	"name": "Pantry Test",
+	"ingredients": [
+		{ "ingredient": { "name": "cheddar cheese" } },
+		{ "ingredient": { "name": "mushroom" } },
+		{ "ingredient": { "name": "onion" } }
+	]
+}

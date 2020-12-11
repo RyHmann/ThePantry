@@ -49,7 +49,7 @@ namespace ThePantry.Data
             // Seed Units into the Db.
             if (!_context.Units.Any())
             {
-                var jsonUnitDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/unit.json");
+                var jsonUnitDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/unit.json");
                 var jsonUnitData = File.ReadAllText(jsonUnitDataFilepath);
                 var unitsToSeed = JsonConvert.DeserializeObject<IEnumerable<Unit>>(jsonUnitData);
                 _context.Units.AddRange(unitsToSeed);
@@ -59,7 +59,7 @@ namespace ThePantry.Data
             // Seed Ingredients into the Db.
             if (!_context.Ingredients.Any())
             {
-                var jsonIngredientDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/ingredients.json");
+                var jsonIngredientDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/ingredients.json");
                 var jsonIngredientData = File.ReadAllText(jsonIngredientDataFilepath);
                 var ingredientsToSeed = JsonConvert.DeserializeObject<IEnumerable<Ingredient>>(jsonIngredientData);
                 _context.Ingredients.AddRange(ingredientsToSeed);

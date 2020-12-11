@@ -9,8 +9,6 @@ namespace ThePantry.Data.Entities
 {
     public class User : IdentityUser
     {
-        public int UserId { get; set; }
-
         // One to Many Relationship (Parent)
         public ICollection<Pantry> Pantries { get; set; }
 
