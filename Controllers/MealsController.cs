@@ -37,7 +37,7 @@ namespace ThePantry.Controllers
             try
             {
                 var meals = _repository.GetAllMeals();
-                return _mapper.Map<MealViewModel[]>(meals);
+                return (_mapper.Map<MealViewModel[]>(meals));
             }
             catch (Exception exception)
             {

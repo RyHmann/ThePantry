@@ -19,7 +19,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/">Home</a>
+                            <a class="nav-link text-dark" asp-controller="App" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="App" asp-action="About">About</a>
@@ -28,10 +28,10 @@
                             <a class="nav-link text-dark" asp-action="Contact">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-action="Meals">Meals</a>
+                            <a class="nav-link text-dark" asp-controller="App" asp-action="Meals">Meals</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-action="Pantries">Pantries</a>
+                            <a class="nav-link text-dark" asp-controller="App" asp-action="Pantries">My Pantry</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {

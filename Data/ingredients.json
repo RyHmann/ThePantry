@@ -1,24 +1,36 @@
 [
-    {
-        "name": "chickpea"
-    },
-    {
-        "name": "bread"
-    },
-    {
-        "name": "ham"
-    },
-    {
-        "name": "cheddar cheese"
-    },
-    {
-        "name": "canned tomato"
-    },
-    {
-        "name": "onion"
-    },
-    {
-        "name": "garlic"
-    }
-    
+  {
+    "name": "chickpea"
+  },
+  {
+    "name": "bread"
+  },
+  {
+    "name": "ham"
+  },
+  {
+    "name": "cheddar cheese"
+  },
+  {
+    "name": "canned tomato"
+  },
+  {
+    "name": "onion"
+  },
+  {
+    "name": "garlic"
+  },
+  {
+    "name": "white rice"
+  },
+  {
+    "name": "brown rice"
+  },
+  {
+    "name": "carrot"
+  },
+  {
+    "name": "mushroom"
+  }
+
 ]
