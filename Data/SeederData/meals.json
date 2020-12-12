@@ -1,22 +1,67 @@
 [
-    {
-        "name": "Ham Sandwich",
-        "description": "A classic sandwich with cheddar cheese and ham",
-        "instructions": "Assemble wrap ingredients in bread.",
-      "ingredients": [
-        { "ingredient": { "name": "cheddar cheese" } },
-        { "ingredient": { "name": "bread" } },
-        { "ingredient": { "name": "ham" } }
-      ]
-    },
-    {
-        "name": "Pepperoni Pizza",
-        "description": "A classic pizza consisting of cheese and pepperoni",
-        "instructions": "Fermet some dough, and place all of the fixins' on top!",
-      "ingredients": [
-        { "ingredient": { "name": "cheddar cheese" } },
-        { "ingredient": { "name": "tomato sauce" } },
-        { "ingredient": { "name": "pepperoni" } }
-      ]
-    }
+  {
+    "name": "Ham Sandwich",
+    "description": "A classic sandwich with cheddar cheese and ham",
+    "instructions": "Assemble wrap ingredients in bread.",
+    "ingredients": [
+      { "ingredient": { "name": "cheddar cheese" } },
+      { "ingredient": { "name": "bread" } },
+      { "ingredient": { "name": "ham" } }
+    ]
+  },
+  {
+    "name": "Pepperoni Pizza",
+    "description": "A classic pizza consisting of cheese and pepperoni",
+    "instructions": "Fermet some dough, and place all of the fixins' on top!",
+    "ingredients": [
+      { "ingredient": { "name": "cheddar cheese" } },
+      { "ingredient": { "name": "tomato sauce" } },
+      { "ingredient": { "name": "pepperoni" } }
+    ]
+  },
+  {
+    "name": "Hamburger",
+    "description": "A classic hamburger sandwich.",
+    "instructions": "Place ingredients between bread.",
+    "ingredients": [
+      { "ingredient": { "name": "cheddar cheese" } },
+      { "ingredient": { "name": "lettuce" } },
+      { "ingredient": { "name": "beef" } },
+      { "ingredient": { "name": "tomato" } },
+      { "ingredient": { "name": "bread" } }
+    ]
+  },
+  {
+    "name": "Chickpea Curry",
+    "description": "A tomato based curry with chickpeas.",
+    "instructions": "Create a tomato based gravy and add chickpeas.",
+    "ingredients": [
+      { "ingredient": { "name": "tomato" } },
+      { "ingredient": { "name": "onion" } },
+      { "ingredient": { "name": "chickpea" } }
+    ]
+  },
+  {
+    "name": "Green Curry Lentils",
+    "description": "A lentil curry with a Thai twist.",
+    "instructions": "Prepare lentils in green curry paste and coconut milk.",
+    "ingredients": [
+      { "ingredient": { "name": "green curry paste" } },
+      { "ingredient": { "name": "lentils" } },
+      { "ingredient": { "name": "turmeric" } },
+      { "ingredient": { "name": "fish sauce" } },
+      { "ingredient": { "name": "tomato paste" } },
+      { "ingredient": { "name": "coconut milk" } }
+    ]
+  },
+  {
+    "name": "Sauerkraut Quesadillas",
+    "description": "A Mexican appentizer with some German infusion.",
+    "instructions": "Place some shredded cheese and saurkraut in a tortilla and pan fry.",
+    "ingredients": [
+      { "ingredient": { "name": "cheddar cheese" } },
+      { "ingredient": { "name": "tortilla" } },
+      { "ingredient": { "name": "sauerkraut" } }
+    ]
+  }
 ]

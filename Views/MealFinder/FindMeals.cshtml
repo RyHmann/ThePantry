@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Meal>
+
+<h1>Meals using your Ingredients</h1>
+<p>Count: @Model.Count()</p>
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@p.Description</h6>
+                        <p class="card-text">@p.Instructions</p>
+                        <a asp-controller="meals" asp-action="showmealbyid" class="btn btn-primary">View Meal</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-controller="App" asp-action="MealFinder" class="btn btn-primary">Change Ingredients</a>

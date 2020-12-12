@@ -48,5 +48,11 @@ namespace ThePantry.Controllers
             return View(pantries);
         }
 
+        [HttpGet("findmeals")]
+        public IActionResult MealFinder()
+        {
+            return View();
+        }
+
     }
 }

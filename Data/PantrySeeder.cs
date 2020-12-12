@@ -43,7 +43,6 @@ namespace ThePantry.Data
                 {
                     throw new InvalidOperationException("Could not create new user in during Db seeding.");
                 }
-
             }
 
             // Seed Units into the Db.
@@ -66,6 +65,28 @@ namespace ThePantry.Data
                 _context.SaveChanges();
             }
 
+            /*
+            if (!_context.Meals.Any())
+            {
+                var jsonMealDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/meals.json");
+                var jsonMealData = File.ReadAllText(jsonMealDataFilepath);
+                var mealsToSeed = JsonConvert.DeserializeObject<IEnumerable<Meal>>(jsonMealData);
+                _context.Meals.AddRange(mealsToSeed);
+                _context.SaveChanges();
+            }
+            
+
+            if (!_context.Pantries.Any())
+            {
+                var jsonPantryDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/pantries.json");
+                var jsonPantryData = File.ReadAllText(jsonPantryDataFilepath);
+                var pantriesToSeed = JsonConvert.DeserializeObject<IEnumerable<Pantry>>(jsonPantryData);
+                _context.Pantries.AddRange(pantriesToSeed);
+                _context.SaveChanges();
+            }
+            */
+
+            
             // Seed Meal into the Db.
             if (!_context.Meals.Any())
             {
@@ -122,6 +143,7 @@ namespace ThePantry.Data
                 _context.Add(mealIngredientCheese);
                 _context.SaveChanges();
             }
+            
         }
     }
 }

@@ -3,6 +3,12 @@
 	"ingredients": [
 		{ "ingredient": { "name": "cheddar cheese" } },
 		{ "ingredient": { "name": "mushroom" } },
-		{ "ingredient": { "name": "onion" } }
+		{ "ingredient": { "name": "onion" } },
+		{ "ingredient": { "name": "beef" } },
+		{ "ingredient": { "name": "tortilla" }},
+		{ "ingredient": { "name": "bread" } },
+		{ "ingredient": { "name": "chickpea" } },
+		{ "ingredient": { "name": "lentils" } },
+		{ "ingredient": { "name": "ham" } }
 	]
 }

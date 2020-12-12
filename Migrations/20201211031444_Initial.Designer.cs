@@ -10,8 +10,8 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20201209091500_Identity")]
-    partial class Identity
+    [Migration("20201211031444_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -341,9 +341,6 @@ namespace ThePantry.Migrations
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)

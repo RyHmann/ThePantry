@@ -179,6 +179,21 @@ namespace ThePantry.Data
                 .FirstOrDefault();
         }
 
+        // MealFinder Functions
+        public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredientsString)
+        {
+            var availableMeals = new HashSet<Meal>();
+            foreach (var ingredient in ingredientsString)
+            {
+                var matchingMeals = _context.MealIngredients
+                    .Where(i => i.Ingredient.Name == ingredient)
+                    .Select(s => s.Meal)
+                    .ToHashSet();
+                availableMeals.UnionWith(matchingMeals);
+            }
+            return availableMeals;
+        }
+
         // Save States
         public void AddEntity(object model)
         {
