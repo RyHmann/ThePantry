@@ -8,6 +8,7 @@ namespace ThePantry.Data
         // Pantry Methods
         IEnumerable<Pantry> GetAllPantries();
         Pantry GetPantryById(int id);
+        Pantry GetPantryByUser(string userName);
 
 
         // Meal methods

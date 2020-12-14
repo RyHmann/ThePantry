@@ -10,9 +10,9 @@ namespace ThePantry.Data.Entities
     public class User : IdentityUser
     {
         // One to Many Relationship (Parent)
-        public ICollection<Pantry> Pantries { get; set; }
+        public virtual ICollection<Pantry> Pantries { get; set; }
 
         // One to Many Relationship (Parent)
-        public ICollection<Meal> Meals { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; }
     }
 }

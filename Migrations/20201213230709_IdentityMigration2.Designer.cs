@@ -10,8 +10,8 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20201211031444_Initial")]
-    partial class Initial
+    [Migration("20201213230709_IdentityMigration2")]
+    partial class IdentityMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -183,15 +183,12 @@ namespace ThePantry.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("MealId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Meals");
                 });
@@ -236,15 +233,12 @@ namespace ThePantry.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PantryId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pantries");
                 });
@@ -414,7 +408,7 @@ namespace ThePantry.Migrations
                 {
                     b.HasOne("ThePantry.Data.Entities.User", "User")
                         .WithMany("Meals")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -446,7 +440,7 @@ namespace ThePantry.Migrations
                 {
                     b.HasOne("ThePantry.Data.Entities.User", "User")
                         .WithMany("Pantries")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

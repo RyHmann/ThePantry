@@ -10,13 +10,9 @@ namespace ThePantry.ViewModels
 {
     public class PantryViewModel
     {
-        [Required]
-        [MinLength(3)]
-        public string Name { get; set; }
-
+        public int PantryId { get; set; }
+        public string Username { get; set; }
         public virtual List<PantryIngredientViewModel> Ingredients { get; set; }
-
-        public User User { get; set; }
 
         public PantryViewModel()
         {

@@ -27,7 +27,7 @@ namespace ThePantry.Data
             {
                 _logger.LogInformation("Attempting to retreive all Pantries.");
                 return _context.Pantries
-                        .OrderBy(p => p.Name)
+                        .OrderBy(p => p.User)
                         .ToList();
             }
             catch (Exception exception)
@@ -49,6 +49,21 @@ namespace ThePantry.Data
             catch (Exception exception)
             {
                 _logger.LogInformation($"Failed to get pantry: {exception}");
+                return null;
+            }
+        }
+        public Pantry GetPantryByUser(string userName)
+        {
+            try
+            {
+                _logger.LogInformation($"Attempting to retreive Pantry by User: {userName}");
+                return _context.Pantries
+                        .Where(p => p.User.UserName == userName)
+                        .FirstOrDefault();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Unable to retreive Pantry: {exception}");
                 return null;
             }
         }

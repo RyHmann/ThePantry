@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
@@ -15,6 +18,7 @@ using ThePantry.ViewModels;
 namespace ThePantry.Controllers
 {
     [Route("/api/[Controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class PantriesController : ControllerBase
     {
@@ -22,27 +26,37 @@ namespace ThePantry.Controllers
         private readonly ILogger<PantriesController> _logger;
         private readonly IMapper _mapper;
         private readonly LinkGenerator _linkGenerator;
+        private readonly UserManager<User> _userManager;
 
-        public PantriesController(IPantryRepository repository, ILogger<PantriesController> logger, IMapper mapper, LinkGenerator linkGenerator)
+        public PantriesController(IPantryRepository repository, ILogger<PantriesController> logger, IMapper mapper, LinkGenerator linkGenerator, UserManager<User> userManager)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
             _linkGenerator = linkGenerator;
+            _userManager = userManager;
         }
 
-        [HttpGet]
-        public IActionResult ShowAllPantries()
+        [HttpGet()]
+        public ActionResult<PantryViewModel> ShowPantryByUser()
         {
             try
             {
-                return Ok(_repository.GetAllPantries());
+                var userName = User.Identity.Name;
+                var userPantry = _repository.GetPantryByUser(userName);
+                if (userPantry != null)
+                {
+                    return Ok(_mapper.Map<PantryViewModel>(userPantry));
+                }
+                else
+                {
+                    return NotFound("Can't locate pantry.");
+                }
             }
             catch (Exception exception)
             {
-
-                _logger.LogError($"Failed to get Pantries: {exception}");
-                return BadRequest("Failed to get pantries.");
+                _logger.LogError($"Failed to show Pantry: {exception}");
+                return BadRequest("Failed to get Pantry.");
             }
         }
 
@@ -71,7 +85,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatePantry(PantryViewModel model)
+        public async Task<ActionResult> CreatePantry([FromBody]PantryViewModel model)
         {
             try
             {
@@ -94,6 +108,9 @@ namespace ThePantry.Controllers
                         pantryIngredients.Add(pantryIngredient);
                     }
                     var newPantry = _mapper.Map<PantryViewModel, Pantry>(model);
+
+                    var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                    newPantry.User = currentUser;
                     newPantry.PantryIngredients = pantryIngredients;
                     _repository.AddEntity(newPantry);
                     if (_repository.SaveAll())

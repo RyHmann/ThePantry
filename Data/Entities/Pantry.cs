@@ -9,14 +9,13 @@ namespace ThePantry.Data.Entities
     public class Pantry
     {
         public int PantryId { get; set; }
-        public string Name { get; set; }
 
         // One to Many Relationship (Parent)
         public virtual ICollection<PantryIngredient> PantryIngredients { get; set; }
       
         // One to Many Relationship (Child)
-        public int? UserId { get; set; }
-        public User User { get; set; }
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
 
         public Pantry()
         {
