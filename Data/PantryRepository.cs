@@ -59,6 +59,7 @@ namespace ThePantry.Data
                 _logger.LogInformation($"Attempting to retreive Pantry by User: {userName}");
                 return _context.Pantries
                         .Where(p => p.User.UserName == userName)
+                        .Include(u => u.User)
                         .FirstOrDefault();
             }
             catch (Exception exception)
@@ -195,18 +196,36 @@ namespace ThePantry.Data
         }
 
         // MealFinder Functions
-        public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredientsString)
+        public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
             var availableMeals = new HashSet<Meal>();
-            foreach (var ingredient in ingredientsString)
+            
+            foreach (var ingredient in ingredients)
             {
                 var matchingMeals = _context.MealIngredients
-                    .Where(i => i.Ingredient.Name == ingredient)
-                    .Select(s => s.Meal)
-                    .ToHashSet();
+                        .Where(i => i.Ingredient.Name == ingredient)
+                        .Select(s => s.Meal)
+                        .ToHashSet();
                 availableMeals.UnionWith(matchingMeals);
             }
             return availableMeals;
+        }
+
+        public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId, IEnumerable<string> ingredients)
+        {
+            try
+            {
+                _logger.LogInformation($"Attempting to retreive Meals containing all ingredients.");
+                //Get an array of all ingredients contained in this fridge or ingredient list
+
+                //Create a method that takes a string array and finds all meals that match this criteria
+                return null;
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError($"Unable to retreive meals containing all ingredients: {exception}");
+                return null;
+            }
         }
 
         // Save States

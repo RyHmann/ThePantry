@@ -52,5 +52,7 @@ namespace ThePantry.Controllers
                 return BadRequest("Could not execute meal search.");
             }
         }
+
+        
     }
 }

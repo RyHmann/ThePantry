@@ -33,19 +33,10 @@ namespace ThePantry.Controllers
             return View();
         }
 
-        [HttpGet("meals")]
-
-        public IActionResult Meals()
-        {
-            var meals = _repository.GetAllMeals();
-            return View(meals);
-        }
-
-        [HttpGet("pantries")]
+        [HttpGet]
         public IActionResult Pantries()
         {
-            var pantries = _repository.GetAllPantries();
-            return View(pantries);
+            return View();
         }
 
         [HttpGet("findmeals")]

@@ -13,7 +13,7 @@
                         <h5 class="card-title">@p.Name</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@p.Description</h6>
                         <p class="card-text">@p.Instructions</p>
-                        <a asp-controller="meals" asp-action="showmealbyid" class="btn btn-primary">View Meal</a>
+                        <a asp-controller="meals" asp-action="showmealbyid" asp-route-id="@p.MealId" class="btn btn-primary">View Meal</a>
                     </div>
                 </div>
             </div>
