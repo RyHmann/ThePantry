@@ -36,14 +36,17 @@ namespace ThePantry.Controllers
             try
             {
                 // Add filter here to indicate which ingredients aren't recognized, and indicate to user
+
                 var ingredients = ingr
                     .Split(',')
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .Select(i => i.Trim())
                     .ToArray();
                 var availableMeals = _repository.FindMealsByIngredients(ingredients);
+
                 // Code below commented out in order to return a View for Demo only, uncomment for returning ViewModel as JSON
                 //var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(availableMeals);
+
                 return View(availableMeals);
             }
             catch (Exception exception)

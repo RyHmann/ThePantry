@@ -165,7 +165,6 @@ namespace ThePantry.Data
                 _logger.LogInformation($"Failed to get ingredients: {exception}");
                 return null;
             }
-            
         }
 
         // Ingredient Methods
@@ -211,21 +210,66 @@ namespace ThePantry.Data
             return availableMeals;
         }
 
-        public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId, IEnumerable<string> ingredients)
+        public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)
         {
             try
             {
                 _logger.LogInformation($"Attempting to retreive Meals containing all ingredients.");
-                //Get an array of all ingredients contained in this fridge or ingredient list
 
-                //Create a method that takes a string array and finds all meals that match this criteria
-                return null;
+                var matchingMeals = new List<Meal>();
+                var initialFilter = new List<Meal>();
+
+                // Hash Set of all Ingredient Ids in Pantry
+                var pantryIngredients = _context.PantryIngredients
+                        .Where(i => i.PantryId == pantryId)
+                        .Select(ingr => ingr.Ingredient.IngredientId)
+                        .ToHashSet();
+
+                // Initial filter to find Meals that have one matching ingredient
+                foreach (var ingredient in pantryIngredients)
+                {
+                    var firstPassMeal = _context.MealIngredients
+                        .Where(i => i.Ingredient.IngredientId == ingredient)
+                        .Select(m => m.Meal)
+                        .FirstOrDefault();
+                    initialFilter.Add(firstPassMeal);
+                }
+                // Compare Hash Sets
+                foreach (var meal in initialFilter)
+                {
+                    var requiredIngredients = getMealIngredientIds(meal);
+                    if (pantryHasRequiredIngredients(requiredIngredients, pantryIngredients))
+                    {
+                        matchingMeals.Add(meal);
+                    }
+                }
+                return matchingMeals;
             }
             catch (Exception exception)
             {
                 _logger.LogError($"Unable to retreive meals containing all ingredients: {exception}");
                 return null;
             }
+        }
+
+        private bool pantryHasRequiredIngredients(HashSet<int> requiredIngredients, HashSet<int> pantryIngredients)
+        {
+            if (requiredIngredients.IsSubsetOf(pantryIngredients))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private HashSet<int> getMealIngredientIds(Meal meal)
+        {
+            var ingredientIds = meal.MealIngredients
+                .Select(i => i.MealIngredientId)
+                .ToHashSet();
+            return ingredientIds;
         }
 
         // Save States
@@ -240,15 +284,10 @@ namespace ThePantry.Data
             _logger.LogInformation("Attempting to remove object from Db");
             _context.Remove(model);
         }
-
         public bool SaveAll()
         {
             _logger.LogInformation("Attempting to save changes to the Db");
             return _context.SaveChanges() > 0;
         }
-
-        
-
-        
     }
 }
