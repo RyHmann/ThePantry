@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data;
 using ThePantry.Data.Entities;
-using ThePantry.ViewModels;
 
 namespace ThePantry.Controllers
 {
@@ -55,7 +54,5 @@ namespace ThePantry.Controllers
                 return BadRequest("Could not execute meal search.");
             }
         }
-
-        
     }
 }

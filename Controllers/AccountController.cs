@@ -59,7 +59,6 @@ namespace ThePantry.Controllers
                 }
             }
             ModelState.AddModelError("", "Failed to login");
-
             return View();
         } 
 
@@ -108,7 +107,6 @@ namespace ThePantry.Controllers
                         return Created("", results);
                     }
                 }
-                
             }
             return BadRequest();
         }

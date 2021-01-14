@@ -31,7 +31,7 @@
                             <a class="nav-link text-dark" asp-controller="App" asp-action="MealFinder">Recipe Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Pantries" asp-action="ShowPantryByUser">My Pantry</a>
+                            <a class="nav-link text-dark" asp-controller="App" asp-action="MyPantry">My Pantry</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -45,7 +45,6 @@
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
                             </li>
                         }
-
                     </ul>
                 </div>
             </div>

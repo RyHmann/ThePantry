@@ -46,7 +46,8 @@ namespace ThePantry.Controllers
                 var userPantry = _repository.GetPantryByUser(userName);
                 if (userPantry != null)
                 {
-                    return Ok(_mapper.Map<PantryViewModel>(userPantry));
+                    var pantryViewModel = _mapper.Map<PantryViewModel>(userPantry);
+                    return Ok(pantryViewModel);
                 }
                 else
                 {
@@ -68,7 +69,8 @@ namespace ThePantry.Controllers
                 var pantry = _repository.GetPantryById(pantryId);
                 if (pantry != null)
                 {
-                    return Ok(_mapper.Map<PantryViewModel>(pantry));
+                    var pantryViewModel = _mapper.Map<PantryViewModel>(pantry);
+                    return Ok(pantryViewModel);
                 }
                 else
                 {
