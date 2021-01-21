@@ -1,10 +1,10 @@
 ﻿@page
-
-<form action="/api/mealfinder/include" name="ingredients" method="GET">
-    <div class="form-group">
-        <label for="IngredientInput">Enter Ingredients<br />(Separated by Comma)</label>
-        <input name="ingr" class="form-control" id="IngredientInput" rows="3"></input>
-        <button>Submit</button>
-    </div>
-</form>
+@section Scripts {
+    <script src="~/clientapp/runtime-es2015.js"></script>
+    <script src="~/clientapp/polyfills-es2015.js"></script>
+    <link href="~/clientapp/styles.css" rel="stylesheet" />
+    <script src="~/clientapp/vendor-es2015.js"></script>
+    <script src="~/clientapp/main-es2015.js"></script>
+}
+<meal-finder></meal-finder>
 
