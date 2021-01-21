@@ -20,4 +20,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="http://json.schemastrore.org/tsconfig" /></VisualStudio></ProjectExtensions>
+
 </Project>
