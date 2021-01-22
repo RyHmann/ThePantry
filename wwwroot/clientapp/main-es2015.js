@@ -26,38 +26,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
-function MealList_li_2_Template(rf, ctx) { if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "li");
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+function MealList_div_1_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](2, "img", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "div", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "h5", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "p", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "a", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9, "View Meal");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
-    const p_r1 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate2"]("", p_r1.title, ": ", p_r1.description, "");
+    const meal_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("src", meal_r1.thumbnail, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵsanitizeUrl"])("title", meal_r1.title)("alt", meal_r1.description);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](meal_r1.title);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](meal_r1.description);
 } }
 class MealList {
     constructor() {
+        this.imageWidth = 50;
+        this.imageMargin = 2;
         this.meals = [{
                 title: "Recipe #1",
-                description: "A delicious recipe."
+                description: "A delicious recipe.",
+                thumbnail: "/assets/thumbnails/pinchofyum_arrozconpollo.jpeg"
             }, {
                 title: "Recipe #2",
-                description: "A delicious recipe."
+                description: "A delicious recipe.",
+                thumbnail: "/app/assets/thumbnails/pinchofyum_coconutlimegrilledchickenandrice.jpeg"
             }, {
                 title: "Recipe #3",
-                description: "A delicious recipe."
+                description: "A delicious recipe.",
+                thumbnail: "./assets/thumbnails/pinchofyum_elotequeso.jpeg"
             }];
     }
 }
 MealList.ɵfac = function MealList_Factory(t) { return new (t || MealList)(); };
-MealList.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MealList, selectors: [["meal-list"]], decls: 3, vars: 1, consts: [[1, "row"], [4, "ngFor", "ngForOf"]], template: function MealList_Template(rf, ctx) { if (rf & 1) {
+MealList.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MealList, selectors: [["meal-list"]], decls: 2, vars: 1, consts: [[1, "row"], ["class", "col-sm-4", 4, "ngFor", "ngForOf"], [1, "col-sm-4"], [1, "card", 2, "width", "18rem"], [1, "card-img-top", 3, "src", "title", "alt"], [1, "card-body"], [1, "card-title"], [1, "card-text"], ["href", "#", 1, "btn", "btn-primary"]], template: function MealList_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "ul");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](2, MealList_li_2_Template, 2, 2, "li", 1);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](1, MealList_div_1_Template, 10, 5, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
     } if (rf & 2) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.meals);
     } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgForOf"]], encapsulation: 2 });
 

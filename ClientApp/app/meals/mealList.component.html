@@ -1,5 +1,12 @@
 ﻿<div class="row">
-    <ul>
-        <li *ngFor="let p of meals">{{ p.title }}: {{ p.description }}</li>
-    </ul>
+    <div class="col-sm-4" *ngFor="let meal of meals">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" [src]= 'meal.thumbnail' [title]="meal.title" [alt]='meal.description'>
+            <div class="card-body">
+                <h5 class="card-title">{{ meal.title }}</h5>
+                <p class="card-text">{{ meal.description }}</p>
+                <a href="#" class="btn btn-primary">View Meal</a>
+            </div>
+        </div>
+    </div>
 </div>
