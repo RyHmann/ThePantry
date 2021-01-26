@@ -9,10 +9,10 @@
 <div class="row">
     <div class="col-sm-4" *ngFor="let meal of meals">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" [src]='meal.ThumbnailUrl' [title]="meal.title" [alt]='meal.description'>
+            <img class="card-img-top" [src]='meal.ThumbnailUrl' [title]="meal.Title" [alt]='meal.Description'>
             <div class="card-body">
-                <h5 class="card-title">{{ meal. }}</h5>
-                <p class="card-text">{{ meal.description }}</p>
+                <h5 class="card-title">{{ meal.Title }}</h5>
+                <p class="card-text">{{ meal.Description }}</p>
                 <a href="#" class="btn btn-primary">View Meal</a>
             </div>
         </div>

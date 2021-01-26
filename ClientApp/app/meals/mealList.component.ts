@@ -14,13 +14,12 @@ export class MealList implements OnInit {
     imageMargin: number = 2;
     searchStringIn: string = "";
     searchStringOut: string = "";
+    meals: IMeal[];
  
 
     constructor(private data: DataService) {
         this.meals = data.meals;
     }
-
-    public meals: IMeal[] = [];
 
     ngOnInit(): void {
         console.log("In OnInit");

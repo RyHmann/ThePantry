@@ -12,6 +12,9 @@ namespace ThePantry.Data.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Instructions { get; set; }
+        public string URL { get; set; }
+        public string Thumbnail { get; set; }
+        public bool Editable { get; set; }
 
         // One to Many Relationship (Parent)
         public virtual ICollection<MealIngredient> MealIngredients { get; set; }
