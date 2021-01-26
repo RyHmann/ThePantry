@@ -1,9 +1,17 @@
-﻿<div class="row">
+﻿<p>Search by ingredients. Separate ingredients by commas.</p>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Search for Meals</span>
+    </div>
+    <input type="text" class="form-control" [(ngModel)]="searchStringIn" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+</div>
+<p>Filtered by: {{searchStringOut}}</p>
+<div class="row">
     <div class="col-sm-4" *ngFor="let meal of meals">
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" [src]= 'meal.thumbnail' [title]="meal.title" [alt]='meal.description'>
+            <img class="card-img-top" [src]='meal.ThumbnailUrl' [title]="meal.title" [alt]='meal.description'>
             <div class="card-body">
-                <h5 class="card-title">{{ meal.title }}</h5>
+                <h5 class="card-title">{{ meal. }}</h5>
                 <p class="card-text">{{ meal.description }}</p>
                 <a href="#" class="btn btn-primary">View Meal</a>
             </div>
