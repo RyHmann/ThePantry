@@ -1,6 +1,6 @@
 # ThePantry
-Ingredient focused Recipe Book Web Application
+An Ingredient focused Recipe API and Web App.
 
-I wanted to make a web application that took into account the user's ingredients, and suggested recipes based on these ingredients. The user will also be able to generate a shopping list based on ingredients required for a recipe that the user would like to create.
+This is an API that returns recipes based on ingredients. The back end of the API is ASP.NET Core 5.0 bolstered by various Nuget Packages. The back end utilizes ASP MVC, with a SQL Server 2019 Database. Data is stored as entities utilizing Entity Framework Core. User Authentication relies on Identity.
 
-This is the third iteration of my idea. This iteration of ThePantry utilizing ASP.NET Core and Entity Framework Core as a backend, paired with a SPA front end utilizing Angular.
+The Web Application consists of an Angular Application built on top of the API.
