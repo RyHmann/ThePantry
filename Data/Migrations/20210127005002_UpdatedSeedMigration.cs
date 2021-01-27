@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ThePantry.Migrations
 {
-    public partial class IdentityMigration : Migration
+    public partial class UpdatedSeedMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -187,15 +187,17 @@ namespace ThePantry.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Editable = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Meals", x => x.MealId);
                     table.ForeignKey(
-                        name: "FK_Meals_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Meals_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -207,16 +209,14 @@ namespace ThePantry.Migrations
                 {
                     PantryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pantries", x => x.PantryId);
                     table.ForeignKey(
-                        name: "FK_Pantries_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Pantries_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -345,14 +345,14 @@ namespace ThePantry.Migrations
                 column: "UnitForeignKey");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Meals_UserId1",
+                name: "IX_Meals_UserId",
                 table: "Meals",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pantries_UserId1",
+                name: "IX_Pantries_UserId",
                 table: "Pantries",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PantryIngredients_IngredientForeignKey",

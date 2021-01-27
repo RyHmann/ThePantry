@@ -10,8 +10,8 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20201214060310_Migration3")]
-    partial class Migration3
+    [Migration("20210127021621_SeedMigration2")]
+    partial class SeedMigration2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -160,9 +160,13 @@ namespace ThePantry.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IngredientId");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Ingredients");
                 });
@@ -177,10 +181,19 @@ namespace ThePantry.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Editable")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Instructions")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")

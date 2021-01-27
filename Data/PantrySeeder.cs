@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data.Entities;
+using ThePantry.Data.SeederData;
 
 namespace ThePantry.Data
 {
@@ -55,95 +56,82 @@ namespace ThePantry.Data
                 _context.SaveChanges();
             }
 
-            // Seed Ingredients into the Db.
+            // Seed Ingredients from POY Data
             if (!_context.Ingredients.Any())
             {
-                var jsonIngredientDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/ingredients.json");
-                var jsonIngredientData = File.ReadAllText(jsonIngredientDataFilepath);
-                var ingredientsToSeed = JsonConvert.DeserializeObject<IEnumerable<Ingredient>>(jsonIngredientData);
-                _context.Ingredients.AddRange(ingredientsToSeed);
-                _context.SaveChanges();
+                // Read Data
+                var jsonPOYDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/pinchofyum.txt");
+                var rawJsonPOYData = File.ReadAllText(jsonPOYDataFilepath);
+                var deserializedJsonPOYData = JsonConvert.DeserializeObject<IEnumerable<JsonMeal>>(rawJsonPOYData);
+
+                //Cycle through each Meal and extract & add ingredients
+                foreach (var meal in deserializedJsonPOYData)
+                {
+                    var newIngredients = meal.MealIngredients;
+
+                    // Cycle through each meal ingredient and add ingredient to DB if it doesn't exist
+
+                    foreach (var ingredient in newIngredients)
+                    {
+                        
+                        var formattedIngredientString = ingredient.Trim();
+                        var ingredientExists = _context.Ingredients
+                            .Any(n => n.Name == formattedIngredientString);
+
+                        if (ingredientExists == false)
+                        {
+                            var ingredientToAdd = new Ingredient();
+                            ingredientToAdd.Name = formattedIngredientString;
+                            _context.Add(ingredientToAdd);
+                            _context.SaveChanges();
+                        }
+                    }
+                }
             }
 
-            /*
+            //Seed Meals from POY Data
             if (!_context.Meals.Any())
             {
-                var jsonMealDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/meals.json");
-                var jsonMealData = File.ReadAllText(jsonMealDataFilepath);
-                var mealsToSeed = JsonConvert.DeserializeObject<IEnumerable<Meal>>(jsonMealData);
-                _context.Meals.AddRange(mealsToSeed);
-                _context.SaveChanges();
-            }
-            
+                // Read Data
+                var jsonPOYDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/pinchofyum.txt");
+                var rawJsonPOYData = File.ReadAllText(jsonPOYDataFilepath);
+                var deserializedJsonPOYData = JsonConvert.DeserializeObject<IEnumerable<JsonMeal>>(rawJsonPOYData);
 
-            if (!_context.Pantries.Any())
-            {
-                var jsonPantryDataFilepath = Path.Combine(_hosting.ContentRootPath, "Data/SeederData/pantries.json");
-                var jsonPantryData = File.ReadAllText(jsonPantryDataFilepath);
-                var pantriesToSeed = JsonConvert.DeserializeObject<IEnumerable<Pantry>>(jsonPantryData);
-                _context.Pantries.AddRange(pantriesToSeed);
-                _context.SaveChanges();
-            }
-            */
-
-            
-            // Seed Meal into the Db.
-            if (!_context.Meals.Any())
-            {
-                var mealHamSandwich = new Meal()
+                //Cycle through each Meal and extract & add ingredients
+                foreach (var meal in deserializedJsonPOYData)
                 {
-                    Name = "Ham Sandwich",
-                    Description = "A traditional ham sandwich",
-                    Instructions = "Assemble ham, cheddar cheese, and bread.",
-                };
-                _context.Add(mealHamSandwich);
-                _context.SaveChanges();
+                    var newMeal = new Meal();
+                    newMeal.Name = meal.Name;
+                    newMeal.Description = meal.Description;
+                    newMeal.Instructions = meal.Instructions;
+                    newMeal.URL = meal.URL;
+                    newMeal.Thumbnail = meal.Thumbnail;
+                    newMeal.Editable = true;
+
+                    // Meal only Editable if created by User
+                    if (!string.IsNullOrEmpty(newMeal.URL))
+                    {
+                        newMeal.Editable = false;
+                    }
+
+                    // Cycle through each meal ingredient and add ingredient to DB if it doesn't exist
+                    var mealIngredients = new List<MealIngredient>();
+                    var newIngredients = meal.MealIngredients;
+                    foreach (var ingredient in newIngredients)
+                    {
+                        var newMealIngredient = new MealIngredient();
+                        var newIngredient = _context.Ingredients
+                            .Where(n => n.Name == ingredient.Trim())
+                            .FirstOrDefault();
+                        newMealIngredient.Ingredient = newIngredient;
+                        newMealIngredient.MealId = newMeal.MealId;
+                        mealIngredients.Add(newMealIngredient);
+                    }
+                    newMeal.MealIngredients = mealIngredients;
+                    _context.Meals.Add(newMeal);
+                    _context.SaveChanges();
+                }
             }
-
-            // Seed MealIngredients into the Db.
-            if (!_context.MealIngredients.Any())
-            {
-                var mealIngredientHam = new MealIngredient()
-                {
-                    MealId = _context.Meals
-                                     .Where(m => m.Name == "Ham Sandwich")
-                                     .SingleOrDefault()
-                                     .MealId,
-                    Ingredient = _context.Ingredients
-                                         .Where(m => m.Name == "ham")
-                                         .FirstOrDefault(),
-                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
-                    Quantity = 5
-                };
-                _context.Add(mealIngredientHam);
-                
-
-                var mealIngredientBread = new MealIngredient()
-                {
-                    MealId = _context.Meals
-                                     .Where(m => m.Name == "Ham Sandwich")
-                                     .SingleOrDefault()
-                                     .MealId,
-                    Ingredient = _context.Ingredients.Where(m => m.Name == "bread").FirstOrDefault(),
-                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
-                    Quantity = 5
-                };
-                _context.Add(mealIngredientBread);
-
-                var mealIngredientCheese = new MealIngredient()
-                {
-                    MealId = _context.Meals
-                                     .Where(m => m.Name == "Ham Sandwich")
-                                     .SingleOrDefault()
-                                     .MealId,
-                    Ingredient = _context.Ingredients.Where(i => i.Name == "cheddar cheese").FirstOrDefault(),
-                    Unit = _context.Units.Where(u => u.Name == "unit").FirstOrDefault(),
-                    Quantity = 5
-                };
-                _context.Add(mealIngredientCheese);
-                _context.SaveChanges();
-            }
-            
         }
     }
 }
