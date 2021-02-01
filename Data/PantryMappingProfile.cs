@@ -14,7 +14,7 @@ namespace ThePantry.Data
         public PantryMappingProfile()
         {
             CreateMap<Meal, MealViewModel>()
-                .ReverseMap();
+                .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(source => source.MealIngredients));
 
             CreateMap<MealIngredient, MealIngredientViewModel>()
                 .ReverseMap();

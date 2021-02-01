@@ -70,6 +70,7 @@ namespace ThePantry.Controllers
             }
         }
 
+        /*
         [HttpPost]
         public ActionResult CreateMeal(MealViewModel model)
         {
@@ -82,7 +83,7 @@ namespace ThePantry.Controllers
                     {
                         var mealIngredient = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredientViewModel);
 
-                        // Add check to make sure same meal ingredient isn't added twice?
+                        // Check to see if Ingredient exists in DB
                         if (_repository.IngredientExists(mealIngredient.Ingredient))
                         {
                             mealIngredient.Ingredient = _repository.GetIngredientByName(mealIngredientViewModel.Ingredient.Name);
@@ -120,6 +121,7 @@ namespace ThePantry.Controllers
             }
             return BadRequest("Failed to save new meal");
         }
+        */
 
         [HttpPut("{id:int}")]
         public ActionResult<MealViewModel> EditMeal(int id, MealViewModel model)

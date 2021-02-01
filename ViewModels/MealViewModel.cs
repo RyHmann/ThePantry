@@ -9,7 +9,6 @@ namespace ThePantry.ViewModels
 {
     public class MealViewModel
     {
-        public int MealId { get; set; }
 
         [Required]
         [MinLength(3)]
@@ -21,11 +20,13 @@ namespace ThePantry.ViewModels
 
         [Required]
         public string Instructions { get; set; }
-        public virtual List<MealIngredientViewModel> Ingredients { get; set; }
+        public virtual List< IngredientViewModel> Ingredients { get; set; }
+        public string Thumbnail { get; set; }
+        public string URL { get; set; }
 
         public MealViewModel()
         {
-            Ingredients = new List<MealIngredientViewModel>();
+            Ingredients = new List<IngredientViewModel>();
         }
     }
 }
