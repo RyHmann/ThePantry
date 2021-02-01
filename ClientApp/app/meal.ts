@@ -1,8 +1,11 @@
-﻿import { MealIngredient } from './mealingredient';
+﻿import { Ingredient } from './ingredient';
 
 export interface Meal {
     name: string;
     description: string;
-    ingredients: MealIngredient[];
+    instructions: string;
+    ingredients: Ingredient[];
+    thumbnail: string;
+    url: string;
 
 }

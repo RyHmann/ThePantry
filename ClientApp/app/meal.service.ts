@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Meal } from './meal';
-import { MEALS } from './mock-meals';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

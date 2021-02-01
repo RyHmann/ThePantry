@@ -13,6 +13,12 @@ namespace ThePantry.Data
     {
         public PantryMappingProfile()
         {
+            // TO DO: Map Meal to MVM and flatten Meal Ingredients to list of IngredientVM
+            // https://stackoverflow.com/questions/13338262/automapper-and-flattening-nested-arrays
+
+            CreateMap<MealIngredient, IngredientViewModel>()
+                .IncludeMembers(src => src.Ingredient);
+
             CreateMap<Meal, MealViewModel>()
                 .ForMember(dest => dest.Ingredients, opt => opt.MapFrom(source => source.MealIngredients));
 

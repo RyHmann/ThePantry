@@ -20,6 +20,9 @@ namespace ThePantry.Data
             _logger = logger;
         }
 
+        // TO DO: Ensure function finds meals CONTAINING ingredients (case agnostic), and not an exact match
+        // TO DO: Convert methods to ASYNC
+
         // Pantry Methods
         public IEnumerable<Pantry> GetAllPantries()
         {
@@ -128,6 +131,8 @@ namespace ThePantry.Data
             _logger.LogInformation($"Attempting to retreive meal with ID: {mealId}.");
             return _context.Meals
                            .Where(m => m.MealId == mealId)
+                           .Include(m => m.MealIngredients)
+                           .ThenInclude(i => i.Ingredient)
                            .FirstOrDefault();
         }
 
@@ -195,19 +200,32 @@ namespace ThePantry.Data
         }
 
         // MealFinder Functions
+        
         public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
-            var availableMeals = new HashSet<Meal>();
+            var populatedMeals = new List<Meal>();
             
             foreach (var ingredient in ingredients)
             {
+                // Select each meal that has this ingredient and return as a Hash Set
                 var matchingMeals = _context.MealIngredients
-                        .Where(i => i.Ingredient.Name == ingredient)
-                        .Select(s => s.Meal)
+                        .Where(m => m.Ingredient.Name == ingredient)
+                        .Select(m => m.Meal)
                         .ToHashSet();
-                availableMeals.UnionWith(matchingMeals);
+
+                // Populate each meal with all data
+                // TODO: Refactor this - possibly into one query
+                foreach (var meal in matchingMeals)
+                {
+                    var fullMeal = _context.Meals
+                        .Where(m => m.MealId == meal.MealId)
+                        .Include(m => m.MealIngredients)
+                        .ThenInclude(i => i.Ingredient)
+                        .FirstOrDefault();
+                    populatedMeals.Add(fullMeal);
+                }
             }
-            return availableMeals;
+            return populatedMeals;
         }
 
         public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)

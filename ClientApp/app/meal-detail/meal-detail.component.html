@@ -3,10 +3,12 @@
     <div>
         <p>Description</p>
         <p>{{meal.description}}</p>
+        <p>Link: {{meal.url}}</p>
+        <p>Thumbnail: {{meal.thumbnail}}</p>
         <p>Ingredients:</p>
         <ul>
-            <li *ngFor="let mealIngredient of meal.ingredients">
-                <p>{{mealIngredient.ingredient.name}}</p>
+            <li *ngFor="let ingredient of meal.ingredients">
+                <p>{{ingredient.name}}</p>
             </li>
         </ul>
     </div>
