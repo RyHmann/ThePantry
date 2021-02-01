@@ -1,6 +1,10 @@
 # ThePantry
 An Ingredient focused Recipe API and Web App.
 
-This is an API that returns recipes based on ingredients. The back end of the API is ASP.NET Core 5.0 bolstered by various Nuget Packages. The back end utilizes ASP MVC, with a SQL Server 2019 Database. Data is stored as entities utilizing Entity Framework Core. User Authentication relies on Identity.
+This is an Angular Front End Web Application built into ASP.NET Core 5.0. The intent of this application is to provide users a means to look up recipes by ingredients.
 
-The Web Application consists of an Angular Application built on top of the API.
+The API utilizes ASP.NET Core 5.0 with an MVC design pattern with the intent to keep the API as RESTful as possible. Data persistence utilizes SQL Server 2019, and all interaction with the database is handled through Entity Framework Core. Entities are converted to View Models via AutoMapper Extensions. User Data is handled by ASP.NET Core Authentication and Identity utilizing JwtBearer Tokens.
+
+The front of the application is controlled by ASP MVC routing with Angular Web Components inserted in ASP.NET views. 
+
+// TO DO: Provide documentation for external parties to utilize API
