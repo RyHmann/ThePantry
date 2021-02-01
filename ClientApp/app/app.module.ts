@@ -4,13 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { MealList } from './meals/mealList.component';
-import { DataService } from './shared/dataService';
+import { MealSearchComponent } from './meal-search/meal-search.component';
+import { MealDetailComponent } from './meal-detail/meal-detail.component';
+import { MealsComponent } from './meals/meals.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MealList
+    MealSearchComponent,
+    MealDetailComponent,
+    MealsComponent,
   ],
   imports: [
       BrowserModule,
@@ -18,7 +22,6 @@ import { DataService } from './shared/dataService';
       FormsModule
   ],
     providers: [
-        DataService
     ],
   bootstrap: [AppComponent]
 })

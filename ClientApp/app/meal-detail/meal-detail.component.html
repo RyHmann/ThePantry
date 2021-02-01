@@ -1,0 +1,13 @@
+<div *ngIf="meal">
+    <h2>{{meal.name | uppercase}}</h2>
+    <div>
+        <p>Description</p>
+        <p>{{meal.description}}</p>
+        <p>Ingredients:</p>
+        <ul>
+            <li *ngFor="let mealIngredient of meal.ingredients">
+                <p>{{mealIngredient.ingredient.name}}</p>
+            </li>
+        </ul>
+    </div>
+</div>
