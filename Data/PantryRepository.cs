@@ -172,11 +172,20 @@ namespace ThePantry.Data
             }
         }
 
-        // Ingredient Methods
+        /*<---------- Ingredient Methods ---------->*/
+
+        // Checks if ingredient with this name exists in the DB
         public bool IngredientExists(Ingredient ingredientToCheck)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");
             return _context.Ingredients.Any(n => n.Name == ingredientToCheck.Name);
+        }
+
+        // Checks if any ingredients contain the search string
+        public bool IngredientHasMatch(string ingredientToCheck)
+        {
+            _logger.LogInformation("Check to see if any ingredients contain this term");
+            return _context.Ingredients.Any(n => n.Name.Contains(ingredientToCheck));
         }
 
         public bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId)
@@ -197,6 +206,15 @@ namespace ThePantry.Data
             return _context.Ingredients
                 .Where(n => n.Name == ingredientName)
                 .FirstOrDefault();
+        }
+
+        // Returns all ingredients that contain input string
+        public IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName)
+        {
+            _logger.LogInformation("Attemping to find ingredients");
+            return _context.Ingredients
+                .Where(n => n.Name.Contains(ingredientName))
+                .ToList();
         }
 
         // MealFinder Functions

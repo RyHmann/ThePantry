@@ -18,16 +18,14 @@ namespace ThePantry.Controllers
     public class MealFinderController : Controller
     {
         private readonly IPantryRepository _repository;
-        private readonly ILogger<MealIngredientsController> _logger;
+        private readonly ILogger<MealFinderController> _logger;
         private readonly IMapper _mapper;
-        private readonly LinkGenerator _linkGenerator;
 
-        public MealFinderController(IPantryRepository repository, ILogger<MealIngredientsController> logger, IMapper mapper, LinkGenerator linkGenerator)
+        public MealFinderController(IPantryRepository repository, ILogger<MealFinderController> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-            _linkGenerator = linkGenerator;
         }
 
         [HttpGet("{include}")]

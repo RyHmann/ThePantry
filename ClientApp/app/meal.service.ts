@@ -21,5 +21,6 @@ export class MealService {
         }
         return this._http.get<Meal[]>(`${this.mealsUrl}${term}}`);
     }
+
 }
 
