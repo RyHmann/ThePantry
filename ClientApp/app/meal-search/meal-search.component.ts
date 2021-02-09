@@ -14,12 +14,13 @@ export class MealSearchComponent implements OnInit {
 
     ingredients$: Observable<Ingredient[]> | undefined;
     private searchTerms = new Subject<string>();
-    private ingredientString: string | undefined;
+    queryString: string | undefined;
 
     constructor(private mealService: MealService) { }
 
     // Push a search term into the observable stream
     search(term: string): void {
+        this.queryString = term;
         this.searchTerms.next(term);
     }
 
@@ -27,13 +28,15 @@ export class MealSearchComponent implements OnInit {
         this.ingredients$ = this.searchTerms.pipe(
             debounceTime(300),
             distinctUntilChanged(),
+            // Map ignores all string items except for the last comma separated value
             map((term: string) => term.split(",").pop()!.trim()),
             switchMap((term: string) => this.mealService.searchIngredients(term))
         );
     }
 
     selectIngredient(ingredient: string): void {
-        this.ingredientString?.concat(ingredient);
+        this.queryString?.concat(ingredient + ", ");
+        console.log(`Selected: ${ingredient}`);
     }
 
 }
