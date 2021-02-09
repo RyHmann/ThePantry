@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Meal } from '../meal';
+import { Ingredient } from '../ingredient';
 import { MealService } from '../meal.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'meal-search',
@@ -10,8 +11,10 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
   styleUrls: ['./meal-search.component.css']
 })
 export class MealSearchComponent implements OnInit {
-    meals$: Observable<Meal[]> | undefined;
+
+    ingredients$: Observable<Ingredient[]> | undefined;
     private searchTerms = new Subject<string>();
+    private ingredientString: string | undefined;
 
     constructor(private mealService: MealService) { }
 
@@ -21,11 +24,16 @@ export class MealSearchComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.meals$ = this.searchTerms.pipe(
+        this.ingredients$ = this.searchTerms.pipe(
             debounceTime(300),
             distinctUntilChanged(),
-            switchMap((term: string) => this.mealService.searchMeals(term))
+            map((term: string) => term.split(",").pop()!.trim()),
+            switchMap((term: string) => this.mealService.searchIngredients(term))
         );
-  }
+    }
+
+    selectIngredient(ingredient: string): void {
+        this.ingredientString?.concat(ingredient);
+    }
 
 }

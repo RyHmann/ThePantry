@@ -1,7 +1,7 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 let MealSearchComponent = class MealSearchComponent {
     constructor(mealService) {
         this.mealService = mealService;
@@ -12,7 +12,11 @@ let MealSearchComponent = class MealSearchComponent {
         this.searchTerms.next(term);
     }
     ngOnInit() {
-        this.meals$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), switchMap((term) => this.mealService.searchMeals(term)));
+        this.ingredients$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
+    }
+    selectIngredient(ingredient) {
+        var _a;
+        (_a = this.ingredientString) === null || _a === void 0 ? void 0 : _a.concat(ingredient);
     }
 };
 MealSearchComponent = __decorate([

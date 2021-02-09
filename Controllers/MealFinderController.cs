@@ -33,17 +33,24 @@ namespace ThePantry.Controllers
         {
             try
             {
-                // TO DO:
-                // Add filter here to indicate which ingredients aren't recognized, and indicate to user
+                if (!string.IsNullOrEmpty(ingr))
+                {
+                    // TO DO:
+                    // Add filter here to indicate which ingredients aren't recognized, and indicate to user
+                    var ingredients = ingr
+                                        .Split(',')
+                                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                                        .Select(i => i.Trim())
+                                        .ToArray();
+                    var availableMeals = _repository.FindMealsByIngredients(ingredients);
+                    var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(availableMeals);
+                    return availabeMealsViewModel;
+                }
+                else
+                {
+                    return NotFound();
+                }
 
-                var ingredients = ingr
-                    .Split(',')
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
-                    .Select(i => i.Trim())
-                    .ToArray();
-                var availableMeals = _repository.FindMealsByIngredients(ingredients);
-                var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(availableMeals);
-                return availabeMealsViewModel;
             }
             catch (Exception exception)
             {
