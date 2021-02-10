@@ -14,6 +14,7 @@ export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
+    searchResultState: boolean = false;
 
     constructor(private mealService: MealService) {
     }
@@ -36,10 +37,25 @@ export class MealSearchComponent implements OnInit {
     }
 
     selectIngredient(ingredient: string): void {
-        let newString = this.queryString?.concat(ingredient + ", ");
+
+        // Removes last item after comma, and inserts the value selected from auto-complete search result
+        // TODO: Change focus from search results to search bar on click, hide search results
+        let stringArray = this.queryString?.split(",");
+        stringArray?.pop();
+        stringArray?.push(ingredient + ", ");
+        let newString = stringArray?.join(", ");
         this.queryString = newString;
+
+        // Clear search results
+        this.searchTerms.next(" ");
+
+        // Jank unit testing
         console.log(`Selected: ${ingredient}`);
         console.log("Current Query: " + newString);
+    }
+
+    toggleDropdown(): void {
+        this.searchResultState = !this.searchResultState;
     }
 
 }

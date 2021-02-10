@@ -10,6 +10,7 @@ let MealSearchComponent = class MealSearchComponent {
     // Push a search term into the observable stream
     search(term) {
         this.queryString = term;
+        console.log(this.queryString);
         this.searchTerms.next(term);
     }
     ngOnInit() {
@@ -19,9 +20,10 @@ let MealSearchComponent = class MealSearchComponent {
     }
     selectIngredient(ingredient) {
         var _a;
-        (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
+        let newString = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
+        this.queryString = newString;
         console.log(`Selected: ${ingredient}`);
-        console.log(this.queryString);
+        console.log("Current Query: " + newString);
     }
 };
 MealSearchComponent = __decorate([
