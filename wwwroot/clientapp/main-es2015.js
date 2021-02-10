@@ -335,6 +335,7 @@ class MealSearchComponent {
     // Push a search term into the observable stream
     search(term) {
         this.queryString = term;
+        console.log(this.queryString);
         this.searchTerms.next(term);
     }
     ngOnInit() {
@@ -344,12 +345,14 @@ class MealSearchComponent {
     }
     selectIngredient(ingredient) {
         var _a;
-        (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
+        let newString = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
+        this.queryString = newString;
         console.log(`Selected: ${ingredient}`);
+        console.log("Current Query: " + newString);
     }
 }
 MealSearchComponent.ɵfac = function MealSearchComponent_Factory(t) { return new (t || MealSearchComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_meal_service__WEBPACK_IMPORTED_MODULE_3__["MealService"])); };
-MealSearchComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({ type: MealSearchComponent, selectors: [["meal-search"]], decls: 9, vars: 4, consts: [["id", "search component"], ["for", "search-box"], ["id", "search-box", 3, "ngModel", "ngModelChange", "input"], ["searchBox", ""], [1, "search-result"], [4, "ngFor", "ngForOf"], [3, "click"], ["ingredientResult", ""]], template: function MealSearchComponent_Template(rf, ctx) { if (rf & 1) {
+MealSearchComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({ type: MealSearchComponent, selectors: [["meal-search"]], decls: 9, vars: 4, consts: [["id", "search component"], ["for", "search-box"], ["type", "text", "id", "search-box", 3, "ngModel", "ngModelChange", "input"], ["searchBox", ""], [1, "search-result"], [4, "ngFor", "ngForOf"], [3, "click"], ["ingredientResult", ""]], template: function MealSearchComponent_Template(rf, ctx) { if (rf & 1) {
         const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "h4");

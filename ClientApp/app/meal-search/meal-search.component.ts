@@ -11,16 +11,17 @@ import { debounceTime, distinctUntilChanged, switchMap, filter, map } from 'rxjs
   styleUrls: ['./meal-search.component.css']
 })
 export class MealSearchComponent implements OnInit {
-
     ingredients$: Observable<Ingredient[]> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
 
-    constructor(private mealService: MealService) { }
+    constructor(private mealService: MealService) {
+    }
 
     // Push a search term into the observable stream
     search(term: string): void {
         this.queryString = term;
+        console.log(this.queryString);
         this.searchTerms.next(term);
     }
 
@@ -35,8 +36,10 @@ export class MealSearchComponent implements OnInit {
     }
 
     selectIngredient(ingredient: string): void {
-        this.queryString?.concat(ingredient + ", ");
+        let newString = this.queryString?.concat(ingredient + ", ");
+        this.queryString = newString;
         console.log(`Selected: ${ingredient}`);
+        console.log("Current Query: " + newString);
     }
 
 }

@@ -9,14 +9,19 @@ let MealSearchComponent = class MealSearchComponent {
     }
     // Push a search term into the observable stream
     search(term) {
+        this.queryString = term;
         this.searchTerms.next(term);
     }
     ngOnInit() {
-        this.ingredients$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
+        this.ingredients$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), 
+        // Map ignores all string items except for the last comma separated value
+        map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
     }
     selectIngredient(ingredient) {
         var _a;
-        (_a = this.ingredientString) === null || _a === void 0 ? void 0 : _a.concat(ingredient);
+        (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
+        console.log(`Selected: ${ingredient}`);
+        console.log(this.queryString);
     }
 };
 MealSearchComponent = __decorate([
