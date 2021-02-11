@@ -222,12 +222,13 @@ namespace ThePantry.Data
         public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
             var populatedMeals = new List<Meal>();
+            var filteredMeals = new List<Meal>();
             
             foreach (var ingredient in ingredients)
             {
                 // Select each meal that has this ingredient and return as a Hash Set
                 var matchingMeals = _context.MealIngredients
-                        .Where(m => m.Ingredient.Name == ingredient)
+                        .Where(m => m.Ingredient.Name.Contains(ingredient))
                         .Select(m => m.Meal)
                         .ToHashSet();
 
@@ -243,7 +244,35 @@ namespace ThePantry.Data
                     populatedMeals.Add(fullMeal);
                 }
             }
+            // TODO: filter meals that have all ingredients
+
+            foreach (var meal in populatedMeals)
+            {
+                // go through each meal ingredient and check if every mealingredient.name contains every ingredient in ingredients
+                if (everyMealIngredientContainsIngredient(meal, ingredients))
+                {
+                    filteredMeals.Add(meal);
+                }
+            }
+
             return populatedMeals;
+        }
+
+        private bool everyMealIngredientContainsIngredient(Meal meal, IEnumerable<string> ingredients)
+        {
+            // Create a list of meal ingredient names
+            var mealIngredientNames = new List<string>();
+            foreach (var mealIngredient in meal.MealIngredients)
+            {
+                mealIngredientNames.Add(mealIngredient.Ingredient.Name);
+            }
+
+            // Compare meal ingredient names and make sure it contains all instances of ingredients
+            if ()
+            {
+                return true;
+            }
+            else return false;
         }
 
         public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)

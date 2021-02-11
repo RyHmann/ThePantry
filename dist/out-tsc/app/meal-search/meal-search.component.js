@@ -6,11 +6,11 @@ let MealSearchComponent = class MealSearchComponent {
     constructor(mealService) {
         this.mealService = mealService;
         this.searchTerms = new Subject();
+        this.searchResultState = false;
     }
     // Push a search term into the observable stream
     search(term) {
         this.queryString = term;
-        console.log(this.queryString);
         this.searchTerms.next(term);
     }
     ngOnInit() {
@@ -19,11 +19,22 @@ let MealSearchComponent = class MealSearchComponent {
         map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
     }
     selectIngredient(ingredient) {
-        var _a;
-        let newString = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.concat(ingredient + ", ");
-        this.queryString = newString;
+        // TODO: Change focus from search results to search bar on click
+        this.incorporateSelectedIngredient(ingredient);
+        // Clear search results
+        this.searchTerms.next(" ");
+        // TODO: clear this jank unit testing
         console.log(`Selected: ${ingredient}`);
-        console.log("Current Query: " + newString);
+        console.log("Current Query: " + this.queryString);
+    }
+    incorporateSelectedIngredient(ingredient) {
+        var _a;
+        // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
+        let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(",");
+        stringArray === null || stringArray === void 0 ? void 0 : stringArray.pop();
+        stringArray === null || stringArray === void 0 ? void 0 : stringArray.push(ingredient + ", ");
+        let newString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.join(", ");
+        this.queryString = newString;
     }
 };
 MealSearchComponent = __decorate([
