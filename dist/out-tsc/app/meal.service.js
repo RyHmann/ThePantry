@@ -15,7 +15,10 @@ let MealService = class MealService {
         if (!term.trim) {
             return of([]);
         }
-        return this._http.get(`${this.mealsUrl}${term}}`);
+        return this._http.get(`${this.mealsUrl}${term}}`)
+            .pipe(tap(x => x.length ?
+            console.log(`Found meals matching "${term}"`) :
+            console.log(`No meals matching "${term}"`)), catchError(this.handleError('searchMeals', [])));
     }
     searchIngredients(term) {
         if (term.trim().length < 3) {

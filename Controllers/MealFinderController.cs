@@ -29,6 +29,8 @@ namespace ThePantry.Controllers
         }
 
         [HttpGet("{include}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public ActionResult<MealViewModel[]> FindMeals([FromQuery]string ingr)
         {
             try

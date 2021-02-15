@@ -1,6 +1,6 @@
 import { __decorate } from "tslib";
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 let MealSearchComponent = class MealSearchComponent {
     constructor(mealService) {
@@ -26,6 +26,12 @@ let MealSearchComponent = class MealSearchComponent {
         // TODO: clear this jank unit testing
         console.log(`Selected: ${ingredient}`);
         console.log("Current Query: " + this.queryString);
+    }
+    searchMeals() {
+        // Clear current search results
+        this.meals$ = of([]);
+        // Return results based on new query string
+        this.meals$ = this.mealService.searchMeals(this.queryString);
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ThePantry.Data.Entities;
 
 namespace ThePantry.Data
@@ -16,8 +17,8 @@ namespace ThePantry.Data
         Meal GetMealById(int mealId);
 
         // MealFinder methods
-        IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredients);
-        IEnumerable<Meal> FindMealsByAllIngredients(int pantryId);
+        Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients);
+        Task<Meal> FindMealsByAllIngredients(int pantryId);
 
         // Pantry Ingredient Methods
         PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId);

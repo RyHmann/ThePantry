@@ -217,10 +217,11 @@ namespace ThePantry.Data
                 .ToList();
         }
 
-        // MealFinder Functions
-        
-        public IEnumerable<Meal> FindMealsByIngredients(IEnumerable<string> ingredients)
+        /*<---------- MealFinder Methods ---------->*/
+
+        public async Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
+            // Meals that have at least one ingredient in search query
             var populatedMeals = new List<Meal>();
             var filteredMeals = new List<Meal>();
             
@@ -249,30 +250,53 @@ namespace ThePantry.Data
             foreach (var meal in populatedMeals)
             {
                 // go through each meal ingredient and check if every mealingredient.name contains every ingredient in ingredients
-                if (everyMealIngredientContainsIngredient(meal, ingredients))
+                if (mealContainsAllIngredients(meal, ingredients))
                 {
                     filteredMeals.Add(meal);
                 }
             }
-
-            return populatedMeals;
+            return await populatedMeals.ToArrayAsync();
         }
 
-        private bool everyMealIngredientContainsIngredient(Meal meal, IEnumerable<string> ingredients)
+        private bool mealContainsAllIngredients(Meal meal, IEnumerable<string> userIngredients)
         {
+            bool allIngredientsPresent = true;
             // Create a list of meal ingredient names
-            var mealIngredientNames = new List<string>();
+            var requiredIngredients = new List<string>();
+
+            // Populate array of ingredient names found in meal
             foreach (var mealIngredient in meal.MealIngredients)
             {
-                mealIngredientNames.Add(mealIngredient.Ingredient.Name);
+                requiredIngredients.Add(mealIngredient.Ingredient.Name);
             }
 
             // Compare meal ingredient names and make sure it contains all instances of ingredients
-            if ()
+            foreach (var ingredient in userIngredients)
             {
-                return true;
+                if (ingredientInMeal(requiredIngredients, ingredient))
+                {
+                    allIngredientsPresent = true;
+                }
+                else
+                {
+                    allIngredientsPresent = false;
+                }
             }
-            else return false;
+            return allIngredientsPresent;
+        }
+
+
+        private bool ingredientInMeal(List<string> requiredIngredients, string ingredient)
+        {
+            // Check if ingredient exists in requiredIngredients
+            if (requiredIngredients.Any(ingredient.Contains))
+            {
+                return true; 
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)
