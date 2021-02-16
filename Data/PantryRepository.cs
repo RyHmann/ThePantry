@@ -205,7 +205,7 @@ namespace ThePantry.Data
             _logger.LogInformation("Attempting to retreive existing Ingredient.");
             return _context.Ingredients
                 .Where(n => n.Name == ingredientName)
-                .FirstOrDefault();
+                .FirstOrDefaultA();
         }
 
         // Returns all ingredients that contain input string
@@ -219,6 +219,7 @@ namespace ThePantry.Data
 
         /*<---------- MealFinder Methods ---------->*/
 
+        // TODO: Standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
         public async Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
             // Meals that have at least one ingredient in search query
@@ -241,7 +242,7 @@ namespace ThePantry.Data
                         .Where(m => m.MealId == meal.MealId)
                         .Include(m => m.MealIngredients)
                         .ThenInclude(i => i.Ingredient)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
                     populatedMeals.Add(fullMeal);
                 }
             }
