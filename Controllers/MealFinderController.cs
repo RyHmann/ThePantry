@@ -44,6 +44,8 @@ namespace ThePantry.Controllers
                                         .Where(s => !string.IsNullOrWhiteSpace(s))
                                         .Select(i => i.Trim())
                                         .ToArray();
+                    var userIngredients = _repository.GetIngredientsByName(ingredients);
+
                     var availableMeals = _repository.FindMealsByIngredients(ingredients);
                     var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(availableMeals);
                     return availabeMealsViewModel;

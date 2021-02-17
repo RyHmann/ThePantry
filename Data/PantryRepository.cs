@@ -205,8 +205,17 @@ namespace ThePantry.Data
             _logger.LogInformation("Attempting to retreive existing Ingredient.");
             return _context.Ingredients
                 .Where(n => n.Name == ingredientName)
-                .FirstOrDefaultA();
+                .FirstOrDefault();
         }
+
+        public Task<IEnumerable<Ingredient>> GetIngredientsByName(string[] ingredients)
+        {
+            _logger.LogInformation("Attempting to get ingredients via ingredient array");
+            // TODO: can this query be done without a foreach loop?
+            // write query to find all entities by string array
+            
+        }
+
 
         // Returns all ingredients that contain input string
         public IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName)
@@ -219,86 +228,14 @@ namespace ThePantry.Data
 
         /*<---------- MealFinder Methods ---------->*/
 
-        // TODO: Standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
-        public async Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients)
+        // TODO: Simplify and use standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
+        /*public async Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients)
         {
-            // Meals that have at least one ingredient in search query
-            var populatedMeals = new List<Meal>();
-            var filteredMeals = new List<Meal>();
-            
-            foreach (var ingredient in ingredients)
-            {
-                // Select each meal that has this ingredient and return as a Hash Set
-                var matchingMeals = _context.MealIngredients
-                        .Where(m => m.Ingredient.Name.Contains(ingredient))
-                        .Select(m => m.Meal)
-                        .ToHashSet();
-
-                // Populate each meal with all data
-                // TODO: Refactor this - possibly into one query
-                foreach (var meal in matchingMeals)
-                {
-                    var fullMeal = _context.Meals
-                        .Where(m => m.MealId == meal.MealId)
-                        .Include(m => m.MealIngredients)
-                        .ThenInclude(i => i.Ingredient)
-                        .FirstOrDefaultAsync();
-                    populatedMeals.Add(fullMeal);
-                }
-            }
-            // TODO: filter meals that have all ingredients
-
-            foreach (var meal in populatedMeals)
-            {
-                // go through each meal ingredient and check if every mealingredient.name contains every ingredient in ingredients
-                if (mealContainsAllIngredients(meal, ingredients))
-                {
-                    filteredMeals.Add(meal);
-                }
-            }
-            return await populatedMeals.ToArrayAsync();
-        }
-
-        private bool mealContainsAllIngredients(Meal meal, IEnumerable<string> userIngredients)
-        {
-            bool allIngredientsPresent = true;
-            // Create a list of meal ingredient names
-            var requiredIngredients = new List<string>();
-
-            // Populate array of ingredient names found in meal
-            foreach (var mealIngredient in meal.MealIngredients)
-            {
-                requiredIngredients.Add(mealIngredient.Ingredient.Name);
-            }
-
-            // Compare meal ingredient names and make sure it contains all instances of ingredients
-            foreach (var ingredient in userIngredients)
-            {
-                if (ingredientInMeal(requiredIngredients, ingredient))
-                {
-                    allIngredientsPresent = true;
-                }
-                else
-                {
-                    allIngredientsPresent = false;
-                }
-            }
-            return allIngredientsPresent;
-        }
+            _logger.LogInformation($"Attempting to find meals containing all ingredients: {ingredients}");
+            var query = _context.Meals
+        }*/
 
 
-        private bool ingredientInMeal(List<string> requiredIngredients, string ingredient)
-        {
-            // Check if ingredient exists in requiredIngredients
-            if (requiredIngredients.Any(ingredient.Contains))
-            {
-                return true; 
-            }
-            else
-            {
-                return false;
-            }
-        }
 
         public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)
         {

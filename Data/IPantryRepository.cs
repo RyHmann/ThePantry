@@ -35,6 +35,7 @@ namespace ThePantry.Data
         public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId);
         Ingredient GetIngredientByName(string ingredientName);
         IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName);
+        Task<IEnumerable<Ingredient>> GetIngredientsByName(string[] ingredientNames);
 
         // DB Methods
         bool SaveAll();
