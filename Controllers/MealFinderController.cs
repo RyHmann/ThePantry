@@ -45,10 +45,10 @@ namespace ThePantry.Controllers
                                         .Where(s => !string.IsNullOrWhiteSpace(s))
                                         .Select(i => i.Trim())
                                         .ToArray();
-                    var userIngredients = await _repository.GetIngredientsByQueryString(ingredients);
+                    var userIngredientIds = await _repository.GetIngredientsByQueryString(ingredients);
 
                     // TODO: Create query to find meals that contain ingredient array
-                    var matchingMeals = await _repository.FindMealsByIngredients(ingredients);
+                    var matchingMeals = await _repository.FindMealsByIngredients(userIngredientIds);
                     var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);
                     return availabeMealsViewModel;
                 }

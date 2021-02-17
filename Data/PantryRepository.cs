@@ -208,11 +208,12 @@ namespace ThePantry.Data
                 .FirstOrDefault();
         }
 
-        public Task<Ingredient[]> GetIngredientsByQueryString(string[] ingredients)
+        public Task<int[]> GetIngredientsByQueryString(string[] ingredients)
         {
             _logger.LogInformation("Attempting to get ingredients via ingredient array");
             var query = _context.Ingredients
                 .Where(i => ingredients.Contains(i.Name))
+                .Select(id => id.IngredientId)
                 .ToArrayAsync();
             return query;
         }
@@ -230,12 +231,15 @@ namespace ThePantry.Data
         /*<---------- MealFinder Methods ---------->*/
 
         // TODO: Simplify and use standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
-        public async Task<Meal[]> FindMealsByIngredients(Ingredient[] ingredients)
+        public async Task<Meal[]> FindMealsByIngredients(int[] ingredients)
         {
             _logger.LogInformation($"Attempting to find meals containing all ingredients in passed in array");
             var query = _context.Meals
-                .Where(meals => ingredients.Contains(meals.MealIngredients))
-                .Select
+                .Include(mi => mi.MealIngredients)
+                .ThenInclude(ing => ing.Ingredient)
+                .Where(test => test.MealIngredients.
+                //.Where(ingredients.All(mi => mi.(i => mi.Ingredient.Id == i.Ingredient.Id)))
+
             return await query.ToArrayAsync();
         }
 
