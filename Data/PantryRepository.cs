@@ -208,12 +208,13 @@ namespace ThePantry.Data
                 .FirstOrDefault();
         }
 
-        public Task<IEnumerable<Ingredient>> GetIngredientsByName(string[] ingredients)
+        public Task<Ingredient[]> GetIngredientsByQueryString(string[] ingredients)
         {
             _logger.LogInformation("Attempting to get ingredients via ingredient array");
-            // TODO: can this query be done without a foreach loop?
-            // write query to find all entities by string array
-            
+            var query = _context.Ingredients
+                .Where(i => ingredients.Contains(i.Name))
+                .ToArrayAsync();
+            return query;
         }
 
 
@@ -229,11 +230,14 @@ namespace ThePantry.Data
         /*<---------- MealFinder Methods ---------->*/
 
         // TODO: Simplify and use standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
-        /*public async Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients)
+        public async Task<Meal[]> FindMealsByIngredients(Ingredient[] ingredients)
         {
-            _logger.LogInformation($"Attempting to find meals containing all ingredients: {ingredients}");
+            _logger.LogInformation($"Attempting to find meals containing all ingredients in passed in array");
             var query = _context.Meals
-        }*/
+                .Where(meals => ingredients.Contains(meals.MealIngredients))
+                .Select
+            return await query.ToArrayAsync();
+        }
 
 
 

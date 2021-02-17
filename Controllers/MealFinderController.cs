@@ -31,23 +31,25 @@ namespace ThePantry.Controllers
         [HttpGet("{include}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public ActionResult<MealViewModel[]> FindMeals([FromQuery]string ingr)
+        public async Task<ActionResult<MealViewModel[]>> FindMeals([FromQuery]string ingr)
         {
             try
             {
                 if (!string.IsNullOrEmpty(ingr))
                 {
-                    // TO DO:
-                    // Add filter here to indicate which ingredients aren't recognized, and indicate to user
+                    // TODO: Add filter here to indicate which ingredients aren't recognized, and indicate to user
+
+                    // Converts uri search string into a list of strings, and finds ingredients by string
                     var ingredients = ingr
                                         .Split(',')
                                         .Where(s => !string.IsNullOrWhiteSpace(s))
                                         .Select(i => i.Trim())
                                         .ToArray();
-                    var userIngredients = _repository.GetIngredientsByName(ingredients);
+                    var userIngredients = await _repository.GetIngredientsByQueryString(ingredients);
 
-                    var availableMeals = _repository.FindMealsByIngredients(ingredients);
-                    var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(availableMeals);
+                    // TODO: Create query to find meals that contain ingredient array
+                    var matchingMeals = await _repository.FindMealsByIngredients(ingredients);
+                    var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);
                     return availabeMealsViewModel;
                 }
                 else

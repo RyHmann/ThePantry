@@ -17,7 +17,7 @@ namespace ThePantry.Data
         Meal GetMealById(int mealId);
 
         // MealFinder methods
-        Task<IEnumerable<Meal>> FindMealsByIngredients(IEnumerable<string> ingredients);
+        Task<Meal[]> FindMealsByIngredients(Ingredient[] ingredients);
         Task<Meal> FindMealsByAllIngredients(int pantryId);
 
         // Pantry Ingredient Methods
@@ -35,7 +35,7 @@ namespace ThePantry.Data
         public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId);
         Ingredient GetIngredientByName(string ingredientName);
         IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName);
-        Task<IEnumerable<Ingredient>> GetIngredientsByName(string[] ingredientNames);
+        Task<Ingredient[]> GetIngredientsByQueryString(string[] ingredientNames);
 
         // DB Methods
         bool SaveAll();
