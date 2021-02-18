@@ -237,8 +237,8 @@ namespace ThePantry.Data
             var query = _context.Meals
                 .Include(mi => mi.MealIngredients)
                 .ThenInclude(ing => ing.Ingredient)
-                .Where(test => test.MealIngredients.
-                //.Where(ingredients.All(mi => mi.(i => mi.Ingredient.Id == i.Ingredient.Id)))
+                .SelectMany(mealEnt => mealEnt.MealIngredients, ()
+                .Where(i => i.Ingredient.IngredientId == 3)
 
             return await query.ToArrayAsync();
         }
