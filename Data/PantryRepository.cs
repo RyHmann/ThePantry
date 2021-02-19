@@ -257,10 +257,10 @@ namespace ThePantry.Data
             _logger.LogInformation("Attempting to remove object from Db");
             _context.Remove(model);
         }
-        public bool SaveAll()
+        public async Task<bool> SaveAll()
         {
             _logger.LogInformation("Attempting to save changes to the Db");
-            return _context.SaveChanges() > 0;
+            return (await _context.SaveChangesAsync() > 0);
         }
     }
 }

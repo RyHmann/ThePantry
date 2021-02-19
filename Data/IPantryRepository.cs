@@ -38,7 +38,7 @@ namespace ThePantry.Data
         Task<int[]> GetIngredientsByQueryString(string[] ingredientNames);
 
         // DB Methods
-        bool SaveAll();
+        Task<bool> SaveAll();
         void AddEntity(object model);
         void DeleteEntity(object model);
 

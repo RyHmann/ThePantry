@@ -117,7 +117,10 @@ namespace ThePantry.Controllers
                     newPantry.User = currentUser;
                     newPantry.PantryIngredients = pantryIngredients;
                     _repository.AddEntity(newPantry);
-                    if (_repository.SaveAll())
+
+                    var changesSaved = await _repository.SaveAll();
+
+                    if (changesSaved)
                     {
                         var newURL = _linkGenerator.GetPathByAction("ShowPantryById", "Pantries", new { id = newPantry.PantryId });
                         if (string.IsNullOrWhiteSpace(newURL))
@@ -142,7 +145,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPut("{pantryId:int}")]
-        public ActionResult<PantryViewModel> EditPantry(int pantryId, PantryViewModel model)
+        public async Task<ActionResult<PantryViewModel>> EditPantry(int pantryId, PantryViewModel model)
         {
             try
             {
@@ -152,7 +155,10 @@ namespace ThePantry.Controllers
                     return NotFound($"Unable to find existing pantry with id of {pantryId}");
                 }
                 _mapper.Map(model, pantryToEdit);
-                if (_repository.SaveAll())
+
+
+                var changesSaved = await _repository.SaveAll();
+                if (changesSaved)
                 {
                     return _mapper.Map<PantryViewModel>(pantryToEdit);
                 }
@@ -166,7 +172,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpDelete("{pantryId:int}")]
-        public IActionResult DeletePantry(int pantryId)
+        public async Task<IActionResult> DeletePantry(int pantryId)
         {
             try
             {
@@ -178,7 +184,8 @@ namespace ThePantry.Controllers
 
                 _repository.DeleteEntity(oldPantry);
 
-                if (_repository.SaveAll())
+                var changesSaved = await _repository.SaveAll();
+                if (changesSaved)
                 {
                     return Ok();
                 }

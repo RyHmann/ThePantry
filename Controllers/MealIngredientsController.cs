@@ -64,7 +64,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpPost]
-        public ActionResult<MealIngredientViewModel> AddIngredientToMeal(int mealId, MealIngredientViewModel model)
+        public async Task<ActionResult<MealIngredientViewModel>> AddIngredientToMeal(int mealId, MealIngredientViewModel model)
         {
             try
             {
@@ -101,8 +101,8 @@ namespace ThePantry.Controllers
                 
                 mealIngredient.Meal = existingMeal;
                 _repository.AddEntity(mealIngredient);
-
-                if (_repository.SaveAll())
+                var saveChanges = await _repository.SaveAll();
+                if (saveChanges)
                 {
                     var url = _linkGenerator.GetPathByAction("ShowMealIngredient", "MealIngredients",
                         values: new { mealId, mealIngredientId = mealIngredient.MealIngredientId });
@@ -126,7 +126,7 @@ namespace ThePantry.Controllers
         }
         
         [HttpPut("{mealIngredientId:int}")]
-        public ActionResult<MealIngredientViewModel> EditMealIngredient(int mealId, int mealIngredientId, MealIngredientViewModel model)
+        public async Task<ActionResult<MealIngredientViewModel>> EditMealIngredient(int mealId, int mealIngredientId, MealIngredientViewModel model)
         {
             try
             {
@@ -155,7 +155,8 @@ namespace ThePantry.Controllers
 
                 existingMealIngredient.Quantity = model.Quantity;
 
-                if (_repository.SaveAll())
+                var saveChanges = await _repository.SaveAll();
+                if (saveChanges)
                 {
                     return _mapper.Map<MealIngredientViewModel>(existingMealIngredient);
                 }
@@ -170,7 +171,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpDelete("{mealIngredientId:int}")]
-        public IActionResult Delete(int mealId, int mealIngredientId)
+        public async Task<IActionResult> Delete(int mealId, int mealIngredientId)
         {
             try
             {
@@ -182,7 +183,8 @@ namespace ThePantry.Controllers
 
                 _repository.DeleteEntity(mealIngredientToDelete);
 
-                if (_repository.SaveAll())
+                var saveChanges = await _repository.SaveAll();
+                if (saveChanges)
                 {
                     return Ok();
                 }

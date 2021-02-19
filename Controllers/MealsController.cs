@@ -21,14 +21,12 @@ namespace ThePantry.Controllers
         private readonly IPantryRepository _repository;
         private readonly ILogger<MealsController> _logger;
         private readonly IMapper _mapper;
-        private readonly LinkGenerator _linkGenerator;
 
-        public MealsController(IPantryRepository repository, ILogger<MealsController> logger, IMapper mapper, LinkGenerator linkGenerator)
+        public MealsController(IPantryRepository repository, ILogger<MealsController> logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
-            _linkGenerator = linkGenerator;
         }
 
         [HttpGet]
@@ -124,7 +122,7 @@ namespace ThePantry.Controllers
         */
 
         [HttpPut("{id:int}")]
-        public ActionResult<MealViewModel> EditMeal(int id, MealViewModel model)
+        public async Task<ActionResult<MealViewModel>> EditMeal(int id, MealViewModel model)
         {
             try
             {
@@ -134,7 +132,9 @@ namespace ThePantry.Controllers
                     return NotFound($"Could not fine meal with id of {id}.");
                 }
                 _mapper.Map(model, existingMeal);
-                if (_repository.SaveAll())
+
+                var saveChanges = await _repository.SaveAll();
+                if (saveChanges)
                 {
                     return _mapper.Map<MealViewModel>(existingMeal);
                 }
@@ -148,7 +148,7 @@ namespace ThePantry.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
@@ -160,7 +160,8 @@ namespace ThePantry.Controllers
 
                 _repository.DeleteEntity(oldMeal);
 
-                if (_repository.SaveAll())
+                var saveChanges = await _repository.SaveAll();
+                if (saveChanges)
                 {
                     return Ok();
                 }

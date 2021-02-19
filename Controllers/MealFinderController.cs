@@ -39,7 +39,7 @@ namespace ThePantry.Controllers
                 {
                     // TODO: Add filter here to indicate which ingredients aren't recognized, and indicate to user
 
-                    var ingredients = formatQueryString(ingr);
+                    var ingredients = FormatQueryString(ingr);
                     var userIngredientIds = await _repository.GetIngredientsByQueryString(ingredients);
                     var potentialMatchingMeals = await _repository.FindMealsByIngredients(userIngredientIds);
 
@@ -49,7 +49,7 @@ namespace ThePantry.Controllers
                     
                     foreach (var meal in potentialMatchingMeals)
                     {
-                        if (mealContainsAllIngredients(meal, userIngredientIds))
+                        if (MealContainsAllIngredients(meal, userIngredientIds))
                         {
                             matchingMeals.Add(meal);
                         }
@@ -71,7 +71,7 @@ namespace ThePantry.Controllers
         }
 
         // Returns TRUE if Meal contains all userIngredients
-        private bool mealContainsAllIngredients(Meal meal, int[] userIngredientIds)
+        private static bool MealContainsAllIngredients(Meal meal, int[] userIngredientIds)
         {
             var targetIngredients = new List<int>();
             foreach(var mealIngredient in meal.MealIngredients)
@@ -88,7 +88,7 @@ namespace ThePantry.Controllers
         }
 
         // Reformats query string to an array of ingredients
-        private string[] formatQueryString(string queryString)
+        private static string[] FormatQueryString(string queryString)
         {
             var ingredients = queryString
                     .Split(',')
