@@ -18,7 +18,7 @@ namespace ThePantry.Data
 
         // MealFinder methods
         Task<Meal[]> FindMealsByIngredients(int[] ingredients);
-        Task<Meal> FindMealsByAllIngredients(int pantryId);
+
 
         // Pantry Ingredient Methods
         PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId);

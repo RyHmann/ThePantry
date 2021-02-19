@@ -230,81 +230,19 @@ namespace ThePantry.Data
 
         /*<---------- MealFinder Methods ---------->*/
 
-        // TODO: Simplify and use standard query linking ingredient ID to meal ingredient ID - need to stem and focus what ingredients make it into ingredient db
+        // TODO: Find a way to make this a single query?
+        // Current query returns an array of meals that contain one of the ingredients
+        // Further sorting happens in the controller
         public async Task<Meal[]> FindMealsByIngredients(int[] ingredients)
         {
             _logger.LogInformation($"Attempting to find meals containing all ingredients in passed in array");
+
             var query = _context.Meals
-                .Include(mi => mi.MealIngredients)
-                .ThenInclude(ing => ing.Ingredient)
-                .SelectMany(mealEnt => mealEnt.MealIngredients, ()
-                .Where(i => i.Ingredient.IngredientId == 3)
-
+                .Where(mi => mi.MealIngredients.Any(
+                    i => i.Ingredient.IngredientId == ingredients[0]))
+                .Include(m => m.MealIngredients)
+                .ThenInclude(i => i.Ingredient);
             return await query.ToArrayAsync();
-        }
-
-
-
-        public IEnumerable<Meal> FindMealsByAllIngredients(int pantryId)
-        {
-            try
-            {
-                _logger.LogInformation($"Attempting to retreive Meals containing all ingredients.");
-
-                var matchingMeals = new List<Meal>();
-                var initialFilter = new List<Meal>();
-
-                // Hash Set of all Ingredient Ids in Pantry
-                var pantryIngredients = _context.PantryIngredients
-                        .Where(i => i.PantryId == pantryId)
-                        .Select(ingr => ingr.Ingredient.IngredientId)
-                        .ToHashSet();
-
-                // Initial filter to find Meals that have one matching ingredient
-                foreach (var ingredient in pantryIngredients)
-                {
-                    var firstPassMeal = _context.MealIngredients
-                        .Where(i => i.Ingredient.IngredientId == ingredient)
-                        .Select(m => m.Meal)
-                        .FirstOrDefault();
-                    initialFilter.Add(firstPassMeal);
-                }
-                // Compare Hash Sets
-                foreach (var meal in initialFilter)
-                {
-                    var requiredIngredients = getMealIngredientIds(meal);
-                    if (pantryHasRequiredIngredients(requiredIngredients, pantryIngredients))
-                    {
-                        matchingMeals.Add(meal);
-                    }
-                }
-                return matchingMeals;
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Unable to retreive meals containing all ingredients: {exception}");
-                return null;
-            }
-        }
-
-        private bool pantryHasRequiredIngredients(HashSet<int> requiredIngredients, HashSet<int> pantryIngredients)
-        {
-            if (requiredIngredients.IsSubsetOf(pantryIngredients))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private HashSet<int> getMealIngredientIds(Meal meal)
-        {
-            var ingredientIds = meal.MealIngredients
-                .Select(i => i.MealIngredientId)
-                .ToHashSet();
-            return ingredientIds;
         }
 
         // Save States

@@ -39,22 +39,27 @@ namespace ThePantry.Controllers
                 {
                     // TODO: Add filter here to indicate which ingredients aren't recognized, and indicate to user
 
-                    // Converts uri search string into a list of strings, and finds ingredients by string
-                    var ingredients = ingr
-                                        .Split(',')
-                                        .Where(s => !string.IsNullOrWhiteSpace(s))
-                                        .Select(i => i.Trim())
-                                        .ToArray();
+                    var ingredients = formatQueryString(ingr);
                     var userIngredientIds = await _repository.GetIngredientsByQueryString(ingredients);
+                    var potentialMatchingMeals = await _repository.FindMealsByIngredients(userIngredientIds);
 
-                    // TODO: Create query to find meals that contain ingredient array
-                    var matchingMeals = await _repository.FindMealsByIngredients(userIngredientIds);
+                    // TODO: Filter and discard 
+                    // TODO: Create a helper function
+                    var matchingMeals = new List<Meal>();
+                    
+                    foreach (var meal in potentialMatchingMeals)
+                    {
+                        if (mealContainsAllIngredients(meal, userIngredientIds))
+                        {
+                            matchingMeals.Add(meal);
+                        }
+                    }
                     var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);
-                    return availabeMealsViewModel;
+                    return Ok(availabeMealsViewModel);
                 }
                 else
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
 
             }
@@ -63,6 +68,34 @@ namespace ThePantry.Controllers
                 _logger.LogError($"Could not execute meal search: {exception}");
                 return BadRequest("Could not execute meal search.");
             }
+        }
+
+        // Returns TRUE if Meal contains all userIngredients
+        private bool mealContainsAllIngredients(Meal meal, int[] userIngredientIds)
+        {
+            var targetIngredients = new List<int>();
+            foreach(var mealIngredient in meal.MealIngredients)
+            {
+                var ingredientId = mealIngredient.Ingredient.IngredientId;
+                targetIngredients.Add(ingredientId);
+            }
+            // Convert to hash sets and check if subset
+            var targetIngredientsHashSet = new HashSet<int>(targetIngredients);
+            var userIngredientsHashSet = new HashSet<int>(userIngredientIds);
+            if (userIngredientsHashSet.IsSubsetOf(targetIngredientsHashSet))
+                return true;
+            else return false;
+        }
+
+        // Reformats query string to an array of ingredients
+        private string[] formatQueryString(string queryString)
+        {
+            var ingredients = queryString
+                    .Split(',')
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(i => i.Trim())
+                    .ToArray();
+            return ingredients;
         }
     }
 }

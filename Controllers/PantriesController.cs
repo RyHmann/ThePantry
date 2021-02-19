@@ -86,23 +86,7 @@ namespace ThePantry.Controllers
             }
         }
 
-        [HttpGet("{pantryId:int}")]
-        public ActionResult<MealViewModel[]> FindMealsWithIngredients(int pantryId)
-        {
-            try
-            {
-                var ingredientsInPantry = _repository.GetPantryIngredientsByPantryId(pantryId);
-                var ingredientNames = ingredientsInPantry.Select(ingr => ingr.Ingredient.Name);
-                var availableMeals = _repository.FindMealsByIngredients(ingredientNames);
-                return _mapper.Map<MealViewModel[]>(availableMeals);
 
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Unable to search for Meals using this Pantry: {exception}");
-                return BadRequest("Unable to search for Meals using this Pantry.");
-            }
-        }
 
         [HttpPost]
         public async Task<ActionResult> CreatePantry([FromBody]PantryViewModel model)
