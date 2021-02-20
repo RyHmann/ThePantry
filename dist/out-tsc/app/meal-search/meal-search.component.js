@@ -30,6 +30,8 @@ let MealSearchComponent = class MealSearchComponent {
     searchMeals() {
         // Clear current search results
         this.meals$ = of([]);
+        // TODO: clear jank unit testing
+        console.log("Current Query @ Button Press: " + this.queryString);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
     }

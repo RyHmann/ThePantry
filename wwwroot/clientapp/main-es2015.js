@@ -366,6 +366,8 @@ class MealSearchComponent {
     searchMeals() {
         // Clear current search results
         this.meals$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
+        // TODO: clear jank unit testing
+        console.log("Current Query @ Button Press: " + this.queryString);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
     }
@@ -452,7 +454,7 @@ class MealService {
         if (!term.trim) {
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
         }
-        return this._http.get(`${this.mealsUrl}${term}}`)
+        return this._http.get(`${this.mealsUrl}${term}`)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(x => x.length ?
             console.log(`Found meals matching "${term}"`) :
             console.log(`No meals matching "${term}"`)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError('searchMeals', [])));
