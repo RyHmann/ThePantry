@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { Meal } from '../meal';
 import { Ingredient } from '../ingredient';
@@ -15,13 +15,18 @@ export class MealSearchComponent implements OnInit {
     meals$: Observable<Meal[]> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
-    searchResultState: boolean = false;
+    showSearchResults: boolean = false;
+
+    @HostListener('document:click', ['$event']) onDocumentClick() {
+        this.showSearchResults = false;
+    }
 
     constructor(private mealService: MealService) {
     }
 
     // Push a search term into the observable stream
     search(term: string): void {
+        this.showSearchResults = true;
         this.queryString = term;
         this.searchTerms.next(term);
     }

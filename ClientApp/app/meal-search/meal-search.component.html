@@ -1,16 +1,19 @@
 
 <div id="search component">
     <h4><label for="search-box">Meal Finder</label></h4>
-    <input type="text" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)"/>
+    <input type="text" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)" />
 
-    <ul class="search-result">
-        <li *ngFor="let ingredient of ingredients$ | async">
-            <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText)">{{ingredient.name}}</a>
-        </li>
-    </ul>
+    <div class="search-result-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
+        <ul class="search-result">
+            <li *ngFor="let ingredient of ingredients$ | async">
+                <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText)">{{ingredient.name}}</a>
+            </li>
+        </ul>
+    </div>
     <button type="submit" (click)="searchMeals()">Search</button>
 </div>
-<div class="meal-search-results">
+
+<div class="meal-search-results" *ngIf="meals$">
     <h2>Available Meals:</h2>
     <ul class="meal-search-results">
         <li *ngFor="let meal of meals$ | async">
@@ -18,3 +21,4 @@
         </li>
     </ul>
 </div>
+
