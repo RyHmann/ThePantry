@@ -52,6 +52,7 @@ namespace ThePantry.Controllers
                         if (MealContainsAllIngredients(meal, userIngredientIds))
                         {
                             matchingMeals.Add(meal);
+                            _logger.LogInformation($"Found match: {meal}");
                         }
                     }
                     var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);

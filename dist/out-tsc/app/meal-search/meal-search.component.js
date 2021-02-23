@@ -1,15 +1,19 @@
 import { __decorate } from "tslib";
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Subject, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
 let MealSearchComponent = class MealSearchComponent {
     constructor(mealService) {
         this.mealService = mealService;
         this.searchTerms = new Subject();
-        this.searchResultState = false;
+        this.showSearchResults = false;
+    }
+    onDocumentClick() {
+        this.showSearchResults = false;
     }
     // Push a search term into the observable stream
     search(term) {
+        this.showSearchResults = true;
         this.queryString = term;
         this.searchTerms.next(term);
     }
@@ -45,6 +49,9 @@ let MealSearchComponent = class MealSearchComponent {
         this.queryString = newString;
     }
 };
+__decorate([
+    HostListener('document:click', ['$event'])
+], MealSearchComponent.prototype, "onDocumentClick", null);
 MealSearchComponent = __decorate([
     Component({
         selector: 'meal-search',
