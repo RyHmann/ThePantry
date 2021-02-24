@@ -11,16 +11,16 @@ let MealSearchComponent = class MealSearchComponent {
     onDocumentClick() {
         this.showSearchResults = false;
     }
+    ngOnInit() {
+        this.ingredients$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), 
+        // Map ignores all string items except for the last comma separated value
+        map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
+    }
     // Push a search term into the observable stream
     search(term) {
         this.showSearchResults = true;
         this.queryString = term;
         this.searchTerms.next(term);
-    }
-    ngOnInit() {
-        this.ingredients$ = this.searchTerms.pipe(debounceTime(300), distinctUntilChanged(), 
-        // Map ignores all string items except for the last comma separated value
-        map((term) => term.split(",").pop().trim()), switchMap((term) => this.mealService.searchIngredients(term)));
     }
     selectIngredient(ingredient) {
         // TODO: Change focus from search results to search bar on click

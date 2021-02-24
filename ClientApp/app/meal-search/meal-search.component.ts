@@ -24,13 +24,6 @@ export class MealSearchComponent implements OnInit {
     constructor(private mealService: MealService) {
     }
 
-    // Push a search term into the observable stream
-    search(term: string): void {
-        this.showSearchResults = true;
-        this.queryString = term;
-        this.searchTerms.next(term);
-    }
-
     ngOnInit(): void {
         this.ingredients$ = this.searchTerms.pipe(
             debounceTime(300),
@@ -39,6 +32,13 @@ export class MealSearchComponent implements OnInit {
             map((term: string) => term.split(",").pop()!.trim()),
             switchMap((term: string) => this.mealService.searchIngredients(term))
         );
+    }
+
+    // Push a search term into the observable stream
+    search(term: string): void {
+        this.showSearchResults = true;
+        this.queryString = term;
+        this.searchTerms.next(term);
     }
 
     selectIngredient(ingredient: string): void {
