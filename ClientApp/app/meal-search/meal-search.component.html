@@ -5,9 +5,11 @@
     <div class="search-bar-container">
         <input type=text class="search-bar" placeholder="ie: parsley, sage, rosemary, thyme" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)">
         <div class="search-results-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
-            <div class="search-results" *ngFor="let ingredient of ingredients$ | async">
-                <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText); searchBox.focus()">{{ingredient.name}}</a>
-            </div>
+            <ul class="search-result-list">
+                <li *ngFor="let ingredient of ingredients$ | async">
+                    <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText); searchBox.focus()">{{ingredient.name}}</a>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="search-button-container">
@@ -21,30 +23,5 @@
             <a>strawberry</a>
         </div>
     </div>
-</div>
-
-
-
-<div id="search component">
-    <h4><label for="search-box">Meal Finder</label></h4>
-    <input type="text" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)" />
-
-    <div class="search-result-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
-        <ul class="search-result">
-            <li *ngFor="let ingredient of ingredients$ | async">
-                <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText); searchBox.focus()">{{ingredient.name}}</a>
-            </li>
-        </ul>
-    </div>
-    <button class="search-buttton" type="submit" (click)="searchMeals()">Search</button>
-</div>
-
-<div class="meal-search-results" *ngIf="meals$">
-    <h2>Available Meals:</h2>
-    <ul class="meal-search-results">
-        <li *ngFor="let meal of meals$ | async">
-            <p>{{meal.name}}</p>
-        </li>
-    </ul>
 </div>
 
