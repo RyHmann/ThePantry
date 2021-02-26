@@ -1,3 +1,29 @@
+<div class="meal-finder-container">
+    <div class="search-bar-heading-container">
+        <h4>Enter ingredients separated by commas</h4>
+    </div>
+    <div class="search-bar-container">
+        <input type=text class="search-bar" placeholder="ie: parsley, sage, rosemary, thyme" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)">
+        <div class="search-results-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
+            <div class="search-results" *ngFor="let ingredient of ingredients$ | async">
+                <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText); searchBox.focus()">{{ingredient.name}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="search-button-container">
+        <button class="search-button" type=submit (click)="searchMeals()">Search</button>
+    </div>
+    <div class="selected-ingredients-container">
+        <div class="selected-ingredients">
+            <a>tomato</a>
+            <a>onion</a>
+            <a>garlic</a>
+            <a>strawberry</a>
+        </div>
+    </div>
+</div>
+
+
 
 <div id="search component">
     <h4><label for="search-box">Meal Finder</label></h4>

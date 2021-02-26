@@ -1,3 +1,97 @@
+.meal-finder-container {
+    display: grid;
+    grid-template-columns: 'auto auto auto auto auto';
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    width: auto;
+}
+
+.search-bar-heading-container > h4 {
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1.5px;
+    text-shadow: 0px 1px 10px rgba(0,0,0,.25);
+    margin: 0;
+}
+
+.search-bar-heading-container {
+    grid-area: 1 / 2 / 1 / 4;
+    margin: 10px 0px 0px 0px
+}
+
+.search-bar-container {
+    grid-area: 2 / 2 / 2 / 4;
+}
+
+.search-bar {
+    width: 100%;
+    height: 20px;
+    font-size: 15px;
+    color: #5c5c5c;
+    letter-spacing: 1px
+}
+
+.search-button-container {
+    grid-area: 2 / 4 / 2 / 4;
+    padding: 0px 0px 0px 10px;
+}
+
+.search-button {
+}
+
+.search-results-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-results {
+    display: block;
+    position: absolute;
+    width: 100%;
+}
+    .search-results > a {
+        display: block;
+        border: 2px;
+        color: #5c5c5c;
+        background-color: #ffffff;
+        font-size: 15px;
+        letter-spacing: 1px;
+    }
+        .search-results > a:hover {
+            background-color: cornflowerblue;
+            color: #fff;
+        }
+
+.selected-ingredients-container {
+    position: static;
+    grid-area: 3 / 2 / 3 / 4;
+}
+
+.selected-ingredients {
+    width: 100%;
+    margin: 15px 5px;
+}
+
+    .selected-ingredients > a {
+        display: inline;
+        font-size: 14px;
+        border: 2px;
+        border-radius: 5px;
+        border-style: solid;
+        color: green;
+        background-color: rgb(256,256,256,.5);
+        padding: 2px 20px 2px 6px;
+        margin: 1px 2px;
+    }
+
+        .selected-ingredients > a:hover {
+            color: red;
+            background-color: rgb(256,175,175,.5);
+        }
+
+/*Everything below here will be deleted once new components are working*/
+
 .search-result li {
     border-bottom: 1px solid gray;
     border-left: 1px solid gray;
