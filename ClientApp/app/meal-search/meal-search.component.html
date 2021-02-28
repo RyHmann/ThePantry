@@ -3,7 +3,7 @@
         <h4>Enter ingredients separated by commas</h4>
     </div>
     <div class="search-bar-container">
-        <input type=text class="search-bar" placeholder="ie: parsley, sage, rosemary, thyme" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)">
+        <input type=text class="search-bar" placeholder="ie: parsley, sage, rosemary, thyme" #searchBox [ngModel]="queryString" (ngModelChange)="queryString=$event" id="search-box" (input)="search(searchBox.value)" (keyup.enter)="searchMeals()">
         <div class="search-results-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
             <ul class="search-result-list">
                 <li *ngFor="let ingredient of ingredients$ | async">
@@ -22,6 +22,7 @@
             <a>garlic</a>
             <a>strawberry</a>
         </div>
-    </div>
+    </div> 
 </div>
+<meals [availableMeals]="meals$"></meals>
 

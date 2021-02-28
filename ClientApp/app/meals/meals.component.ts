@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Meal } from '../meal';
 import { MealService } from '../meal.service';
 
@@ -8,7 +9,7 @@ import { MealService } from '../meal.service';
   styleUrls: ['./meals.component.css']
 })
 export class MealsComponent implements OnInit {
-    meals: Meal[] | undefined
+    @Input() availableMeals: Observable<Meal[]> | undefined;
     selectedMeal: Meal | undefined
 
     constructor(private mealService: MealService) {
@@ -16,11 +17,6 @@ export class MealsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getMeals();
-    }
-
-    getMeals(): void {
-        this.mealService.getMeals().subscribe(meals => this.meals = meals);
     }
 
     onSelect(meal: Meal): void {

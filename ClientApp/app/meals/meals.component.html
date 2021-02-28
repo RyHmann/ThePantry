@@ -1,6 +1,6 @@
 <h2>Available Meals</h2>
 <ul class="meals">
-    <li *ngFor="let meal of meals" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
+    <li *ngFor="let meal of availableMeals | async" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
         <span class="meal">{{meal.name}}</span>
     </li>
 </ul>
