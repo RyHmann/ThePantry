@@ -4,68 +4,61 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ThePantry</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Poppins:wght@300&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ThePantry</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="App" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="App" asp-action="About">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-action="Contact">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="App" asp-action="MealFinder">Recipe Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="App" asp-action="MyPantry">My Pantry</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <div class="navbar-container">
+            <ul class="navbar">
+                <li>
+                    <a asp-controller="App" asp-action="Index">Home</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="About">About</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="Mealfinder">Find Recipes</a>
+                </li>
+                <li>
+                    <a asp-controller="App" asp-action="Contact">Contact</a>
+                </li>
+            </ul>
+        </div>
     </header>
+
+
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - ThePantry - <a asp-area="" asp-page="/Privacy">Privacy</a>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="copyright-blurb">
+                <p>&#169 2020 Ryan Heitmann &#8226; All rights reserved</p>
+            </div>
+            <div class="icon-container">
+                <ion-icon name="logo-instagram"></ion-icon>
+                <ion-icon name="logo-facebook"></ion-icon>
+                <ion-icon name="logo-twitch"></ion-icon>
+            </div>
         </div>
     </footer>
+    <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+
+
+
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

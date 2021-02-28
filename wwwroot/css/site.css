@@ -1,71 +1,97 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿html {
+    line-height: 1.5;
+    height: 100%;
 }
 
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+ul, li {
+    list-style-type: none;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.index-bg-image{
+    background: linear-gradient(to bottom, rgba(0,0,0, 0.3), rgba(0,0,0,0)), url("brooke-lark-kXQ3J7_2fpc-unsplash.jpg") no-repeat;
+    background-size: cover;
+    overflow: hidden;
+    margin: 0px;
+    min-width: 200px;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.banner-container {
+    margin: 120px 20px 25px 20px;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    .banner-container h2 {
+        font-size: 80px;
+        font-family: 'Amatic SC', cursive;
+        letter-spacing: 2.5px;
+        text-align: center;
+        color: #ffffff;
+        text-shadow: 0px 1px 10px rgba(0,0,0,.34);
+        margin: 0px;
+    }
+
+header {
+    width: auto;
 }
 
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+/*Navbar Styles*/
+.navbar-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
 }
 
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+.navbar {
+    padding: 10px 15px;
+    backdrop-filter: blur(6px);
+    margin: 0px;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
+    .navbar li {
+        list-style-type: none;
+        display: inline;
+        padding: 15px;
+    }
 
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
+        .navbar li a {
+            font-size: 19px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1.5px;
+            color: #f1f1f1;
+        }
+
+/*Footer Styles*/
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
 }
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(6px);
+}
+
+.copyright-blurb {
+}
+
+    .copyright-blurb > p {
+        color: #798E64;
+        padding: 5px;
+        margin: 3px 0px 3px 8px;
+    }
+
+.icon-container {
+    margin-left: auto;
+}
+
+    .icon-container > ion-icon {
+        font-size: 22px;
+        color: #798E64;
+        margin: 0px 8px;
+    }
