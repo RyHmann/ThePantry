@@ -1,19 +1,18 @@
 import { __decorate } from "tslib";
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 let MealsComponent = class MealsComponent {
     constructor(mealService) {
         this.mealService = mealService;
     }
     ngOnInit() {
-        this.getMeals();
-    }
-    getMeals() {
-        this.mealService.getMeals().subscribe(meals => this.meals = meals);
     }
     onSelect(meal) {
         this.selectedMeal = meal;
     }
 };
+__decorate([
+    Input()
+], MealsComponent.prototype, "availableMeals", void 0);
 MealsComponent = __decorate([
     Component({
         selector: 'meals',

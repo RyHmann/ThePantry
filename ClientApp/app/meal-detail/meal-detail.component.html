@@ -1,4 +1,13 @@
 <div *ngIf="meal">
+    <div class="card-meal-detail">
+        <img />
+        <div class="card-container">
+            <h4>{{meal.name | uppercase}}</h4>
+        </div>
+    </div>
+
+
+
     <h2>{{meal.name | uppercase}}</h2>
     <div>
         <p>Description</p>
