@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="Search-result.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-</head>
-<div class="grid-container" *ngIf="meals">
-    <div class="card" *ngFor="let meal of availableMeals | async" (click)="onSelect(meal" [class.selected]="meal===selectedMeal">
+<div class="grid-container" *ngIf="availableMeals">
+    <div class="card" *ngFor="let meal of availableMeals | async" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
         <img />
         <div class="card-container">
             <h4><b>{{meal.name}}</b></h4>
@@ -20,13 +13,3 @@
         </div>
     </div>
 </div>
-
-<!--Old Code Below
-<h2>Available Meals</h2>
-<ul class="meals">
-    <li *ngFor="let meal of availableMeals | async" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
-        <span class="meal">{{meal.name}}</span>
-    </li>
-</ul>
-<meal-detail [meal]="selectedMeal"></meal-detail>
--->

@@ -12,7 +12,7 @@ ul, li {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     column-gap: 10px;
     grid-row-gap: 10px;
     width: auto;
@@ -22,6 +22,7 @@ ul, li {
     display: inline;
     box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
     width: auto;
+    background-color: #ffffff;
     padding: 10px;
     margin: 10px;
 }
@@ -48,53 +49,5 @@ img {
     color: #999999;
 }
 
-/*Old code Below:*/
 
-.meals {
-    margin: 0 0 2em 0;
-    list-style-type: none;
-    padding: 0;
-    width: 30em;
-}
 
-    .meals li {
-        cursor: pointer;
-        position: relative;
-        left: 0;
-        background-color: #EEE;
-        margin: .5em;
-        padding: .3em 0;
-        height: 1.6em;
-        border-radius: 4px;
-    }
-
-        .meals li:hover {
-            color: #607D8B;
-            background-color: #DDD;
-            left: .1em;
-        }
-
-        .meals li.selected {
-            background-color: #CFD8DC;
-            color: white;
-        }
-
-            .meals li.selected:hover {
-                background-color: #BBD8DC;
-                color: white;
-            }
-
-    .meals .meal {
-        display: inline-block;
-        font-size: small;
-        color: white;
-        padding: 0.8em 0.7em 0 0.7em;
-        background-color: #405061;
-        line-height: 1em;
-        position: relative;
-        left: -1px;
-        top: -4px;
-        height: 1.8em;
-        margin-right: .8em;
-        border-radius: 4px 0 0 4px;
-    }
