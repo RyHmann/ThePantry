@@ -13,7 +13,6 @@ export class MealsComponent implements OnInit {
     selectedMeal: Meal | undefined
 
     constructor(private mealService: MealService) {
-        
     }
 
     ngOnInit(): void {
