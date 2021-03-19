@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MealSearchComponent } from './meal-search/meal-search.component';
 import { MealDetailComponent } from './meal-detail/meal-detail.component';
 import { MealsComponent } from './meals/meals.component';
+import { TruncatePipe } from './truncate.pipe';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { MealsComponent } from './meals/meals.component';
     MealSearchComponent,
     MealDetailComponent,
     MealsComponent,
+    TruncatePipe
   ],
   imports: [
       BrowserModule,

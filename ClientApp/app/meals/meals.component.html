@@ -1,14 +1,16 @@
 <div class="grid-container" *ngIf="availableMeals">
     <div class="card" *ngFor="let meal of availableMeals | async" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
-        <img />
+        <img src="../../assets/pinchofyum_elotequeso.jpeg"/>
         <div class="card-container">
-            <h4><b>{{meal.name}}</b></h4>
-            <p>{{meal.description}}</p>
+            <a href="{{meal.url}}" target="_blank">
+                <h4><b>{{meal.name}}</b></h4>
+            </a>
+            <p>{{meal.description | truncate: 145 }}</p>
             <div class="meal-ingredient-container">
                 <p class="ingredient-list">Ingredients:</p>
-                <ul class="ingredient-list">
-                    <li *ngFor="let ingredient of meal.ingredients">{{ingredient.name}}</li>
-                </ul>
+                <div class="meal-ingredient-container">
+                    <span class="ingredients" *ngFor="let ingredient of meal.ingredients">{{ingredient.name}}</span>
+                </div>
             </div>
         </div>
     </div>

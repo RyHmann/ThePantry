@@ -1,25 +1,19 @@
-﻿html {
-    line-height: 1.5;
+﻿
+.index-bg-image{
+    position: fixed;
+    background: linear-gradient(to bottom, rgba(0,0,0, 0.3), rgba(0,0,0,0)), url("brooke-lark-kXQ3J7_2fpc-unsplash.jpg") no-repeat;
+    background-size: cover;
+    overflow: auto;
+    margin: 0px;
+    padding: 0px;
+    left: 0;
+    top: 0;
+    width: 100%;
     height: 100%;
 }
 
-ul, li {
-    list-style-type: none;
-    list-style-position: inside;
-    margin: 0;
-    padding: 0;
-}
-
-.index-bg-image{
-    background: linear-gradient(to bottom, rgba(0,0,0, 0.3), rgba(0,0,0,0)), url("brooke-lark-kXQ3J7_2fpc-unsplash.jpg") no-repeat;
-    background-size: cover;
-    overflow: hidden;
-    margin: 0px;
-    min-width: 200px;
-}
-
 .banner-container {
-    margin: 120px 20px 25px 20px;
+    margin: 120px auto 25px auto;
 }
 
     .banner-container h2 {
@@ -32,6 +26,10 @@ ul, li {
         margin: 0px;
     }
 
+.recipe-app-container {
+    margin: 100px;
+}
+
 header {
     width: auto;
 }
@@ -42,6 +40,7 @@ header {
     position: fixed;
     top: 0;
     right: 0;
+    z-index: 2;
 }
 
 .navbar {
@@ -70,11 +69,12 @@ header {
 .footer-container {
     display: flex;
     flex-direction: row;
-    align-items: baseline;
+    align-items: center;
     position: fixed;
     bottom: 0;
     width: 100%;
     backdrop-filter: blur(6px);
+    z-index: 2;
 }
 
 .copyright-blurb {
@@ -87,11 +87,12 @@ header {
     }
 
 .icon-container {
-    margin-left: auto;
+    margin: 3px 15px 3px auto;
 }
 
     .icon-container > ion-icon {
         font-size: 22px;
         color: #798E64;
-        margin: 0px 8px;
+        padding: 0px 8px;
     }
+
