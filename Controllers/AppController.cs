@@ -66,5 +66,10 @@ namespace ThePantry.Controllers
         {
             return View();
         }
+
+        public IActionResult API()
+        {
+            return View();
+        }
     }
 }

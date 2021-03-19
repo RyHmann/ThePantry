@@ -38,18 +38,25 @@ namespace ThePantry.Controllers
                 if (!string.IsNullOrEmpty(ingr))
                 {
                     // TODO: Add filter here to indicate which ingredients aren't recognized, and indicate to user
+                    // This section can remain the same - this will be +, and - filtering will take place at the end
 
-                    var ingredients = FormatQueryString(ingr);
-                    var userIngredientIds = await _repository.GetIngredientsByQueryString(ingredients);
-                    var potentialMatchingMeals = await _repository.FindMealsByIngredients(userIngredientIds);
+                    // Find recipes based on ingredients sent in the query string
+                    var searchIngredients = ExtractSearchIngredients(ingr);
+                    var searchIngredientIds = await _repository.GetIngredientsByQueryString(searchIngredients);
+
+                    // Identify ingredients that need to be excluded
+                    var excludeIngredients = ExtractExcludeIngredients(ingr);
+                    var excludeIngredientIds = await _repository.GetIngredientsByQueryString(excludeIngredients);
 
                     // TODO: Filter and discard 
                     // TODO: Create a helper function
+                    var potentialMatchingMeals = await _repository.FindMealsByIngredients(searchIngredientIds);
+
                     var matchingMeals = new List<Meal>();
                     
                     foreach (var meal in potentialMatchingMeals)
                     {
-                        if (MealContainsAllIngredients(meal, userIngredientIds))
+                        if (MealContainsAllIngredients(meal, searchIngredientIds))
                         {
                             matchingMeals.Add(meal);
                             _logger.LogInformation($"Found match: {meal}");
@@ -71,6 +78,8 @@ namespace ThePantry.Controllers
             }
         }
 
+
+
         // Returns TRUE if Meal contains all userIngredients
         private static bool MealContainsAllIngredients(Meal meal, int[] userIngredientIds)
         {
@@ -88,13 +97,27 @@ namespace ThePantry.Controllers
             else return false;
         }
 
-        // Reformats query string to an array of ingredients
-        private static string[] FormatQueryString(string queryString)
+        // Reformats query string to an array of ingredients to include in query
+        private static string[] ExtractSearchIngredients(string queryString)
         {
             var ingredients = queryString
                     .Split(',')
-                    .Where(s => !string.IsNullOrWhiteSpace(s))
                     .Select(i => i.Trim())
+                    .Where(p =>!p.StartsWith("-"))
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray();
+            return ingredients;
+        }
+
+        // Reformats query string to an array of ingredients to exclude from query
+        private static string[] ExtractExcludeIngredients(string queryString)
+        {
+            var ingredients = queryString
+                    .Split(',')
+                    .Select(i => i.Trim())
+                    .Where(p => p.StartsWith("-"))
+                    .Select(n => n.Remove(0, 1))
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
                     .ToArray();
             return ingredients;
         }

@@ -1,6 +1,6 @@
 <div class="grid-container" *ngIf="availableMeals">
     <div class="card" *ngFor="let meal of availableMeals | async" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
-        <img src="../../assets/pinchofyum_elotequeso.jpeg"/>
+        <img src="C:\Repos\csharp\Projects\ThePantry\wwwroot\clientapp\assets\pinchofyum_elotequeso.jpeg"/>
         <div class="card-container">
             <a href="{{meal.url}}" target="_blank">
                 <h4><b>{{meal.name}}</b></h4>
