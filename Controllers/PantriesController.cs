@@ -102,7 +102,7 @@ namespace ThePantry.Controllers
 
                         if (_repository.IngredientExists(pantryIngredient.Ingredient))
                         {
-                            pantryIngredient.Ingredient = _repository.GetIngredientByName(pantryIngredientViewModel.Ingredient.Name);
+                            pantryIngredient.Ingredient = await _repository.GetIngredientByName(pantryIngredientViewModel.Ingredient.Name);
                         }
                         else
                         {

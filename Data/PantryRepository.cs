@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data.Entities;
 
@@ -136,6 +135,14 @@ namespace ThePantry.Data
                            .FirstOrDefault();
         }
 
+        public async Task<IEnumerable<Meal>> GetMealByIds(IEnumerable<int> mealIds)
+        {
+            _logger.LogInformation("Attempting to retreive meals with IDs in provided array.");
+            var meals =  _context.Meals
+                           .Where(m => mealIds.Any(id => id == m.MealId));
+            return await meals.ToListAsync();
+        }
+
         // Meal Ingredient Methods
         public MealIngredient[] GetMealIngredientsByMealId(int mealId)
         {
@@ -200,22 +207,22 @@ namespace ThePantry.Data
             return _context.PantryIngredients.Any(n => n.PantryId == pantryId && n.Ingredient.IngredientId == ingredientId);
         }
 
-        public Ingredient GetIngredientByName(string ingredientName)
+        public async Task<Ingredient> GetIngredientByName(string ingredientName)
         {
             _logger.LogInformation("Attempting to retreive existing Ingredient.");
-            return _context.Ingredients
+            return await _context.Ingredients
                 .Where(n => n.Name == ingredientName)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
         }
 
-        public Task<int[]> GetIngredientsByQueryString(string[] ingredients)
+        public async Task<int[]> GetIngredientsByQueryString(string[] ingredients)
         {
             _logger.LogInformation("Attempting to get ingredients via ingredient array");
             var query = _context.Ingredients
                 .Where(i => ingredients.Contains(i.Name))
                 .Select(id => id.IngredientId)
                 .ToArrayAsync();
-            return query;
+            return await query;
         }
 
 

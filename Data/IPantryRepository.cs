@@ -15,10 +15,10 @@ namespace ThePantry.Data
         // Meal methods
         IEnumerable<Meal> GetAllMeals();
         Meal GetMealById(int mealId);
+        Task<IEnumerable<Meal>> GetMealByIds(IEnumerable<int> mealIds);
 
         // MealFinder methods
         Task<Meal[]> FindMealsByIngredients(int[] ingredients);
-
 
         // Pantry Ingredient Methods
         PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId);
@@ -33,7 +33,7 @@ namespace ThePantry.Data
         bool IngredientHasMatch(string ingredientToCheck);
         bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId);
         public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId);
-        Ingredient GetIngredientByName(string ingredientName);
+        Task<Ingredient> GetIngredientByName(string ingredientName);
         IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName);
         Task<int[]> GetIngredientsByQueryString(string[] ingredientNames);
 
