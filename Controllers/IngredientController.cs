@@ -26,15 +26,13 @@ namespace ThePantry.Controllers
             _mapper = mapper;
         }
 
-        
-
         [HttpGet("{id}")]
-        public ActionResult<MealIngredientViewModel[]> GetIngredient(string id)
+        public async Task<ActionResult<MealIngredientViewModel[]>> GetIngredient(string id)
         {
             try
             {
-                
-                if (_repository.IngredientHasMatch(id))
+                var ingredientMatch = await _repository.IngredientHasMatch(id);
+                if (ingredientMatch)
                 {
                     var newIngredient = _repository.GetIngredientsContainingName(id);
                     var newIngredientVM = _mapper.Map<IngredientViewModel[]>(newIngredient);
@@ -50,7 +48,6 @@ namespace ThePantry.Controllers
                 _logger.LogInformation($"Failed to get ingredients: {exception}");
                 return BadRequest("Could not find ingredient");
             }
-
         }
     }
 }

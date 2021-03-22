@@ -1,9 +1,11 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
-import { Meal } from '../meal';
-import { Ingredient } from '../ingredient';
 import { MealService } from '../meal.service';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+
+import { Meal } from '../meal';
+import { Ingredient } from '../ingredient';
+import { ActiveIngredient } from '../activeingredient';
 
 @Component({
   selector: 'meal-search',
@@ -13,6 +15,7 @@ import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operato
 export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
     meals$: Observable<Meal[]> | undefined;
+    activeIngredients$: Observable<ActiveIngredient[]> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
     showSearchResults: boolean = false;
@@ -56,12 +59,14 @@ export class MealSearchComponent implements OnInit {
     searchMeals(): void {
         // Clear current search results
         this.meals$ = of([]);
+        this.activeIngredients$ = of([]);
 
         // TODO: clear jank unit testing
         console.log("Current Query @ Button Press: " + this.queryString);
 
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString!);
+        this.activeIngredients$ = this.mealService.confirmIngredients(this.queryString!);
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {

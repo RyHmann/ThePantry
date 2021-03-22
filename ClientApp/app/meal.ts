@@ -7,5 +7,4 @@ export interface Meal {
     ingredients: Ingredient[];
     thumbnail: string;
     url: string;
-
 }

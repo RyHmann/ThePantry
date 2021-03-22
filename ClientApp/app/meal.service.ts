@@ -4,13 +4,15 @@ import { Ingredient } from './ingredient';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
+import { ActiveIngredient } from './activeingredient';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MealService {
     private mealsUrl = '/api/mealfinder/include?ingr=';
-    private ingredientsUrl = '/api/ingredient/'
+    private ingredientsUrl = '/api/ingredient/';
+    private activeIngredientsUrl = '/api/ingredient/include?ing=';
 
     constructor(private _http: HttpClient) { }
 
@@ -44,6 +46,16 @@ export class MealService {
             );
     }
 
+    confirmIngredients(term: string): Observable<ActiveIngredient[]> {
+        return this._http.get<ActiveIngredient[]>(`${this.activeIngredientsUrl}${term}`)
+            .pipe(
+                tap(x => x.length ?
+                    console.log("Found active ingredients.") :
+                    console.log("Found no active ingredients.")),
+                    catchError(this.handleError<ActiveIngredient[]>('confirmIngredients', []))
+                );
+    }
+
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             console.error(error);
@@ -51,6 +63,5 @@ export class MealService {
             return of(result as T);
         }
     }
-
 }
 

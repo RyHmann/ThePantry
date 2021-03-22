@@ -189,10 +189,13 @@ namespace ThePantry.Data
         }
 
         // Checks if any ingredients contain the search string
-        public bool IngredientHasMatch(string ingredientToCheck)
+
+        public async Task<bool> IngredientHasMatch(string ingredientToCheck)
         {
             _logger.LogInformation("Check to see if any ingredients contain this term");
-            return _context.Ingredients.Any(n => n.Name.Contains(ingredientToCheck));
+            var query = _context.Ingredients
+                           .AnyAsync(n => n.Name.Contains(ingredientToCheck));
+            return await query;
         }
 
         public bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId)

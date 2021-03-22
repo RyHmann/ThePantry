@@ -15,13 +15,8 @@
     <div class="search-button-container">
         <button class="search-button" type=submit (click)="searchMeals()">Search</button>
     </div>
-    <div class="selected-ingredients-container">
-        <div class="selected-ingredients">
-            <a>tomato</a>
-            <a>onion</a>
-            <a>garlic</a>
-            <a>strawberry</a>
-        </div>
+    <div class="active-ingredients-container">
+        <active-ingredients></active-ingredients>
     </div> 
 </div>
 <meals [availableMeals]="meals$"></meals>

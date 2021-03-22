@@ -8,6 +8,7 @@ import { MealSearchComponent } from './meal-search/meal-search.component';
 import { MealDetailComponent } from './meal-detail/meal-detail.component';
 import { MealsComponent } from './meals/meals.component';
 import { TruncatePipe } from './truncate.pipe';
+import { ActiveIngredientsComponent } from './active-ingredients/active-ingredients.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { TruncatePipe } from './truncate.pipe';
     MealSearchComponent,
     MealDetailComponent,
     MealsComponent,
-    TruncatePipe
+    TruncatePipe,
+    ActiveIngredientsComponent
   ],
   imports: [
       BrowserModule,

@@ -34,10 +34,12 @@ let MealSearchComponent = class MealSearchComponent {
     searchMeals() {
         // Clear current search results
         this.meals$ = of([]);
+        this.activeIngredients$ = of([]);
         // TODO: clear jank unit testing
         console.log("Current Query @ Button Press: " + this.queryString);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
+        this.activeIngredients$ = this.mealService.confirmIngredients(this.queryString);
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;

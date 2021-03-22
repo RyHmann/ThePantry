@@ -30,7 +30,7 @@ namespace ThePantry.Data
 
         // Ingredient Methods
         bool IngredientExists(Ingredient ingredientToCheck);
-        bool IngredientHasMatch(string ingredientToCheck);
+        Task<bool> IngredientHasMatch(string ingredientToCheck);
         bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId);
         public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId);
         Task<Ingredient> GetIngredientByName(string ingredientName);
