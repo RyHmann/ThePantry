@@ -7,7 +7,6 @@ let MealService = class MealService {
         this._http = _http;
         this.mealsUrl = '/api/mealfinder/include?ingr=';
         this.ingredientsUrl = '/api/ingredient/';
-        this.activeIngredientsUrl = '/api/ingredient/include?ing=';
     }
     getMeals() {
         return this._http.get(this.mealsUrl);
@@ -29,12 +28,6 @@ let MealService = class MealService {
             .pipe(tap(x => x.length ?
             console.log(`Found ingredients matching "${term}"`) :
             console.log(`No ingredients matching "${term}"`)), catchError(this.handleError('searchIngredients', [])));
-    }
-    confirmIngredients(term) {
-        return this._http.get(`${this.activeIngredientsUrl}${term}`)
-            .pipe(tap(x => x.length ?
-            console.log("Found active ingredients.") :
-            console.log("Found no active ingredients.")), catchError(this.handleError('confirmIngredients', [])));
     }
     handleError(operation = 'operation', result) {
         return (error) => {

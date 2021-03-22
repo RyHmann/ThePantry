@@ -7,7 +7,7 @@
         <div class="search-results-container" (click)="$event.stopPropagation()" *ngIf="showSearchResults">
             <ul class="search-result-list">
                 <li *ngFor="let ingredient of ingredients$ | async">
-                    <a #ingredientResult (click)="selectIngredient(ingredientResult.innerText); searchBox.focus()">{{ingredient.name}}</a>
+                    <a #ingredientResult (click)="selectIngredient(ingredient); searchBox.focus()">{{ingredient.name}}</a>
                 </li>
             </ul>
         </div>

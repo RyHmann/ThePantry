@@ -428,7 +428,7 @@ function MealSearchComponent_div_7_li_2_Template(rf, ctx) { if (rf & 1) {
     const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "li");
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "a", 13, 14);
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function MealSearchComponent_div_7_li_2_Template_a_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r6); const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](2); const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"](2); const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](6); ctx_r5.selectIngredient(_r4.innerText); return _r0.focus(); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function MealSearchComponent_div_7_li_2_Template_a_click_1_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r6); const ingredient_r3 = ctx.$implicit; const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"](2); const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](6); ctx_r5.selectIngredient(ingredient_r3); return _r0.focus(); });
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](3);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
@@ -461,8 +461,8 @@ class MealSearchComponent {
     }
     ngOnInit() {
         this.ingredients$ = this.searchTerms.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["debounceTime"])(300), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["distinctUntilChanged"])(), 
-        // Map ignores all string items except for the last comma separated value
-        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((term) => term.split(",").pop().trim()), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])((term) => this.mealService.searchIngredients(term)));
+        // Map ignores all string items except for the last comma separated value and removes minus sign
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((term) => term.split(",").pop().replace("-", "").trim()), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["switchMap"])((term) => this.mealService.searchIngredients(term)));
     }
     // Push a search term into the observable stream
     search(term) {
@@ -471,32 +471,33 @@ class MealSearchComponent {
         this.searchTerms.next(term);
     }
     selectIngredient(ingredient) {
-        // TODO: Change focus from search results to search bar on click
-        this.incorporateSelectedIngredient(ingredient);
+        // TODO: BUG: An additional space is being introduced somewhere
+        this.incorporateSelectedIngredient(ingredient.name);
         // Clear search results
-        this.searchTerms.next(" ");
+        this.searchTerms.next("");
         // TODO: clear this jank unit testing
-        console.log(`Selected: ${ingredient}`);
+        console.log(`Selected: ${ingredient.name}`);
         console.log("Current Query: " + this.queryString);
     }
     searchMeals() {
         // Clear current search results
         this.meals$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
         this.activeIngredients$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
-        // TODO: clear jank unit testing
-        console.log("Current Query @ Button Press: " + this.queryString);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
-        this.activeIngredients$ = this.mealService.confirmIngredients(this.queryString);
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
         let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(",");
-        stringArray === null || stringArray === void 0 ? void 0 : stringArray.pop();
-        stringArray === null || stringArray === void 0 ? void 0 : stringArray.push(ingredient + ", ");
+        let ingredientString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.pop().trim();
+        this.checkForMinusSign(ingredientString) ? stringArray === null || stringArray === void 0 ? void 0 : stringArray.push("-" + ingredient + ", ") : stringArray === null || stringArray === void 0 ? void 0 : stringArray.push(ingredient + ", ");
+        //stringArray?.push(ingredient + ", ");
         let newString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.join(", ");
         this.queryString = newString;
+    }
+    checkForMinusSign(term) {
+        return term.slice(0, 1) === '-' ? true : false;
     }
 }
 MealSearchComponent.ɵfac = function MealSearchComponent_Factory(t) { return new (t || MealSearchComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdirectiveInject"](_meal_service__WEBPACK_IMPORTED_MODULE_3__["MealService"])); };
@@ -562,7 +563,6 @@ class MealService {
         this._http = _http;
         this.mealsUrl = '/api/mealfinder/include?ingr=';
         this.ingredientsUrl = '/api/ingredient/';
-        this.activeIngredientsUrl = '/api/ingredient/include?ing=';
     }
     getMeals() {
         return this._http.get(this.mealsUrl);
@@ -584,12 +584,6 @@ class MealService {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(x => x.length ?
             console.log(`Found ingredients matching "${term}"`) :
             console.log(`No ingredients matching "${term}"`)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError('searchIngredients', [])));
-    }
-    confirmIngredients(term) {
-        return this._http.get(`${this.activeIngredientsUrl}${term}`)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["tap"])(x => x.length ?
-            console.log("Found active ingredients.") :
-            console.log("Found no active ingredients.")), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(this.handleError('confirmIngredients', [])));
     }
     handleError(operation = 'operation', result) {
         return (error) => {

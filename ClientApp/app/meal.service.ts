@@ -12,7 +12,6 @@ import { ActiveIngredient } from './activeingredient';
 export class MealService {
     private mealsUrl = '/api/mealfinder/include?ingr=';
     private ingredientsUrl = '/api/ingredient/';
-    private activeIngredientsUrl = '/api/ingredient/include?ing=';
 
     constructor(private _http: HttpClient) { }
 
@@ -44,16 +43,6 @@ export class MealService {
                     console.log(`No ingredients matching "${term}"`)),
                 catchError(this.handleError<Ingredient[]>('searchIngredients', []))
             );
-    }
-
-    confirmIngredients(term: string): Observable<ActiveIngredient[]> {
-        return this._http.get<ActiveIngredient[]>(`${this.activeIngredientsUrl}${term}`)
-            .pipe(
-                tap(x => x.length ?
-                    console.log("Found active ingredients.") :
-                    console.log("Found no active ingredients.")),
-                    catchError(this.handleError<ActiveIngredient[]>('confirmIngredients', []))
-                );
     }
 
     private handleError<T>(operation = 'operation', result?: T) {

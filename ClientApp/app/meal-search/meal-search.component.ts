@@ -31,8 +31,8 @@ export class MealSearchComponent implements OnInit {
         this.ingredients$ = this.searchTerms.pipe(
             debounceTime(300),
             distinctUntilChanged(),
-            // Map ignores all string items except for the last comma separated value
-            map((term: string) => term.split(",").pop()!.trim()),
+            // Map ignores all string items except for the last comma separated value and removes minus sign
+            map((term: string) => term.split(",").pop()!.replace("-","").trim()),
             switchMap((term: string) => this.mealService.searchIngredients(term))
         );
     }
@@ -44,15 +44,15 @@ export class MealSearchComponent implements OnInit {
         this.searchTerms.next(term);
     }
 
-    selectIngredient(ingredient: string): void {
-        // TODO: Change focus from search results to search bar on click
-        this.incorporateSelectedIngredient(ingredient);
+    selectIngredient(ingredient: Ingredient): void {
+        // TODO: BUG: An additional space is being introduced somewhere
+        this.incorporateSelectedIngredient(ingredient.name);
 
         // Clear search results
-        this.searchTerms.next(" ");
+        this.searchTerms.next("");
 
         // TODO: clear this jank unit testing
-        console.log(`Selected: ${ingredient}`);
+        console.log(`Selected: ${ingredient.name}`);
         console.log("Current Query: " + this.queryString);
     }
 
@@ -61,20 +61,21 @@ export class MealSearchComponent implements OnInit {
         this.meals$ = of([]);
         this.activeIngredients$ = of([]);
 
-        // TODO: clear jank unit testing
-        console.log("Current Query @ Button Press: " + this.queryString);
-
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString!);
-        this.activeIngredients$ = this.mealService.confirmIngredients(this.queryString!);
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
         let stringArray = this.queryString?.split(",");
-        stringArray?.pop();
-        stringArray?.push(ingredient + ", ");
+        let ingredientString = stringArray?.pop()!.trim();
+        this.checkForMinusSign(ingredientString!) ? stringArray?.push("-" + ingredient + ", ") : stringArray?.push(ingredient + ", ");
+        //stringArray?.push(ingredient + ", ");
         let newString = stringArray?.join(", ");
         this.queryString = newString;
+    }
+
+    private checkForMinusSign(term: string): boolean {
+        return term.slice(0,1) === '-' ? true : false;
     }
 }
