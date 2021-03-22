@@ -312,10 +312,8 @@ ActiveIngredientsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["�
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MealsComponent", function() { return MealsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _meal_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../meal.service */ "kciO");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _truncate_pipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../truncate.pipe */ "PrUn");
-
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _truncate_pipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../truncate.pipe */ "PrUn");
 
 
 
@@ -379,21 +377,18 @@ function MealsComponent_div_0_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 1, ctx_r0.availableMeals));
 } }
 class MealsComponent {
-    constructor(mealService) {
-        this.mealService = mealService;
-    }
     ngOnInit() {
     }
     onSelect(meal) {
         this.selectedMeal = meal;
     }
 }
-MealsComponent.ɵfac = function MealsComponent_Factory(t) { return new (t || MealsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_meal_service__WEBPACK_IMPORTED_MODULE_1__["MealService"])); };
+MealsComponent.ɵfac = function MealsComponent_Factory(t) { return new (t || MealsComponent)(); };
 MealsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: MealsComponent, selectors: [["meals"]], inputs: { availableMeals: "availableMeals" }, decls: 1, vars: 1, consts: [["class", "grid-container", 4, "ngIf"], [1, "grid-container"], ["class", "card", 3, "selected", "click", 4, "ngFor", "ngForOf"], [1, "card", 3, "click"], ["src", "C:\\Repos\\csharp\\Projects\\ThePantry\\wwwroot\\clientapp\\assets\\pinchofyum_elotequeso.jpeg"], [1, "card-container"], ["target", "_blank", 3, "href"], [1, "meal-ingredient-container"], [1, "ingredient-list"], ["class", "ingredients", 4, "ngFor", "ngForOf"], [1, "ingredients"]], template: function MealsComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, MealsComponent_div_0_Template, 3, 3, "div", 0);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.availableMeals);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["AsyncPipe"], _truncate_pipe__WEBPACK_IMPORTED_MODULE_3__["TruncatePipe"]], styles: ["html[_ngcontent-%COMP%] {\r\n    height: 100%;\r\n    overflow: scroll;\r\n}\r\n\r\n.grid-container[_ngcontent-%COMP%] {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\r\n    -moz-column-gap: 10px;\r\n         column-gap: 10px;\r\n    grid-row-gap: 10px;\r\n    width: 80%;\r\n    margin: 0px auto;\r\n}\r\n\r\n.card[_ngcontent-%COMP%] {\r\n    display: inline;\r\n    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.3);\r\n    width: auto;\r\n    background-color: #ffffff;\r\n    padding: 10px;\r\n    margin: 20px;\r\n    border-radius: 15px;\r\n}\r\n\r\n.card[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%], p[_ngcontent-%COMP%] {\r\n        font-family: 'Lato', sans-serif;\r\n        margin: 10px;\r\n    }\r\n\r\n.card[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\r\n        letter-spacing: 1px;\r\n        text-decoration: underline;\r\n        color: #444444\r\n    }\r\n\r\nimg[_ngcontent-%COMP%] {\r\n    width: 90%;\r\n    display: block;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%] {\r\n    color: #999999;\r\n    font-family: 'Lato', sans-serif;\r\n    font-size: 14px;\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%]:after {\r\n    content: \", \";\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%]:last-child:after {\r\n    content: \"\";\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lYWxzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksYUFBYTtJQUNiLDREQUE0RDtJQUM1RCxxQkFBZ0I7U0FBaEIsZ0JBQWdCO0lBQ2hCLGtCQUFrQjtJQUNsQixVQUFVO0lBQ1YsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksZUFBZTtJQUNmLDJDQUEyQztJQUMzQyxXQUFXO0lBQ1gseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixZQUFZO0lBQ1osbUJBQW1CO0FBQ3ZCOztBQUVJO1FBQ0ksK0JBQStCO1FBQy9CLFlBQVk7SUFDaEI7O0FBRUE7UUFDSSxtQkFBbUI7UUFDbkIsMEJBQTBCO1FBQzFCO0lBQ0o7O0FBRUo7SUFDSSxVQUFVO0lBQ1YsY0FBYztJQUNkLGlCQUFpQjtJQUNqQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QsK0JBQStCO0lBQy9CLGVBQWU7QUFDbkI7O0FBQ0E7SUFDSSxhQUFhO0FBQ2pCOztBQUNBO0lBQ0ksV0FBVztBQUNmIiwiZmlsZSI6Im1lYWxzLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJodG1sIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIG92ZXJmbG93OiBzY3JvbGw7XHJcbn1cclxuXHJcbi5ncmlkLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgY29sdW1uLWdhcDogMTBweDtcclxuICAgIGdyaWQtcm93LWdhcDogMTBweDtcclxuICAgIHdpZHRoOiA4MCU7XHJcbiAgICBtYXJnaW46IDBweCBhdXRvO1xyXG59XHJcblxyXG4uY2FyZCB7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmU7XHJcbiAgICBib3gtc2hhZG93OiAwcHggNHB4IDhweCAwcHggcmdiYSgwLDAsMCwwLjMpO1xyXG4gICAgd2lkdGg6IGF1dG87XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmO1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIG1hcmdpbjogMjBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XHJcbn1cclxuXHJcbiAgICAuY2FyZCBoNCwgcCB7XHJcbiAgICAgICAgZm9udC1mYW1pbHk6ICdMYXRvJywgc2Fucy1zZXJpZjtcclxuICAgICAgICBtYXJnaW46IDEwcHg7XHJcbiAgICB9XHJcblxyXG4gICAgLmNhcmQgaDQge1xyXG4gICAgICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XHJcbiAgICAgICAgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7XHJcbiAgICAgICAgY29sb3I6ICM0NDQ0NDRcclxuICAgIH1cclxuXHJcbmltZyB7XHJcbiAgICB3aWR0aDogOTAlO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgIG1hcmdpbi1yaWdodDogYXV0bztcclxufVxyXG5cclxuLmluZ3JlZGllbnRzIHtcclxuICAgIGNvbG9yOiAjOTk5OTk5O1xyXG4gICAgZm9udC1mYW1pbHk6ICdMYXRvJywgc2Fucy1zZXJpZjtcclxuICAgIGZvbnQtc2l6ZTogMTRweDtcclxufVxyXG4uaW5ncmVkaWVudHM6YWZ0ZXIge1xyXG4gICAgY29udGVudDogXCIsIFwiO1xyXG59XHJcbi5pbmdyZWRpZW50czpsYXN0LWNoaWxkOmFmdGVyIHtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbn1cclxuXHJcblxyXG5cclxuIl19 */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["NgIf"], _angular_common__WEBPACK_IMPORTED_MODULE_1__["NgForOf"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["AsyncPipe"], _truncate_pipe__WEBPACK_IMPORTED_MODULE_2__["TruncatePipe"]], styles: ["html[_ngcontent-%COMP%] {\r\n    height: 100%;\r\n    overflow: scroll;\r\n}\r\n\r\n.grid-container[_ngcontent-%COMP%] {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\r\n    -moz-column-gap: 10px;\r\n         column-gap: 10px;\r\n    grid-row-gap: 10px;\r\n    width: 80%;\r\n    margin: 0px auto;\r\n}\r\n\r\n.card[_ngcontent-%COMP%] {\r\n    display: inline;\r\n    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.3);\r\n    width: auto;\r\n    background-color: #ffffff;\r\n    padding: 10px;\r\n    margin: 20px;\r\n    border-radius: 15px;\r\n}\r\n\r\n.card[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%], p[_ngcontent-%COMP%] {\r\n        font-family: 'Lato', sans-serif;\r\n        margin: 10px;\r\n    }\r\n\r\n.card[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\r\n        letter-spacing: 1px;\r\n        text-decoration: underline;\r\n        color: #444444\r\n    }\r\n\r\nimg[_ngcontent-%COMP%] {\r\n    width: 90%;\r\n    display: block;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%] {\r\n    color: #999999;\r\n    font-family: 'Lato', sans-serif;\r\n    font-size: 14px;\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%]:after {\r\n    content: \", \";\r\n}\r\n\r\n.ingredients[_ngcontent-%COMP%]:last-child:after {\r\n    content: \"\";\r\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm1lYWxzLmNvbXBvbmVudC5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7SUFDSSxZQUFZO0lBQ1osZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksYUFBYTtJQUNiLDREQUE0RDtJQUM1RCxxQkFBZ0I7U0FBaEIsZ0JBQWdCO0lBQ2hCLGtCQUFrQjtJQUNsQixVQUFVO0lBQ1YsZ0JBQWdCO0FBQ3BCOztBQUVBO0lBQ0ksZUFBZTtJQUNmLDJDQUEyQztJQUMzQyxXQUFXO0lBQ1gseUJBQXlCO0lBQ3pCLGFBQWE7SUFDYixZQUFZO0lBQ1osbUJBQW1CO0FBQ3ZCOztBQUVJO1FBQ0ksK0JBQStCO1FBQy9CLFlBQVk7SUFDaEI7O0FBRUE7UUFDSSxtQkFBbUI7UUFDbkIsMEJBQTBCO1FBQzFCO0lBQ0o7O0FBRUo7SUFDSSxVQUFVO0lBQ1YsY0FBYztJQUNkLGlCQUFpQjtJQUNqQixrQkFBa0I7QUFDdEI7O0FBRUE7SUFDSSxjQUFjO0lBQ2QsK0JBQStCO0lBQy9CLGVBQWU7QUFDbkI7O0FBQ0E7SUFDSSxhQUFhO0FBQ2pCOztBQUNBO0lBQ0ksV0FBVztBQUNmIiwiZmlsZSI6Im1lYWxzLmNvbXBvbmVudC5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJodG1sIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIG92ZXJmbG93OiBzY3JvbGw7XHJcbn1cclxuXHJcbi5ncmlkLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBncmlkO1xyXG4gICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maWxsLCBtaW5tYXgoMzAwcHgsIDFmcikpO1xyXG4gICAgY29sdW1uLWdhcDogMTBweDtcclxuICAgIGdyaWQtcm93LWdhcDogMTBweDtcclxuICAgIHdpZHRoOiA4MCU7XHJcbiAgICBtYXJnaW46IDBweCBhdXRvO1xyXG59XHJcblxyXG4uY2FyZCB7XHJcbiAgICBkaXNwbGF5OiBpbmxpbmU7XHJcbiAgICBib3gtc2hhZG93OiAwcHggNHB4IDhweCAwcHggcmdiYSgwLDAsMCwwLjMpO1xyXG4gICAgd2lkdGg6IGF1dG87XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmO1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIG1hcmdpbjogMjBweDtcclxuICAgIGJvcmRlci1yYWRpdXM6IDE1cHg7XHJcbn1cclxuXHJcbiAgICAuY2FyZCBoNCwgcCB7XHJcbiAgICAgICAgZm9udC1mYW1pbHk6ICdMYXRvJywgc2Fucy1zZXJpZjtcclxuICAgICAgICBtYXJnaW46IDEwcHg7XHJcbiAgICB9XHJcblxyXG4gICAgLmNhcmQgaDQge1xyXG4gICAgICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XHJcbiAgICAgICAgdGV4dC1kZWNvcmF0aW9uOiB1bmRlcmxpbmU7XHJcbiAgICAgICAgY29sb3I6ICM0NDQ0NDRcclxuICAgIH1cclxuXHJcbmltZyB7XHJcbiAgICB3aWR0aDogOTAlO1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgIG1hcmdpbi1yaWdodDogYXV0bztcclxufVxyXG5cclxuLmluZ3JlZGllbnRzIHtcclxuICAgIGNvbG9yOiAjOTk5OTk5O1xyXG4gICAgZm9udC1mYW1pbHk6ICdMYXRvJywgc2Fucy1zZXJpZjtcclxuICAgIGZvbnQtc2l6ZTogMTRweDtcclxufVxyXG4uaW5ncmVkaWVudHM6YWZ0ZXIge1xyXG4gICAgY29udGVudDogXCIsIFwiO1xyXG59XHJcbi5pbmdyZWRpZW50czpsYXN0LWNoaWxkOmFmdGVyIHtcclxuICAgIGNvbnRlbnQ6IFwiXCI7XHJcbn1cclxuXHJcblxyXG5cclxuIl19 */"] });
 
 
 /***/ }),
@@ -471,7 +466,6 @@ class MealSearchComponent {
         this.searchTerms.next(term);
     }
     selectIngredient(ingredient) {
-        // TODO: BUG: An additional space is being introduced somewhere
         this.incorporateSelectedIngredient(ingredient.name);
         // Clear search results
         this.searchTerms.next("");
@@ -482,17 +476,15 @@ class MealSearchComponent {
     searchMeals() {
         // Clear current search results
         this.meals$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
-        this.activeIngredients$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])([]);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
-        let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(",");
+        let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(", ");
         let ingredientString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.pop().trim();
         this.checkForMinusSign(ingredientString) ? stringArray === null || stringArray === void 0 ? void 0 : stringArray.push("-" + ingredient + ", ") : stringArray === null || stringArray === void 0 ? void 0 : stringArray.push(ingredient + ", ");
-        //stringArray?.push(ingredient + ", ");
         let newString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.join(", ");
         this.queryString = newString;
     }

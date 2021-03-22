@@ -23,14 +23,17 @@ let MealSearchComponent = class MealSearchComponent {
         this.searchTerms.next(term);
     }
     selectIngredient(ingredient) {
-        this.incorporateSelectedIngredient(ingredient.name);
+        // TODO: BUG: An additional space is being introduced somewhere
+        this.incorporateSelectedIngredient(ingredient);
         // Clear search results
-        this.searchTerms.next(" ");
+        this.searchTerms.next("");
+        // TODO: clear this jank unit testing
+        console.log(`Selected: ${ingredient}`);
+        console.log("Current Query: " + this.queryString);
     }
     searchMeals() {
         // Clear current search results
         this.meals$ = of([]);
-        this.activeIngredients$ = of([]);
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString);
     }

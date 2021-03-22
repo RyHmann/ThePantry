@@ -5,7 +5,6 @@ import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operato
 
 import { Meal } from '../meal';
 import { Ingredient } from '../ingredient';
-import { ActiveIngredient } from '../activeingredient';
 
 @Component({
   selector: 'meal-search',
@@ -15,7 +14,6 @@ import { ActiveIngredient } from '../activeingredient';
 export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
     meals$: Observable<Meal[]> | undefined;
-    activeIngredients$: Observable<ActiveIngredient[]> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
     showSearchResults: boolean = false;
@@ -45,7 +43,6 @@ export class MealSearchComponent implements OnInit {
     }
 
     selectIngredient(ingredient: Ingredient): void {
-        // TODO: BUG: An additional space is being introduced somewhere
         this.incorporateSelectedIngredient(ingredient.name);
 
         // Clear search results
@@ -59,7 +56,6 @@ export class MealSearchComponent implements OnInit {
     searchMeals(): void {
         // Clear current search results
         this.meals$ = of([]);
-        this.activeIngredients$ = of([]);
 
         // Return results based on new query string
         this.meals$ = this.mealService.searchMeals(this.queryString!);
@@ -67,10 +63,9 @@ export class MealSearchComponent implements OnInit {
 
     private incorporateSelectedIngredient(ingredient: string): void {
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
-        let stringArray = this.queryString?.split(",");
+        let stringArray = this.queryString?.split(", ");
         let ingredientString = stringArray?.pop()!.trim();
         this.checkForMinusSign(ingredientString!) ? stringArray?.push("-" + ingredient + ", ") : stringArray?.push(ingredient + ", ");
-        //stringArray?.push(ingredient + ", ");
         let newString = stringArray?.join(", ");
         this.queryString = newString;
     }
