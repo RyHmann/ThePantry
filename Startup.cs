@@ -31,22 +31,7 @@ namespace ThePantry
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>(cfg =>
-           {
-               cfg.User.RequireUniqueEmail = true;
-           })
-                .AddEntityFrameworkStores<PantryContext>();
-            services.AddAuthentication()
-                .AddCookie()
-                .AddJwtBearer(cfg =>
-                {
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidIssuer = Configuration["Tokens:Issuer"],
-                        ValidAudience = Configuration["Tokens:audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                    };
-                });
+            
             services.AddDbContext<PantryContext>(cfg =>
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("PantryConnectionString"));
@@ -56,7 +41,7 @@ namespace ThePantry
             services.AddTransient<PantrySeeder>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddScoped<IPantryRepository, PantryRepository>();
-            //services.AddRazorPages();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,15 +61,13 @@ namespace ThePantry
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseAuthentication();
             app.UseRouting();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("Fallback",
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action= "Index"}) ;
-                //endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
             });
         }
     }

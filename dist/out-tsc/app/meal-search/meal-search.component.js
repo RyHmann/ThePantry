@@ -23,12 +23,11 @@ let MealSearchComponent = class MealSearchComponent {
         this.searchTerms.next(term);
     }
     selectIngredient(ingredient) {
-        // TODO: BUG: An additional space is being introduced somewhere
-        this.incorporateSelectedIngredient(ingredient);
+        this.incorporateSelectedIngredient(ingredient.name);
         // Clear search results
         this.searchTerms.next("");
         // TODO: clear this jank unit testing
-        console.log(`Selected: ${ingredient}`);
+        console.log(`Selected: ${ingredient.name}`);
         console.log("Current Query: " + this.queryString);
     }
     searchMeals() {
@@ -40,10 +39,9 @@ let MealSearchComponent = class MealSearchComponent {
     incorporateSelectedIngredient(ingredient) {
         var _a;
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
-        let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(",");
+        let stringArray = (_a = this.queryString) === null || _a === void 0 ? void 0 : _a.split(", ");
         let ingredientString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.pop().trim();
         this.checkForMinusSign(ingredientString) ? stringArray === null || stringArray === void 0 ? void 0 : stringArray.push("-" + ingredient + ", ") : stringArray === null || stringArray === void 0 ? void 0 : stringArray.push(ingredient + ", ");
-        //stringArray?.push(ingredient + ", ");
         let newString = stringArray === null || stringArray === void 0 ? void 0 : stringArray.join(", ");
         this.queryString = newString;
     }

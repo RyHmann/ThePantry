@@ -27,13 +27,6 @@ namespace ThePantry.Data
 
             CreateMap<Ingredient, IngredientViewModel>()
                 .ReverseMap();
-
-            CreateMap<Pantry, PantryViewModel>()
-                .ForMember(dest => dest.Username, opt => opt.MapFrom(source => source.User.UserName))
-                .ReverseMap();
-
-            CreateMap<PantryIngredient, PantryIngredientViewModel>()
-                .ReverseMap();
         }
     }
 }

@@ -1,9 +1,6 @@
 import { __decorate } from "tslib";
 import { Component, Input } from '@angular/core';
 let MealsComponent = class MealsComponent {
-    constructor(mealService) {
-        this.mealService = mealService;
-    }
     ngOnInit() {
     }
     onSelect(meal) {

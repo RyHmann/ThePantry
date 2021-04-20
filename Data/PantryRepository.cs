@@ -22,93 +22,6 @@ namespace ThePantry.Data
         // TO DO: Ensure function finds meals CONTAINING ingredients (case agnostic), and not an exact match
         // TO DO: Convert methods to ASYNC
 
-        // Pantry Methods
-        public IEnumerable<Pantry> GetAllPantries()
-        {
-            try
-            {
-                _logger.LogInformation("Attempting to retreive all Pantries.");
-                return _context.Pantries
-                        .OrderBy(p => p.User)
-                        .ToList();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"Failed to get all pantries: {exception}");
-                return null;
-            }
-        }
-
-        public Pantry GetPantryById(int pantryId)
-        {
-            try
-            {
-                _logger.LogInformation($"Attempting to retreive Pantry by Pantry ID: {pantryId}.");
-                return _context.Pantries
-                        .Where(p => p.PantryId == pantryId)
-                        .FirstOrDefault();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogInformation($"Failed to get pantry: {exception}");
-                return null;
-            }
-        }
-        public Pantry GetPantryByUser(string userName)
-        {
-            try
-            {
-                _logger.LogInformation($"Attempting to retreive Pantry by User: {userName}");
-                return _context.Pantries
-                        .Where(p => p.User.UserName == userName)
-                        .Include(u => u.User)
-                        .FirstOrDefault();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Unable to retreive Pantry: {exception}");
-                return null;
-            }
-        }
-
-        // Pantry Ingredient Methods
-        public PantryIngredient GetPantryIngredientByPantryId(int pantryId, int pantryIngredientId)
-        {
-            try
-            {
-                _logger.LogInformation($"Attempting to retreive Pantry Ingredient in Pantry: {pantryId} and Ingredient: {pantryIngredientId}.");
-                return _context.PantryIngredients
-                               .Where(p => p.PantryId == pantryId && p.PantryIngredientId == pantryIngredientId)
-                               .Include(i => i.Ingredient)
-                               .FirstOrDefault();
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Failed to get Pantry Ingredient: {exception}.");
-                return null;
-            }
-        }
-
-        public PantryIngredient[] GetPantryIngredientsByPantryId(int pantryId)
-        {
-            try
-            {
-                _logger.LogInformation($"Attempting to retreive all Pantry Ingredients in Pantry: {pantryId}.");
-                return _context.PantryIngredients
-                               .Where(p => p.PantryId == pantryId)
-                               .Include(i => i.Ingredient)
-                               .OrderBy(n => n.Ingredient.Name)
-                               .ToArray();
-            }
-            catch (Exception exception)
-            {
-
-                _logger.LogError($"Failed to get Pantry Ingredients in Pantry: {exception}.");
-                return null;
-            }
-        }
-
-        // Meal Methods
         public IEnumerable<Meal> GetAllMeals()
         {
             try
@@ -143,7 +56,6 @@ namespace ThePantry.Data
             return await meals.ToListAsync();
         }
 
-        // Meal Ingredient Methods
         public MealIngredient[] GetMealIngredientsByMealId(int mealId)
         {
             try
@@ -179,16 +91,13 @@ namespace ThePantry.Data
             }
         }
 
-        /*<---------- Ingredient Methods ---------->*/
 
-        // Checks if ingredient with this name exists in the DB
         public bool IngredientExists(Ingredient ingredientToCheck)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");
             return _context.Ingredients.Any(n => n.Name == ingredientToCheck.Name);
         }
 
-        // Checks if any ingredients contain the search string
 
         public async Task<bool> IngredientHasMatch(string ingredientToCheck)
         {
@@ -202,12 +111,6 @@ namespace ThePantry.Data
         {
             _logger.LogInformation($"Checking to see if ingredient: {ingredientId} exists in meal.");
             return _context.MealIngredients.Any(n => n.MealId == mealId && n.Ingredient.IngredientId == ingredientId);
-        }
-
-        public bool IngredientAlreadyAssignedToPantry(int pantryId, int ingredientId)
-        {
-            _logger.LogInformation($"Checking to see if ingredient: {ingredientId} exists in pantry.");
-            return _context.PantryIngredients.Any(n => n.PantryId == pantryId && n.Ingredient.IngredientId == ingredientId);
         }
 
         public async Task<Ingredient> GetIngredientByName(string ingredientName)
@@ -229,7 +132,6 @@ namespace ThePantry.Data
         }
 
 
-        // Returns all ingredients that contain input string
         public IEnumerable<Ingredient> GetIngredientsContainingName(string ingredientName)
         {
             _logger.LogInformation("Attemping to find ingredients");
@@ -238,7 +140,6 @@ namespace ThePantry.Data
                 .ToList();
         }
 
-        /*<---------- MealFinder Methods ---------->*/
 
         // TODO: Find a way to make this a single query?
         // Current query returns an array of meals that contain one of the ingredients
@@ -255,7 +156,6 @@ namespace ThePantry.Data
             return await query.ToArrayAsync();
         }
 
-        // Save States
         public void AddEntity(object model)
         {
             _logger.LogInformation("Attempting to add model to the Db");

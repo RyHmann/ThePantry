@@ -15,13 +15,11 @@ namespace ThePantry.Controllers
     public class AppController : Controller
     {
         private readonly IPantryRepository _repository;
-        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
 
-        public AppController(IPantryRepository repository, UserManager<User> userManager, IMapper mapper)
+        public AppController(IPantryRepository repository, IMapper mapper)
         {
             _repository = repository;
-            _userManager = userManager;
             _mapper = mapper;
         }
         public IActionResult Index()
@@ -38,28 +36,6 @@ namespace ThePantry.Controllers
         public IActionResult About()
         {
             return View();
-        }
-
-        public IActionResult MyPantry()
-        {
-            try
-            {
-                var userName = User.Identity.Name;
-                var userPantry = _repository.GetPantryByUser(userName);
-                if (userPantry != null)
-                {
-                    var pantryViewModel = _mapper.Map<PantryViewModel>(userPantry);
-                    return View(pantryViewModel);
-                }
-                else
-                {
-                    return NotFound("Can't locate pantry.");
-                }
-            }
-            catch (Exception exception)
-            {
-                return BadRequest($"Failed to get Pantry: {exception}.");
-            }
         }
 
         public IActionResult MealFinder()

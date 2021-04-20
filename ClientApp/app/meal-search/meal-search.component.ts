@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable, Subject, of } from 'rxjs';
 import { MealService } from '../meal.service';
 import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
-
 import { Meal } from '../meal';
 import { Ingredient } from '../ingredient';
 

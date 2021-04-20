@@ -19,10 +19,6 @@ namespace ThePantry.Data.Entities
         // One to Many Relationship (Parent)
         public virtual ICollection<MealIngredient> MealIngredients { get; set; }
 
-        // One to Many Relationship (Child)
-        public string UserId { get; set; }
-        public virtual User User { get; set; }
-
         public Meal()
         {
             MealIngredients = new List<MealIngredient>();
