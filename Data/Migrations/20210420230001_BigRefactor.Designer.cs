@@ -10,8 +10,8 @@ using ThePantry.Data;
 namespace ThePantry.Migrations
 {
     [DbContext(typeof(PantryContext))]
-    [Migration("20210420225152_Refactor")]
-    partial class Refactor
+    [Migration("20210420230001_BigRefactor")]
+    partial class BigRefactor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
