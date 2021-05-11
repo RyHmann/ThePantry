@@ -38,10 +38,6 @@ namespace ThePantry.Controllers
             return View();
         }
 
-        public IActionResult MealFinder()
-        {
-            return View();
-        }
 
         public IActionResult API()
         {

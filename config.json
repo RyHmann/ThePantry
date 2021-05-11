@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
-    "PantryConnectionString": "server=(localdb)\\MSSQLLocalDB;Database=PantryDb;Integrated Security=true;MultipleActiveResultSets=true;"
+    "PantryConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PantryDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
   },
   "Logging": {
     "LogLevel": {

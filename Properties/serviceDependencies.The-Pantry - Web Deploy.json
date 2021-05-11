@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/the-pantry/databases/the-pantry-db",
+      "type": "mssql.azure",
+      "connectionId": "the-pantry.database.windows.net",
+      "secretStore": "AzureAppSettings"
+    }
+  }
+}
