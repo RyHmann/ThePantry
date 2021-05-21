@@ -13,7 +13,6 @@ import { QueryResult } from '../queryresult';
 })
 export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
-    meals$: Observable<Meal[]> | undefined;
     queryResult$: Observable<QueryResult> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
