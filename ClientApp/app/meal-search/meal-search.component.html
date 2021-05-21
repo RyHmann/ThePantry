@@ -15,11 +15,9 @@
     <div class="search-button-container">
         <button class="search-button" type=submit (click)="searchMeals()">Search</button>
     </div>
-    <div class="ingredient-warning" *ngif="queryResult$">
-    </div>
     <div class="active-ingredients-container">
         <active-ingredients></active-ingredients>
     </div> 
 </div>
-<meals [queryResult$]="queryResult$"></meals>
+<meals [availableMeals]="queryResult$"></meals>
 

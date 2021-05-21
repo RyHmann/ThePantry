@@ -1,5 +1,5 @@
-<div class="grid-container" *ngIf="queryResult$ | async as query">
-    <div class="card" *ngFor="let meal of query.Meals" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
+<div class="grid-container" *ngIf="(availableMeals | async)?.meals as meals">
+    <div class="card" *ngFor="let meal of meals" (click)="onSelect(meal)" [class.selected]="meal===selectedMeal">
         <img src="https://thepantryblob.blob.core.windows.net/the-pantry-blob/{{meal.thumbnail}}"/>
         <div class="card-container">
             <a href="{{meal.url}}" target="_blank">

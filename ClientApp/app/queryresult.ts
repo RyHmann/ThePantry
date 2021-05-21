@@ -5,5 +5,5 @@ export interface QueryResult {
     URL: string;
     ValidIngredients: string[];
     InvalidIngredients: string[];
-    Meals: Meal[];
+    meals: Meal[];
 }

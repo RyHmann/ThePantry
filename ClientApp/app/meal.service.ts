@@ -28,6 +28,7 @@ export class MealService {
                 tap(x => typeof x != "undefined" ? 
                     console.log(`Found meals matching "${term}"`) :
                     console.log(`No meals matching "${term}"`)),
+                tap(data => console.log('Query Results: ', JSON.stringify(data))),
                 catchError(this.handleError<QueryResult>('searchMeals', ))
                     );
     }

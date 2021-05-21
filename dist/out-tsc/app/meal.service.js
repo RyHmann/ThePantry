@@ -18,7 +18,7 @@ let MealService = class MealService {
         return this._http.get(`${this.mealsUrl}${term}`)
             .pipe(tap(x => typeof x != "undefined" ?
             console.log(`Found meals matching "${term}"`) :
-            console.log(`No meals matching "${term}"`)), catchError(this.handleError('searchMeals')));
+            console.log(`No meals matching "${term}"`)), tap(data => console.log('Query Results: ', JSON.stringify(data))), catchError(this.handleError('searchMeals')));
     }
     searchIngredients(term) {
         if (term.trim().length < 3) {

@@ -13,7 +13,7 @@ import { QueryResult } from '../queryresult';
 })
 export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
-    meals$: Meal[] | undefined;
+    meals$: Observable<Meal[]> | undefined;
     queryResult$: Observable<QueryResult> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
@@ -34,6 +34,7 @@ export class MealSearchComponent implements OnInit {
             map((term: string) => term.split(",").pop()!.replace("-","").trim()),
             switchMap((term: string) => this.mealService.searchIngredients(term))
         );
+
     }
 
     // Push a search term into the observable stream
@@ -51,6 +52,11 @@ export class MealSearchComponent implements OnInit {
     searchMeals(): void {
         this.queryResult$ = of();
         this.queryResult$ = this.mealService.searchMeals(this.queryString!);
+        /*this.meals$ = this.queryResult$
+            .pipe(
+                map(meals => meals.Meals),
+                tap(data => console.log('Meals: ', JSON.stringify(data)))
+                );*/
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {
