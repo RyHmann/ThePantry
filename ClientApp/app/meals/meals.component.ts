@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Meal } from '../meal';
+import { QueryResult } from '../queryresult';
 
 @Component({
   selector: 'meals',
@@ -8,7 +9,7 @@ import { Meal } from '../meal';
   styleUrls: ['./meals.component.css']
 })
 export class MealsComponent implements OnInit {
-    @Input() availableMeals: Observable<Meal[]> | undefined;
+    @Input() queryResult$: Observable<QueryResult> | undefined;
     selectedMeal: Meal | undefined
 
     ngOnInit(): void {

@@ -13,12 +13,12 @@ let MealService = class MealService {
     }
     searchMeals(term) {
         if (!term.trim) {
-            return of([]);
+            return of();
         }
         return this._http.get(`${this.mealsUrl}${term}`)
-            .pipe(tap(x => x.length ?
+            .pipe(tap(x => typeof x != "undefined" ?
             console.log(`Found meals matching "${term}"`) :
-            console.log(`No meals matching "${term}"`)), catchError(this.handleError('searchMeals', [])));
+            console.log(`No meals matching "${term}"`)), catchError(this.handleError('searchMeals')));
     }
     searchIngredients(term) {
         if (term.trim().length < 3) {

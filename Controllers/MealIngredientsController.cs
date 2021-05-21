@@ -83,7 +83,8 @@ namespace ThePantry.Controllers
                 }
 
                 // Check if ingredient exists in database
-                if (_repository.IngredientExists(mealIngredient.Ingredient))
+                bool ingredientExistsInDb = await _repository.IngredientExists(mealIngredient.Ingredient);
+                if (ingredientExistsInDb)
                 {
                     mealIngredient.Ingredient = await _repository.GetIngredientByName(model.Ingredient.Name);
                 }

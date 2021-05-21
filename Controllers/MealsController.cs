@@ -68,58 +68,6 @@ namespace ThePantry.Controllers
             }
         }
 
-        /*
-        [HttpPost]
-        public ActionResult CreateMeal(MealViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var mealIngredients = new List<MealIngredient>();
-                    foreach (var mealIngredientViewModel in model.Ingredients)
-                    {
-                        var mealIngredient = _mapper.Map<MealIngredientViewModel, MealIngredient>(mealIngredientViewModel);
-
-                        // Check to see if Ingredient exists in DB
-                        if (_repository.IngredientExists(mealIngredient.Ingredient))
-                        {
-                            mealIngredient.Ingredient = _repository.GetIngredientByName(mealIngredientViewModel.Ingredient.Name);
-                        }
-                        else
-                        {
-                            var newIngredient = _mapper.Map<IngredientViewModel, Ingredient>(mealIngredientViewModel.Ingredient);
-                            _repository.AddEntity(newIngredient);
-                        }
-                        mealIngredients.Add(mealIngredient);
-                    }
-                    var newMeal = _mapper.Map<MealViewModel,Meal>(model);
-                    newMeal.MealIngredients = mealIngredients;
-                    _repository.AddEntity(newMeal);
-                    if (_repository.SaveAll())
-                    {
-                        var location = _linkGenerator.GetPathByAction("ShowMealById", "Meals", new { id = newMeal.MealId });
-                        if (string.IsNullOrWhiteSpace(location))
-                        {
-                            _logger.LogError("Could not complete URI creation.");
-                            return BadRequest("Could not use meal identifier.");
-                        }
-                        return Created($"{location}", _mapper.Map<Meal, MealViewModel>(newMeal));
-                    }
-                }
-                else
-                {
-                    return BadRequest(ModelState);
-                }
-            }
-            catch (Exception exception)
-            {
-
-                _logger.LogError($"Failed to save a new meal: {exception}");
-            }
-            return BadRequest("Failed to save new meal");
-        }
-        */
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult<MealViewModel>> EditMeal(int id, MealViewModel model)

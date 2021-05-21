@@ -9,7 +9,7 @@ let MealsComponent = class MealsComponent {
 };
 __decorate([
     Input()
-], MealsComponent.prototype, "availableMeals", void 0);
+], MealsComponent.prototype, "queryResult$", void 0);
 MealsComponent = __decorate([
     Component({
         selector: 'meals',

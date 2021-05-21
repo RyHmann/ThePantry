@@ -4,7 +4,7 @@ import { Ingredient } from './ingredient';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
-import { ActiveIngredient } from './activeingredient';
+import { QueryResult } from './queryresult';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +19,16 @@ export class MealService {
         return this._http.get<Meal[]>(this.mealsUrl);
     }
 
-    searchMeals(term: string): Observable<Meal[]> {
+    searchMeals(term: string): Observable<QueryResult> {
         if (!term.trim) {
-            return of([]);
+            return of();
         }
-        return this._http.get<Meal[]>(`${this.mealsUrl}${term}`)
+        return this._http.get<QueryResult>(`${this.mealsUrl}${term}`)
             .pipe(
-                tap(x => x.length ? 
+                tap(x => typeof x != "undefined" ? 
                     console.log(`Found meals matching "${term}"`) :
                     console.log(`No meals matching "${term}"`)),
-                catchError(this.handleError<Meal[]>('searchMeals', []))
+                catchError(this.handleError<QueryResult>('searchMeals', ))
                     );
     }
 

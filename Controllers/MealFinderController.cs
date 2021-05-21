@@ -37,18 +37,19 @@ namespace ThePantry.Controllers
             {
                 if (!string.IsNullOrEmpty(ingr))
                 {
-                    // TODO: Add filter here to indicate which ingredients aren't recognized, and indicate to user
-
                     // Find recipes based on ingredients sent in the query string
-                    var userIngredients = ExtractDesirableIngredients(ingr);
-                    var searchIngredientIds = await _repository.GetIngredientsByQueryString(userIngredients);
+                    string[] desirableIngredients = ExtractDesirableIngredientsFromQueryString(ingr);
+                    int[] desirableIngredientIds = await _repository.GetIngredientsByQueryString(desirableIngredients);
+                    string[] undesirableIngredients = ExtractUndesirableIngredientsFromQueryString(ingr);
 
-                    // Identify ingredients that need to be excluded
-                    var undesirableIngredients = ExtractUndesirableIngredients(ingr);
+                    // This is for ingredient button implementation
+                    string[] ingredientsFromQueryString = ExtractAllIngredientsFromQueryString(ingr);
+                    IEnumerable<string> validIngredients = await GetValidIngredients(ingredientsFromQueryString);
+                    IEnumerable<string> invalidIngredients = await GetInvalidIngredients(ingredientsFromQueryString);
 
                     // TODO: Create a helper function
-                    var potentialMatchingMeals = await _repository.FindMealsByIngredients(searchIngredientIds);
-                    var potentialMatchingMealHashSets = potentialMatchingMeals
+                    Meal[] potentialMatchingMeals = await _repository.FindMealsByIngredients(desirableIngredientIds);
+                    HashSet<int> potentialMatchingMealHashSets = potentialMatchingMeals
                             .Select(i => i.MealId)
                             .ToHashSet();
 
@@ -65,7 +66,7 @@ namespace ThePantry.Controllers
                                 mealsToRemove.Add(meal);
                             }
                         }
-                        var mealsToRemoveHashSet = mealsToRemove
+                        HashSet<int> mealsToRemoveHashSet = mealsToRemove
                                                        .Select(mid => mid.MealId)
                                                        .ToHashSet();
 
@@ -73,21 +74,28 @@ namespace ThePantry.Controllers
                         potentialMatchingMealHashSets.ExceptWith(mealsToRemoveHashSet);
                         // Now we have hash set - we need to filter meal list - linq query may not grab ingredients - this may need another repository interface
                     }
-                    var filteredMeals = await _repository.GetMealByIds(potentialMatchingMealHashSets);
+                    IEnumerable<Meal> filteredMeals = await _repository.GetMealByIds(potentialMatchingMealHashSets);
                     // Remove filteredMeals from potentialMatchingMeals here
                     // if true, remove meal
 
                     var matchingMeals = new List<Meal>();
                     foreach (var meal in filteredMeals)
                     {
-                        if (MealContainsAllIngredients(meal, searchIngredientIds))
+                        if (MealContainsAllIngredients(meal, desirableIngredientIds))
                         {
                             matchingMeals.Add(meal);
                             _logger.LogInformation($"Found match: {meal}");
                         }
                     }
-                    var availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);
-                    return Ok(availabeMealsViewModel);
+                    MealViewModel[] availabeMealsViewModel = _mapper.Map<MealViewModel[]>(matchingMeals);
+
+                    // Instantiate new class, populate with data, and return
+                    var QueryResult = new QueryResultViewModel();
+                    QueryResult.Meals = availabeMealsViewModel;
+                    QueryResult.ValidIngredients = validIngredients;
+                    QueryResult.InvalidIngredients = invalidIngredients;
+                    // TODO: Get list of recognized and unrecognized ingredients
+                    return Ok(QueryResult);
                 }
                 else
                 {
@@ -101,7 +109,6 @@ namespace ThePantry.Controllers
             }
         }
 
-        // Returns TRUE if Meal contains any userIngredients
         private bool MealContainsAnyIngredients(Meal meal, int[] undesirableIngredients)
         {
             var recipeIngredients = new List<int>();
@@ -117,14 +124,15 @@ namespace ThePantry.Controllers
             else return false;
         }
 
-        // Returns true if recipe contains any undesirable ingredients
         private bool recipeHasUndesirableIngredients(List<int> recipeIngredients, int[] undesirableIngredients)
         {
-            if (recipeIngredients.Intersect(undesirableIngredients).Any()) return true;
+            if (recipeIngredients.Intersect(undesirableIngredients).Any())
+            {
+                return true;
+            }
             else return false;
         }
 
-        // Returns TRUE if Meal contains all userIngredients
         private static bool MealContainsAllIngredients(Meal meal, int[] userIngredientIds)
         {
             var targetIngredients = new List<int>();
@@ -143,9 +151,45 @@ namespace ThePantry.Controllers
                 return true;
             else return false;
         }
+        private async Task<IEnumerable<string>> GetValidIngredients(string[] ingredientsFromQueryString)
+        {
+            var validIngredients = new List<string>();
+            foreach (string ingredient in ingredientsFromQueryString)
+            {
+                var ingredientExists = await _repository.IngredientHasMatch(ingredient);
+                if (ingredientExists)
+                {
+                    validIngredients.Add(ingredient);
+                }
+            }
+            return validIngredients;
+        }
 
-        // Reformats query string to an array of ingredients to include in query
-        private static string[] ExtractDesirableIngredients(string queryString)
+        private async Task<IEnumerable<string>> GetInvalidIngredients(string[] ingredientsFromQueryString)
+        {
+            var invalidIngredients = new List<string>();
+            foreach (string ingredient in ingredientsFromQueryString)
+            {
+                var ingredientExists = await _repository.IngredientHasMatch(ingredient);
+                if (!ingredientExists)
+                {
+                    invalidIngredients.Add(ingredient);
+                }
+            }
+            return invalidIngredients;
+        }
+
+        private string[] ExtractAllIngredientsFromQueryString(string queryString)
+        {
+            var ingredients = queryString
+                    .Split(',')
+                    .Select(i => i.Trim())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .ToArray();
+            return ingredients;
+        }
+
+        private string[] ExtractDesirableIngredientsFromQueryString(string queryString)
         {
             var ingredients = queryString
                     .Split(',')
@@ -156,8 +200,7 @@ namespace ThePantry.Controllers
             return ingredients;
         }
 
-        // Reformats query string to an array of ingredients to exclude from query
-        private static string[] ExtractUndesirableIngredients(string queryString)
+        private string[] ExtractUndesirableIngredientsFromQueryString(string queryString)
         {
             var ingredients = queryString
                     .Split(',')

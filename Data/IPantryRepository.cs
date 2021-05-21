@@ -16,7 +16,7 @@ namespace ThePantry.Data
         MealIngredient GetMealIngredientByMealId(int mealId, int mealIngredientId);
         MealIngredient[] GetMealIngredientsByMealId(int mealId);
 
-        bool IngredientExists(Ingredient ingredientToCheck);
+        Task<bool> IngredientExists(Ingredient ingredientToCheck);
         Task<bool> IngredientHasMatch(string ingredientToCheck);
         bool IngredientAlreadyAssignedToMeal(int mealId, int ingredientId);
         Task<Ingredient> GetIngredientByName(string ingredientName);

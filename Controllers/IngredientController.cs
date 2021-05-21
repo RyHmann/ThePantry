@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ThePantry.Data;
+using ThePantry.Data.Entities;
 using ThePantry.ViewModels;
 
 namespace ThePantry.Controllers
@@ -35,12 +36,12 @@ namespace ThePantry.Controllers
                 if (ingredientMatch)
                 {
                     var newIngredient = _repository.GetIngredientsContainingName(id);
-                    var newIngredientVM = _mapper.Map<IngredientViewModel[]>(newIngredient);
-                    return Ok(newIngredientVM);
+                    var newIngredientViewModel = _mapper.Map<IngredientViewModel[]>(newIngredient);
+                    return Ok(newIngredientViewModel);
                 }
                 else
                 {
-                    return NotFound($"{id} not found");
+                    return NotFound($"{id} not found in our database");
                 }
             }
             catch (Exception exception)

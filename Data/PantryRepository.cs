@@ -92,12 +92,11 @@ namespace ThePantry.Data
         }
 
 
-        public bool IngredientExists(Ingredient ingredientToCheck)
+        public async Task<bool> IngredientExists(Ingredient ingredientToCheck)
         {
             _logger.LogInformation("Checking to see if ingredient exists in Db.");
-            return _context.Ingredients.Any(n => n.Name == ingredientToCheck.Name);
+            return await _context.Ingredients.AnyAsync(n => n.Name == ingredientToCheck.Name);
         }
-
 
         public async Task<bool> IngredientHasMatch(string ingredientToCheck)
         {

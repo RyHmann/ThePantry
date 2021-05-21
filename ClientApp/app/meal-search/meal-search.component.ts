@@ -1,9 +1,10 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, throwError } from 'rxjs';
 import { MealService } from '../meal.service';
-import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
 import { Meal } from '../meal';
 import { Ingredient } from '../ingredient';
+import { QueryResult } from '../queryresult';
 
 @Component({
   selector: 'meal-search',
@@ -12,7 +13,8 @@ import { Ingredient } from '../ingredient';
 })
 export class MealSearchComponent implements OnInit {
     ingredients$: Observable<Ingredient[]> | undefined;
-    meals$: Observable<Meal[]> | undefined;
+    meals$: Meal[] | undefined;
+    queryResult$: Observable<QueryResult> | undefined;
     private searchTerms = new Subject<string>();
     queryString: string | undefined;
     showSearchResults: boolean = false;
@@ -43,21 +45,12 @@ export class MealSearchComponent implements OnInit {
 
     selectIngredient(ingredient: Ingredient): void {
         this.incorporateSelectedIngredient(ingredient.name);
-
-        // Clear search results
         this.searchTerms.next("");
-
-        // TODO: clear this jank unit testing
-        console.log(`Selected: ${ingredient.name}`);
-        console.log("Current Query: " + this.queryString);
     }
 
     searchMeals(): void {
-        // Clear current search results
-        this.meals$ = of([]);
-
-        // Return results based on new query string
-        this.meals$ = this.mealService.searchMeals(this.queryString!);
+        this.queryResult$ = of();
+        this.queryResult$ = this.mealService.searchMeals(this.queryString!);
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {
@@ -72,4 +65,5 @@ export class MealSearchComponent implements OnInit {
     private checkForMinusSign(term: string): boolean {
         return term.slice(0,1) === '-' ? true : false;
     }
+    
 }

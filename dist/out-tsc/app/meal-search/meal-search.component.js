@@ -24,17 +24,11 @@ let MealSearchComponent = class MealSearchComponent {
     }
     selectIngredient(ingredient) {
         this.incorporateSelectedIngredient(ingredient.name);
-        // Clear search results
         this.searchTerms.next("");
-        // TODO: clear this jank unit testing
-        console.log(`Selected: ${ingredient.name}`);
-        console.log("Current Query: " + this.queryString);
     }
     searchMeals() {
-        // Clear current search results
-        this.meals$ = of([]);
-        // Return results based on new query string
-        this.meals$ = this.mealService.searchMeals(this.queryString);
+        this.queryResult$ = of();
+        this.queryResult$ = this.mealService.searchMeals(this.queryString);
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;
