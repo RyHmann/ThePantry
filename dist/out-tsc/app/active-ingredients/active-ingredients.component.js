@@ -7,7 +7,7 @@ let ActiveIngredientsComponent = class ActiveIngredientsComponent {
 };
 __decorate([
     Input()
-], ActiveIngredientsComponent.prototype, "userIngredients", void 0);
+], ActiveIngredientsComponent.prototype, "invalidIngredients", void 0);
 ActiveIngredientsComponent = __decorate([
     Component({
         selector: 'active-ingredients',

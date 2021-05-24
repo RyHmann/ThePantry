@@ -1,5 +1,3 @@
-<div class="active-ingredients">
-    <div>
-        <p>Sorry, we didn't recognize: <span *ngFor="let invalidIngredient of invalidIngredients">{{invalidIngredient}}</span></p>
-    </div>
+<div class="invalid-ingredient-container">
+    <p>Sorry, we didn't recognize: <span class="invalid-ingredient" *ngFor="let invalidIngredient of invalidIngredients">{{invalidIngredient}}</span></p>
 </div>

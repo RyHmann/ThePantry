@@ -10,6 +10,7 @@ import { MealsComponent } from './meals/meals.component';
 import { TruncatePipe } from './truncate.pipe';
 import { ActiveIngredientsComponent } from './active-ingredients/active-ingredients.component';
 import { RemovequotesPipe } from './removequotes.pipe';
+import { TargetIngredientsComponent } from './target-ingredients/target-ingredients.component';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -21,7 +22,8 @@ AppModule = __decorate([
             MealsComponent,
             TruncatePipe,
             ActiveIngredientsComponent,
-            RemovequotesPipe
+            RemovequotesPipe,
+            TargetIngredientsComponent
         ],
         imports: [
             BrowserModule,

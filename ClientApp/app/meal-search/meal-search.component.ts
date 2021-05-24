@@ -2,7 +2,6 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Observable, Subject, of, throwError } from 'rxjs';
 import { MealService } from '../meal.service';
 import { debounceTime, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
-import { Meal } from '../meal';
 import { Ingredient } from '../ingredient';
 import { QueryResult } from '../queryresult';
 
@@ -53,7 +52,7 @@ export class MealSearchComponent implements OnInit {
         this.queryResult$ = this.mealService.searchMeals(this.queryString!);
     }
 
-    invalidIngredientsDetected(array: string[]): boolean {
+    arrayHasData(array: string[]): boolean {
         return array.length > 0 ? true : false;
     }
 

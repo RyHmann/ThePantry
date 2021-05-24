@@ -1,27 +1,36 @@
-.active-ingredients {
-    width: 100%;
-    margin: 15px 5px;
-}
 .invalid-ingredient-container {
     background-color: #FFDDDD;
     border: 2px solid #FFB3B3;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
+    height: 22px;
 }
-.ingredient-button{
-    display: inline;
-    font-size: 14px;
-    border: 2px;
-    border-radius: 5px;
-    border-style: solid;
-    color: green;
-    background-color: rgb(256,256,256,.5);
-    padding: 2px 20px 2px 6px;
-    margin: 1px 2px;
-
-}
-.ingredient-button:hover {
-    color: red;
-    background-color: rgb(256,175,175,0.5);
+.invalid-ingredient-container > p {
+    color: dimgrey;
+    margin: 0;
+    padding: 0;
 }
 
+.invalid-ingredient:first-child:empty ~ .invalid-ingredient:not(:empty) {
+    margin-left: 0;
+}
+
+    .invalid-ingredient:first-child:empty ~ .invalid-ingredient:not(:empty) ~ .invalid-ingredient:not(:empty) {
+        margin-left: -.3em;
+    }
+
+.invalid-ingredient:empty {
+    display: none;
+}
+
+.invalid-ingredient:not(:first-child):before {
+    content: ", ";
+}
+
+.invalid-ingredient:empty + .invalid-ingredient:not(:empty):before {
+    content: "";
+}
+
+.invalid-ingredient:not(:empty) ~ .invalid-ingredient:empty + .invalid-ingredient:not(:empty):before {
+    content: ", ";
+}

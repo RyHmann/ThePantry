@@ -30,6 +30,9 @@ let MealSearchComponent = class MealSearchComponent {
         this.queryResult$ = of();
         this.queryResult$ = this.mealService.searchMeals(this.queryString);
     }
+    arrayHasData(array) {
+        return array.length > 0 ? true : false;
+    }
     incorporateSelectedIngredient(ingredient) {
         var _a;
         // Splits query string into array, removes the last item, inserts the user selected ingredient, and updates the queryString
