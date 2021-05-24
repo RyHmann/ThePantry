@@ -11,11 +11,17 @@
                 </li>
             </ul>
         </div>
+        <div *ngIf="(queryResult$ | async)?.invalidIngredients as ingredients">
+            <active-ingredients *ngIf="invalidIngredientsDetected(ingredients)" [invalidIngredients]="ingredients"></active-ingredients>
+        </div>
+        <div *ngIf="(queryResults$ | async)?.targetIngredients as ingredients">
+            <target-ingredients></target-ingredients>
+        </div>
     </div>
     <div class="search-button-container">
         <button class="search-button" type=submit (click)="searchMeals()">Search</button>
     </div>
-    <active-ingredients></active-ingredients>
+    
 </div>
 <meals [availableMeals]="queryResult$"></meals>
 

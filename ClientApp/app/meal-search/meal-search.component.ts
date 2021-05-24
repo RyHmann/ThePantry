@@ -51,11 +51,10 @@ export class MealSearchComponent implements OnInit {
     searchMeals(): void {
         this.queryResult$ = of();
         this.queryResult$ = this.mealService.searchMeals(this.queryString!);
-        /*this.meals$ = this.queryResult$
-            .pipe(
-                map(meals => meals.Meals),
-                tap(data => console.log('Meals: ', JSON.stringify(data)))
-                );*/
+    }
+
+    invalidIngredientsDetected(array: string[]): boolean {
+        return array.length > 0 ? true : false;
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {

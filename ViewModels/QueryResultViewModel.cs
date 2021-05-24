@@ -10,7 +10,8 @@ namespace ThePantry.ViewModels
     {
         public string Source { get; set; }
         public string URL { get; set; }
-        public IEnumerable<string> ValidIngredients { get; set; }
+        public IEnumerable<string> TargetIngredients { get; set; }
+        public IEnumerable<string> AvoidedIngredients { get; set; }
         public IEnumerable<string> InvalidIngredients { get; set; }
         public IEnumerable<MealViewModel> Meals { get; set; }
 

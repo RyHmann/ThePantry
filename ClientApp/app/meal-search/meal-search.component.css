@@ -53,7 +53,24 @@ ul, li {
 .search-button {
     font-family: 'Poppins', sans-serif;
     padding: 4px;
+    color: #fff;
+    background-color: #3EAED9;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border: 1px solid #9F9F9F;
+    border-radius: 4px;
+    cursor: pointer;
 }
+
+    .search-button:hover {
+        background-color: #33B5E6;
+        border: 1px solid #fff;
+    }
+    .search-button:active {
+        background-color: #FBDA8C;
+        color: #fff;
+        border: 1px solid #fff;
+    }
 
 .search-results-container {
     position: absolute;
@@ -83,7 +100,7 @@ ul, li {
         cursor: default;
     }
 
-.active-ingredients-container {
+active-ingredients {
     position: static;
     grid-area: 3 / 2 / 3 / 4;
 }

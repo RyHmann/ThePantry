@@ -92,7 +92,7 @@ namespace ThePantry.Controllers
                     // Instantiate new class, populate with data, and return
                     var QueryResult = new QueryResultViewModel();
                     QueryResult.Meals = availabeMealsViewModel;
-                    QueryResult.ValidIngredients = validIngredients;
+                    QueryResult.TargetIngredients = validIngredients;
                     QueryResult.InvalidIngredients = invalidIngredients;
                     // TODO: Get list of recognized and unrecognized ingredients
                     return Ok(QueryResult);

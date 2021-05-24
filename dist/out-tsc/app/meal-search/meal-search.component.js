@@ -29,11 +29,6 @@ let MealSearchComponent = class MealSearchComponent {
     searchMeals() {
         this.queryResult$ = of();
         this.queryResult$ = this.mealService.searchMeals(this.queryString);
-        /*this.meals$ = this.queryResult$
-            .pipe(
-                map(meals => meals.Meals),
-                tap(data => console.log('Meals: ', JSON.stringify(data)))
-                );*/
     }
     incorporateSelectedIngredient(ingredient) {
         var _a;

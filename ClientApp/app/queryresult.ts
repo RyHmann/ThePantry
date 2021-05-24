@@ -1,9 +1,10 @@
 ﻿import { Meal } from './meal';
 
 export interface QueryResult {
-    Source: string;
-    URL: string;
-    ValidIngredients: string[];
-    InvalidIngredients: string[];
+    source: string;
+    url: string;
+    targetIngredients: string[];
+    avoidedIngredients: string[];
+    invalidIngredients: string[];
     meals: Meal[];
 }
