@@ -10,11 +10,44 @@
     <div class="banner-container">
         <h2>Our API</h2>
     </div>
+
     <div class="about-text-container">
-        <p>The Pantry provides free use of its public API.<br>
-        Querying the API is simple, and it will return recipes in JSON format.<br>Refer to the box below for access to the API as well as some instructions.</p>
-        <div class="api-instructions">
-            <p>http://wwww.the-pantry.azurewebsites.com/<br>api/mealfinder/include?ingr=</p>
+        <p>The Pantry also provides an open API so you can perform your own queries for your own use. An HTTP GET will return a query result in JSON format that contains multiple arrays of Target Ingredients, Invalid Ingredients, Avoided Ingredients, and Recipes. Refer to the examples below for a brief explanation of how to query our API.
+        </p>
+        <p>To use our API, send your requests to the following URL:</p>
+        <div class="api-example-section">
+            <div class="api-example-container">
+                <h2>Example:</h2>
+                <div>
+                    <p>http://wwww.the-pantry.azurewebsites.com/api/mealfinder/include?ingr=</p>
+                </div>
+            </div>
+        </div>
+        <p>
+            Add any ingredients you want to search for, separated by commas (,).<br>
+            For example, let's search for recipes that contain onion, garlic, and tomato:
+        </p>
+        <div class="api-example-section">
+
+            <div class="api-example-container">
+                <h2>Example:</h2>
+                <div>
+                    <p>http://wwww.the-pantry.azurewebsites.com/api/mealfinder/include?ingr=<span class="target-ingredient-example">onion,garlic,tomato</span></p>
+                </div>
+            </div>
+        </div>
+        <p>
+            To exclude certian ingredients from a search, add a minus (-) sign in front of the unwanted ingredient<br>
+            In the example below, we'll search for recipes containing onion and tomato, but exclude any recipes with garlic:
+        </p>
+        <div class="api-example-section">
+
+            <div class="api-example-container">
+                <h2>Example:</h2>
+                <div>
+                    <p>http://wwww.the-pantry.azurewebsites.com/api/mealfinder/include?ingr=<span class="target-ingredient-example">onion,</span><span class="unwanted-ingredient-example">-garlic,</span><span class="target-ingredient-example">tomato</span></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
