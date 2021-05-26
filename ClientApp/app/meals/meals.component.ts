@@ -9,7 +9,7 @@ import { QueryResult } from '../queryresult';
   styleUrls: ['./meals.component.css']
 })
 export class MealsComponent implements OnInit {
-    @Input() availableMeals: Observable<QueryResult> | undefined;
+    @Input() availableMeals: Meal[] | undefined;
     selectedMeal: Meal | undefined
 
     ngOnInit(): void {

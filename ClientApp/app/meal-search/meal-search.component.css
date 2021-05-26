@@ -105,4 +105,15 @@ active-ingredients {
     grid-area: 3 / 2 / 3 / 4;
 }
 
+.no-meals-container {
+    background-color: #FFDDDD;
+    border: 2px solid #FFB3B3;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.no-meals-container h2, p{
+    color: dimgrey;
+    padding: 5px 20px;
+}
 

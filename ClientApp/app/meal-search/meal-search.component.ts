@@ -52,8 +52,15 @@ export class MealSearchComponent implements OnInit {
         this.queryResult$ = this.mealService.searchMeals(this.queryString!);
     }
 
-    arrayHasData(array: string[]): boolean {
+    arrayHasData(array: any[]): boolean {
         return array.length > 0 ? true : false;
+    }
+
+    onRemoveIngredient(ingredient: string) {
+        let termToRemove = "";
+        this.queryString!.includes(ingredient + ",") ? termToRemove = ingredient + ", " : termToRemove = ingredient;
+        this.queryString = this.queryString!.replace(termToRemove, "");
+        this.searchMeals();
     }
 
     private incorporateSelectedIngredient(ingredient: string): void {

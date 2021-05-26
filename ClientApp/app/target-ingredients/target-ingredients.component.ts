@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'target-ingredients',
@@ -8,10 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TargetIngredientsComponent implements OnInit {
 
     @Input() userIngredients: string[] | undefined;
+    @Output() ingredientRemoved = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+    flagIngredientForRemoval(ingredient: string): void {
+        console.log(ingredient);
+        this.ingredientRemoved.emit(ingredient);
+    }
 }

@@ -13,7 +13,7 @@
         </div>
         <ng-container *ngIf="(queryResult$ | async) as arrays">
             <active-ingredients *ngIf="arrayHasData(arrays.invalidIngredients)" [invalidIngredients]="arrays.invalidIngredients"></active-ingredients>
-            <target-ingredients *ngIf="arrayHasData(arrays.targetIngredients)" [userIngredients]="arrays.targetIngredients"></target-ingredients>
+            <target-ingredients *ngIf="arrayHasData(arrays.targetIngredients)" [userIngredients]="arrays.targetIngredients" (ingredientRemoved)="onRemoveIngredient($event)"></target-ingredients>
         </ng-container>
     </div>
     <div class="search-button-container">
@@ -21,5 +21,15 @@
     </div>
     
 </div>
-<meals [availableMeals]="queryResult$"></meals>
+<ng-container *ngIf="(queryResult$ | async) as mealArray">
+    <meals *ngIf="arrayHasData(mealArray.meals)" [availableMeals]="mealArray.meals"></meals>
+    <ng-container *ngIf="!arrayHasData(mealArray.meals)">
+        <div class="no-meals-container">
+            <h2>Sorry, we couldn't find any recipes with your combination of ingredients</h2>
+            <p>To broaden your search results, try to remove a few ingredients from your search</p>
+        </div>
+    </ng-container>
+</ng-container>
+
+
 
